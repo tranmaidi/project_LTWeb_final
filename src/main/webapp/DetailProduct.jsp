@@ -174,18 +174,12 @@
                                 <div class="table-responsive">
                                     <table class="table table-sm table-borderless mb-0">
                                         <tbody>
-                                            <tr>
-                                                <th class="pl-0 w-25" scope="row"><strong>Model</strong></th>
-                                                <td>${detail.model }</td>
-                                            </tr>
+                                           
                                             <tr>
                                                 <th class="pl-0 w-25" scope="row"><strong>Color</strong></th>
                                                 <td>${detail.color }</td>
                                             </tr>
-                                            <tr>
-                                                <th class="pl-0 w-25" scope="row"><strong>Delivery</strong></th>
-                                                <td>${detail.delivery }</td>
-                                            </tr>
+                                         
                                         </tbody>
                                     </table>
                                 </div>

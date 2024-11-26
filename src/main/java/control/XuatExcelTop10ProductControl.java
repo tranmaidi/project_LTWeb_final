@@ -129,11 +129,11 @@ public class XuatExcelTop10ProductControl extends HttpServlet {
              		     cell4=row.createCell(5);
              		     cell4.setCellValue(pro.getDescription());	
              		     cell4=row.createCell(6);
-             		     cell4.setCellValue(pro.getModel());	
+//             		     cell4.setCellValue(pro.getModel());	
              		     cell4=row.createCell(7);
              		     cell4.setCellValue(pro.getColor());	
              		     cell4=row.createCell(8);
-             		     cell4.setCellValue(pro.getDelivery());	
+//             		     cell4.setCellValue(pro.getDelivery());	
              		     cell4=row.createCell(9);
              		     cell4.setCellValue(pro.getImage2());	
              		     cell4=row.createCell(10);

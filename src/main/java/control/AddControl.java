@@ -39,9 +39,9 @@ public class AddControl extends HttpServlet {
         String pimage2 = request.getParameter("image2");
         String pimage3 = request.getParameter("image3");
         String pimage4 = request.getParameter("image4");
-        String pmodel = request.getParameter("model");
+//        String pmodel = request.getParameter("model");
         String pcolor = request.getParameter("color");
-        String pdelivery = request.getParameter("delivery");
+//        String pdelivery = request.getParameter("delivery");
         
         String pprice = request.getParameter("price");
         String ptitle = request.getParameter("title");
@@ -53,7 +53,7 @@ public class AddControl extends HttpServlet {
         
         
         DAO dao = new DAO();
-        dao.insertProduct(pname, pimage, pprice, ptitle, pdescription, pcategory, sid, pmodel, pcolor, pdelivery, pimage2, pimage3, pimage4);
+        dao.insertProduct(pname, pimage, pprice, ptitle, pdescription, pcategory, sid, pcolor, pimage2, pimage3, pimage4);
         request.setAttribute("mess", "Product Added!");
         request.getRequestDispatcher("manager").forward(request, response);
     }

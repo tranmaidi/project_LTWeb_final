@@ -78,18 +78,12 @@
                                     <label>Title</label>
                                     <textarea name="title" class="form-control" required>${detail.title}</textarea>
                                 </div>
-                                <div class="form-group">
-                                    <label>Model</label>
-                                    <textarea name="model" class="form-control" required>${detail.model}</textarea>
-                                </div>
+                              
                                 <div class="form-group">
                                     <label>Color</label>
                                     <textarea name="color" class="form-control" required>${detail.color}</textarea>
                                 </div>
-                                <div class="form-group">
-                                    <label>Delivery</label>
-                                    <textarea name="delivery" class="form-control" required>${detail.delivery}</textarea>
-                                </div>
+                                
                                 <div class="form-group">
                                     <label>Description</label>
                                     <textarea name="description" class="form-control" >${detail.description}</textarea>

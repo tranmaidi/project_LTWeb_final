@@ -47,9 +47,7 @@
                                             <th scope="col" class="border-0 bg-light">
                                                 <div class="py-2 text-uppercase">Màu Sắc</div>
                                             </th>
-                                            <th scope="col" class="border-0 bg-light">
-                                                <div class="py-2 text-uppercase">Delivery</div>
-                                            </th>
+                                            
                                             <th scope="col" class="border-0 bg-light">
                                                 <div class="py-2 text-uppercase">Kích Thước</div>
                                             </th>
@@ -80,8 +78,7 @@
                                                             </th>
                                                             <td class="align-middle"><strong>${p.price}$</strong></td>
                                                             <td class="align-middle"><strong>${p.color}</strong></td>
-                                                            <td class="align-middle"><strong>${p.delivery}</strong></td>
-
+                                                            
                                                             <td class="align-middle">
                                                                 <strong>${o.size}</strong>
                                                             </td>

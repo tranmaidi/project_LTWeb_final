@@ -143,7 +143,7 @@
                                                 <td>
                                                     <img src="${o.image}">
                                                 </td>
-                                                <td>${o.price} $</td>
+                                                <td>${o.price} VND</td>
                                                 <td>
                                                     <a href="loadProduct?pid=${o.id}"><button type="button" class="btn btn-warning"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></button></a>
                                                     <a href="delete?pid=${o.id}"><button type="button" class="btn btn-danger"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></button></a>
@@ -215,18 +215,18 @@
                                 <label>Title</label>
                                 <textarea name="title" class="form-control" required></textarea>
                             </div>
-                            <div class="form-group">
+<!--                            <div class="form-group">
                                 <label>Model</label>
                                 <input name="model" type="text" class="form-control" >
-                            </div>
+                            </div>-->
                             <div class="form-group">
                                 <label>Color</label>
                                 <input name="color" type="text" class="form-control" >
                             </div>
-                            <div class="form-group">
+<!--                            <div class="form-group">
                                 <label>Delivery</label>
                                 <input name="delivery" type="text" class="form-control" >
-                            </div>
+                            </div>-->
                             <div class="form-group">
                                 <label>Description</label>
                                 <textarea name="description" class="form-control" ></textarea>

@@ -16,14 +16,12 @@ public class Product {
     private double price;
     private String title;
     private String description;
-    private String model;
     private String color;
-    private String delivery;
     private String image2;
     private String image3;
     private String image4;
-	public Product(int id, String name, String image, double price, String title, String description, String model,
-			String color, String delivery, String image2, String image3, String image4) {
+	public Product(int id, String name, String image, double price, String title, String description,
+			String color, String image2, String image3, String image4) {
 		
 		this.id = id;
 		this.name = name;
@@ -31,9 +29,7 @@ public class Product {
 		this.price = price;
 		this.title = title;
 		this.description = description;
-		this.model = model;
 		this.color = color;
-		this.delivery = delivery;
 		this.image2 = image2;
 		this.image3 = image3;
 		this.image4 = image4;
@@ -44,8 +40,7 @@ public class Product {
 	@Override
 	public String toString() {
 		return "Product [id=" + id + ", name=" + name + ", image=" + image + ", price=" + price + ", title=" + title
-				+ ", description=" + description + ", model=" + model + ", color=" + color + ", delivery=" + delivery
-				+ ", image2=" + image2 + ", image3=" + image3 + ", image4=" + image4 + "]";
+				+ ", description=" + description + ", color=" + color + ", image2=" + image2 + ", image3=" + image3 + ", image4=" + image4 + "]";
 	}
 	public int getId() {
 		return id;
@@ -83,24 +78,14 @@ public class Product {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String getModel() {
-		return model;
-	}
-	public void setModel(String model) {
-		this.model = model;
-	}
+
 	public String getColor() {
 		return color;
 	}
 	public void setColor(String color) {
 		this.color = color;
 	}
-	public String getDelivery() {
-		return delivery;
-	}
-	public void setDelivery(String delivery) {
-		this.delivery = delivery;
-	}
+
 	public String getImage2() {
 		return image2;
 	}

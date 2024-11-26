@@ -39,8 +39,9 @@
                                 <a class="dropdown-item" href="manager" target="_blank">Manager Product</a>
                                 <a class="dropdown-item" href="admin" target="_blank">Statistic</a>
                             </c:if>
-                            <a class="dropdown-item" href="logout">Logout</a>
                             <a class="dropdown-item" href="managerHistory">History</a>
+                            <a class="dropdown-item" href="logout">Logout</a>
+                            
                         </div>
                     </li>
                 </c:if>

@@ -46,9 +46,7 @@ public class DAO {
                         rs.getString(9),
                         rs.getString(10),
                         rs.getString(11),
-                        rs.getString(12),
-                        rs.getString(13),
-                        rs.getString(14)));
+                        rs.getString(12)));
             }
         } catch (Exception e) {
         }
@@ -92,8 +90,7 @@ public class DAO {
                 list.add(new Invoice(rs.getInt(1),
                         rs.getInt(2),
                         rs.getDouble(3),
-                        rs.getDate(4)
-                ));
+                        rs.getDate(4)));
             }
         } catch (Exception e) {
         }
@@ -303,9 +300,7 @@ public class DAO {
                         rs.getString(9),
                         rs.getString(10),
                         rs.getString(11),
-                        rs.getString(12),
-                        rs.getString(13),
-                        rs.getString(14)));
+                        rs.getString(12)));
             }
         } catch (Exception e) {
         }
@@ -334,9 +329,7 @@ public class DAO {
                         rs.getString(9),
                         rs.getString(10),
                         rs.getString(11),
-                        rs.getString(12),
-                        rs.getString(13),
-                        rs.getString(14)));
+                        rs.getString(12)));
             }
         } catch (Exception e) {
         }
@@ -365,9 +358,7 @@ public class DAO {
                         rs.getString(9),
                         rs.getString(10),
                         rs.getString(11),
-                        rs.getString(12),
-                        rs.getString(13),
-                        rs.getString(14)));
+                        rs.getString(12)));
             }
         } catch (Exception e) {
         }
@@ -396,9 +387,7 @@ public class DAO {
                         rs.getString(9),
                         rs.getString(10),
                         rs.getString(11),
-                        rs.getString(12),
-                        rs.getString(13),
-                        rs.getString(14)));
+                        rs.getString(12)));
             }
         } catch (Exception e) {
         }
@@ -427,9 +416,7 @@ public class DAO {
                         rs.getString(9),
                         rs.getString(10),
                         rs.getString(11),
-                        rs.getString(12),
-                        rs.getString(13),
-                        rs.getString(14)));
+                        rs.getString(12)));
             }
         } catch (Exception e) {
         }
@@ -455,9 +442,7 @@ public class DAO {
                         rs.getString(9),
                         rs.getString(10),
                         rs.getString(11),
-                        rs.getString(12),
-                        rs.getString(13),
-                        rs.getString(14)));
+                        rs.getString(12)));
             }
         } catch (Exception e) {
         }
@@ -487,9 +472,7 @@ public class DAO {
                         rs.getString(9),
                         rs.getString(10),
                         rs.getString(11),
-                        rs.getString(12),
-                        rs.getString(13),
-                        rs.getString(14)));
+                        rs.getString(12)));
             }
         } catch (Exception e) {
         }
@@ -517,9 +500,7 @@ public class DAO {
                         rs.getString(9),
                         rs.getString(10),
                         rs.getString(11),
-                        rs.getString(12),
-                        rs.getString(13),
-                        rs.getString(14)));
+                        rs.getString(12)));
             }
         } catch (Exception e) {
         }
@@ -545,9 +526,7 @@ public class DAO {
                         rs.getString(9),
                         rs.getString(10),
                         rs.getString(11),
-                        rs.getString(12),
-                        rs.getString(13),
-                        rs.getString(14)));
+                        rs.getString(12)));
             }
         } catch (Exception e) {
         }
@@ -567,8 +546,7 @@ public class DAO {
                 list.add(new Invoice(rs.getInt(1),
                         rs.getInt(2),
                         rs.getDouble(3),
-                        rs.getDate(4)
-                ));
+                        rs.getDate(4)));
             }
         } catch (Exception e) {
         }
@@ -593,9 +571,7 @@ public class DAO {
                         rs.getString(9),
                         rs.getString(10),
                         rs.getString(11),
-                        rs.getString(12),
-                        rs.getString(13),
-                        rs.getString(14)));
+                        rs.getString(12)));
             }
         } catch (Exception e) {
         }
@@ -620,9 +596,7 @@ public class DAO {
                         rs.getString(9),
                         rs.getString(10),
                         rs.getString(11),
-                        rs.getString(12),
-                        rs.getString(13),
-                        rs.getString(14)));
+                        rs.getString(12)));
             }
         } catch (Exception e) {
         }
@@ -647,9 +621,7 @@ public class DAO {
                         rs.getString(9),
                         rs.getString(10),
                         rs.getString(11),
-                        rs.getString(12),
-                        rs.getString(13),
-                        rs.getString(14)));
+                        rs.getString(12)));
             }
         } catch (Exception e) {
         }
@@ -674,9 +646,7 @@ public class DAO {
                         rs.getString(9),
                         rs.getString(10),
                         rs.getString(11),
-                        rs.getString(12),
-                        rs.getString(13),
-                        rs.getString(14)));
+                        rs.getString(12)));
             }
         } catch (Exception e) {
         }
@@ -701,9 +671,7 @@ public class DAO {
                         rs.getString(9),
                         rs.getString(10),
                         rs.getString(11),
-                        rs.getString(12),
-                        rs.getString(13),
-                        rs.getString(14)));
+                        rs.getString(12)));
             }
         } catch (Exception e) {
         }
@@ -728,9 +696,7 @@ public class DAO {
                         rs.getString(9),
                         rs.getString(10),
                         rs.getString(11),
-                        rs.getString(12),
-                        rs.getString(13),
-                        rs.getString(14)));
+                        rs.getString(12)));
             }
         } catch (Exception e) {
         }
@@ -757,9 +723,7 @@ public class DAO {
                         rs.getString(9),
                         rs.getString(10),
                         rs.getString(11),
-                        rs.getString(12),
-                        rs.getString(13),
-                        rs.getString(14)));
+                        rs.getString(12)));
             }
         } catch (Exception e) {
         }
@@ -784,9 +748,7 @@ public class DAO {
                         rs.getString(9),
                         rs.getString(10),
                         rs.getString(11),
-                        rs.getString(12),
-                        rs.getString(13),
-                        rs.getString(14)));
+                        rs.getString(12)));
             }
         } catch (Exception e) {
         }
@@ -813,9 +775,7 @@ public class DAO {
                         rs.getString(9),
                         rs.getString(10),
                         rs.getString(11),
-                        rs.getString(12),
-                        rs.getString(13),
-                        rs.getString(14)));
+                        rs.getString(12)));
             }
         } catch (Exception e) {
         }
@@ -861,9 +821,7 @@ public class DAO {
                         rs.getString(9),
                         rs.getString(10),
                         rs.getString(11),
-                        rs.getString(12),
-                        rs.getString(13),
-                        rs.getString(14));
+                        rs.getString(12));
             }
         } catch (Exception e) {
         }
@@ -1045,9 +1003,7 @@ public class DAO {
                         rs.getString(7),
                         rs.getString(8),
                         rs.getString(9),
-                        rs.getString(10),
-                        rs.getString(11),
-                        rs.getString(12));
+                        rs.getString(10));
             }
         } catch (Exception e) {
         }
@@ -1071,9 +1027,7 @@ public class DAO {
                         rs.getString(9),
                         rs.getString(10),
                         rs.getString(11),
-                        rs.getString(12),
-                        rs.getString(13),
-                        rs.getString(14)));
+                        rs.getString(12)));
             }
         } catch (Exception e) {
         }
@@ -1099,9 +1053,7 @@ public class DAO {
                         rs.getString(9),
                         rs.getString(10),
                         rs.getString(11),
-                        rs.getString(12),
-                        rs.getString(13),
-                        rs.getString(14)));
+                        rs.getString(12)));
             }
         } catch (Exception e) {
         }
@@ -1127,9 +1079,7 @@ public class DAO {
                         rs.getString(9),
                         rs.getString(10),
                         rs.getString(11),
-                        rs.getString(12),
-                        rs.getString(13),
-                        rs.getString(14)));
+                        rs.getString(12)));
             }
         } catch (Exception e) {
         }
@@ -1155,9 +1105,7 @@ public class DAO {
                         rs.getString(9),
                         rs.getString(10),
                         rs.getString(11),
-                        rs.getString(12),
-                        rs.getString(13),
-                        rs.getString(14)));
+                        rs.getString(12)));
             }
         } catch (Exception e) {
         }
@@ -1409,12 +1357,12 @@ public class DAO {
         }
     }
 
-    public void insertProduct(String name, String image, String price,
-            String title, String description, String category, int sid, String model, String color, String delivery, String image2, String image3, String image4) {
+    public void insertProduct(String name, String image, String price,String title, String description, 
+            String category, int sid, String color, String image2, String image3, String image4) {
         String query = "insert Product([name],[image],[price],[title],\r\n"
-                + "[description],[cateID],[sell_ID],[model],\r\n"
-                + "[color],[delivery],[image2],[image3],[image4])\r\n"
-                + "values(N'" + name + "','" + image + "','" + price + "',N'" + title + "',N'" + description + "','" + category + "','" + sid + "',N'" + model + "',N'" + color + "',N'" + delivery + "','" + image2 + "','" + image3 + "','" + image4 + "')";
+                + "[description],[cateID],[sell_ID],\r\n"
+                + "[color],[image2],[image3],[image4])\r\n"
+                + "values(N'" + name + "','" + image + "','" + price + "',N'" + title + "',N'" + description + "','" + category + "','" + sid + "',N'" + color + "',N'" +  image2 + "','" + image3 + "','" + image4 + "')";
         try {
 
             conn = new DBContext().getConnection();//mo ket noi voi sql
@@ -1563,8 +1511,7 @@ public class DAO {
     }
 
     public void editProduct(String pname, String pimage, String pprice, String ptitle, String pdescription, String pcategory,
-            String pmodel, String pcolor,
-            String pdelivery, String pimage2, String pimage3, String pimage4, String pid) {
+            String pcolor,String pimage2, String pimage3, String pimage4, String pid) {
         String query = "update Product\r\n"
                 + "set [name] = ?,\r\n"
                 + "[image] = ?,\r\n"
@@ -1572,9 +1519,9 @@ public class DAO {
                 + "title = ?,\r\n"
                 + "[description] = ?,\r\n"
                 + "cateID = ?,\r\n"
-                + "model= ?,\r\n"
+//                + "model= ?,\r\n"
                 + "color= ?,\r\n"
-                + "delivery=?,\r\n"
+//                + "delivery=?,\r\n"
                 + "image2=?,\r\n"
                 + "image3=?,\r\n"
                 + "image4=?\r\n"
@@ -1588,13 +1535,13 @@ public class DAO {
             ps.setString(4, ptitle);
             ps.setString(5, pdescription);
             ps.setString(6, pcategory);
-            ps.setString(7, pmodel);
-            ps.setString(8, pcolor);
-            ps.setString(9, pdelivery);
-            ps.setString(10, pimage2);
-            ps.setString(11, pimage3);
-            ps.setString(12, pimage4);
-            ps.setString(13, pid);
+//            ps.setString(7, pmodel);
+            ps.setString(7, pcolor);
+//            ps.setString(9, pdelivery);
+            ps.setString(8, pimage2);
+            ps.setString(9, pimage3);
+            ps.setString(10, pimage4);
+            ps.setString(11, pid);
             ps.executeUpdate();
 
         } catch (Exception e) {

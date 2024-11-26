@@ -96,12 +96,12 @@ public class XuatExcelProductControl extends HttpServlet {
         cell4.setCellValue("Title");
         cell5=row.createCell(5);
         cell5.setCellValue("Description");
-        cell5=row.createCell(6);
-        cell5.setCellValue("Model");
+//        cell5=row.createCell(6);
+//        cell5.setCellValue("Model");
         cell5=row.createCell(7);
         cell5.setCellValue("Color");
-        cell5=row.createCell(8);
-        cell5.setCellValue("Delivery");
+//        cell5=row.createCell(8);
+//        cell5.setCellValue("Delivery");
         cell5=row.createCell(9);
         cell5.setCellValue("Image");
         cell5=row.createCell(10);
@@ -127,11 +127,11 @@ public class XuatExcelProductControl extends HttpServlet {
         		     cell4=row.createCell(5);
         		     cell4.setCellValue(pro.getDescription());	
         		     cell4=row.createCell(6);
-        		     cell4.setCellValue(pro.getModel());	
+//        		     cell4.setCellValue(pro.getModel());	
         		     cell4=row.createCell(7);
         		     cell4.setCellValue(pro.getColor());	
         		     cell4=row.createCell(8);
-        		     cell4.setCellValue(pro.getDelivery());	
+//        		     cell4.setCellValue(pro.getDelivery());	
         		     cell4=row.createCell(9);
         		     cell4.setCellValue(pro.getImage2());	
         		     cell4=row.createCell(10);
@@ -145,7 +145,7 @@ public class XuatExcelProductControl extends HttpServlet {
         file.close();
         
         request.setAttribute("mess", "Đã xuất file Excel thành công!");
-        request.getRequestDispatcher("managerAccount").forward(request, response); 
+        request.getRequestDispatcher("manager").forward(request, response); 
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

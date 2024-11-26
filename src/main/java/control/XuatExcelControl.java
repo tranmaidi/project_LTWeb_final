@@ -50,11 +50,12 @@ public class XuatExcelControl extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
       
-        String ngayXuat = request.getParameter("dateHoaDon");  
+//        String ngayXuat = request.getParameter("dateHoaDon");  
        
         DAO dao = new DAO();
         
-        List<Invoice> list = dao.searchByNgayXuat(ngayXuat);
+//        List<Invoice> list = dao.searchByNgayXuat(ngayXuat);
+        List<Invoice> list = dao.getAllInvoice();
         List<Account> listAllAccount = dao.getAllAccount();
         
         int maximum=2147483647;
@@ -65,7 +66,7 @@ public class XuatExcelControl extends HttpServlet {
         int randomNum =  rn.nextInt(range) + minimum;
 
         
-        FileOutputStream file=new FileOutputStream("C:\\ExcelWebBanGiay\\"+"hoa-don-"+ngayXuat+"-"+Integer.toString(randomNum)+".xlsx");
+        FileOutputStream file=new FileOutputStream("C:\\ExcelWebBanGiay\\"+"hoa-don-"+Integer.toString(randomNum)+".xlsx");
         XSSFWorkbook workbook=new XSSFWorkbook();
         XSSFSheet workSheet=workbook.createSheet("1");
         XSSFRow row;
@@ -80,7 +81,7 @@ public class XuatExcelControl extends HttpServlet {
         cell1=row.createCell(1);
         cell1.setCellValue("Account");
         cell2=row.createCell(2);
-        cell2.setCellValue("Tổng Giá($)");
+        cell2.setCellValue("Tổng Giá(VND)");
         cell3=row.createCell(3);
         cell3.setCellValue("Ngày Xuất");
         
@@ -91,16 +92,16 @@ public class XuatExcelControl extends HttpServlet {
         	i=i+1;
         	for (Account a : listAllAccount) {
         		if(o.getAccountID()==a.getId()) {
-        			tongGia=Math.round((o.getTongGia()) * 100.0) / 100.0;
+//        			tongGia=Math.round((o.getTongGia()) * 100.0) / 100.0;
         			 row=workSheet.createRow(i);
         			 cell0=row.createCell(0);
         		     cell0.setCellValue(o.getMaHD());
         		     cell1=row.createCell(1);
         		     cell1.setCellValue(a.getUser());
         		     cell2=row.createCell(2);
-        		     cell2.setCellValue(tongGia);
+        		     cell2.setCellValue(o.getTongGia());
         		     cell3=row.createCell(3);
-        		     cell3.setCellValue(ngayXuat);	
+        		     cell3.setCellValue(o.getNgayXuat());	
         		}
         		}
         }

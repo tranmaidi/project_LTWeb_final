@@ -39,7 +39,8 @@ public class DetailControl extends HttpServlet {
         String id = request.getParameter("pid");
         DAO dao = new DAO();
         Product p = dao.getProductByID(id);
-        
+        System.out.println(p); // In ra giá trị của detail
+
         int cateIDProductDetail = dao.getCateIDByProductID(id);
         List<Product> listRelatedProduct = dao.getRelatedProduct(cateIDProductDetail);
         
