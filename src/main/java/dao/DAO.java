@@ -90,7 +90,8 @@ public class DAO {
                 list.add(new Invoice(rs.getInt(1),
                         rs.getInt(2),
                         rs.getDouble(3),
-                        rs.getDate(4)));
+                        rs.getDate(4),
+                        rs.getString(5)));
             }
         } catch (Exception e) {
         }
@@ -233,8 +234,8 @@ public class DAO {
             while (rs.next()) {
                 list.add(new Account(rs.getInt(1),
                         rs.getString(2),
-                        rs.getString(3),
-                        rs.getInt(4),
+                        rs.getInt(3),
+                        rs.getString(4),
                         rs.getString(5)));
             }
         } catch (Exception e) {
@@ -336,7 +337,7 @@ public class DAO {
         return list;
     }
 
-    public List<Product> getNext4NikeProduct(int amount) {
+    public List<Product> getNext4GVProduct(int amount) {
         List<Product> list = new ArrayList<>();
         String query = "select * from Product\r\n"
                 + "where cateID=2\r\n"
@@ -365,7 +366,7 @@ public class DAO {
         return list;
     }
 
-    public List<Product> getNext4AdidasProduct(int amount) {
+    public List<Product> getNext4GNProduct(int amount) {
         List<Product> list = new ArrayList<>();
         String query = "select * from Product\r\n"
                 + "where cateID=1\r\n"
@@ -546,7 +547,8 @@ public class DAO {
                 list.add(new Invoice(rs.getInt(1),
                         rs.getInt(2),
                         rs.getDouble(3),
-                        rs.getDate(4)));
+                        rs.getDate(4),
+                        rs.getString(5)));
             }
         } catch (Exception e) {
         }
@@ -1034,7 +1036,7 @@ public class DAO {
         return list;
     }
 
-    public List<Product> get4NikeLast() {
+    public List<Product> get4GVLast() {
         List<Product> list = new ArrayList<>();
         String query = "select top 4 * from Product\r\n"
                 + "where cateID = 2\r\n"
@@ -1060,7 +1062,7 @@ public class DAO {
         return list;
     }
 
-    public List<Product> get4AdidasLast() {
+    public List<Product> get4GNLast() {
         List<Product> list = new ArrayList<>();
         String query = "select top 4 * from Product\r\n"
                 + "where cateID = 1\r\n"
@@ -1125,8 +1127,8 @@ public class DAO {
             while (rs.next()) {
                 return new Account(rs.getInt(1),
                         rs.getString(2),
-                        rs.getString(3),
-                        rs.getInt(4),
+                        rs.getInt(3),
+                        rs.getString(4),
                         rs.getString(5));
             }
         } catch (Exception e) {
@@ -1145,8 +1147,8 @@ public class DAO {
             while (rs.next()) {
                 return new Account(rs.getInt(1),
                         rs.getString(2),
-                        rs.getString(3),
-                        rs.getInt(4),
+                        rs.getInt(3),
+                        rs.getString(4),
                         rs.getString(5));
             }
         } catch (Exception e) {
@@ -1165,8 +1167,8 @@ public class DAO {
             while (rs.next()) {
                 return new Account(rs.getInt(1),
                         rs.getString(2),
-                        rs.getString(3),
-                        rs.getInt(4),
+                        rs.getInt(3),
+                        rs.getString(4),
                         rs.getString(5));
             }
         } catch (Exception e) {
@@ -1196,15 +1198,17 @@ public class DAO {
 
     public void singup(String user, String pass, String email) {
         String query = "insert into Account\n"
-                + "values(?,?,0,?)";
+                + "values(?,0,?,?)";
         try {
             conn = new DBContext().getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
-            ps.setString(1, user);
-            ps.setString(2, pass);
-            ps.setString(3, email);
+            ps.setString(1, pass);
+            ps.setString(2, email);
+            ps.setString(3, user);
             ps.executeUpdate();
+            System.out.println("Tài khoản đã được thêm thành công.");
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -1383,15 +1387,15 @@ public class DAO {
 
     public void insertAccount(String user, String pass,
             String isAdmin, String email) {
-        String query = "insert Account([user], pass, isAdmin, email)\r\n"
+        String query = "insert Account(pass, isAdmin, email, [user])\r\n"
                 + "values(?,?,?,?)";
         try {
             conn = new DBContext().getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
-            ps.setString(1, user);
-            ps.setString(2, pass);
-            ps.setString(3, isAdmin);
-            ps.setString(4, email);
+            ps.setString(1, pass);
+            ps.setString(2, isAdmin);
+            ps.setString(3, email);
+            ps.setString(4, user);
             ps.executeUpdate();
         } catch (Exception e) {
         }
@@ -1463,9 +1467,9 @@ public class DAO {
         }
     }
 
-    public void insertInvoice(int accountID, double tongGia) {
-        String query = "insert Invoice(accountID,tongGia,ngayXuat)\r\n"
-                + "values(?,?,?)";
+    public void insertInvoice(int accountID, double tongGia, String phuongThuc) {
+        String query = "insert Invoice(accountID,tongGia,ngayXuat,phuongThuc)\r\n"
+                + "values(?,?,?,?)";
 
         try {
             conn = new DBContext().getConnection();//mo ket noi voi sql
@@ -1473,6 +1477,7 @@ public class DAO {
             ps.setInt(1, accountID);
             ps.setDouble(2, tongGia);
             ps.setDate(3, getCurrentDate());
+            ps.setString(4, phuongThuc);
             ps.executeUpdate();
 
         } catch (Exception e) {
@@ -1640,48 +1645,25 @@ public class DAO {
         } catch (Exception e) {
         }
     }
-    
-    public int getCartQuantityByAccountID(int accountID) {
-        int totalQuantity = 0;
-        try {
-            String query = "SELECT SUM(amount) FROM Cart WHERE accountID = ?";
-            conn = new DBContext().getConnection();//mo ket noi voi sql
-            ps = conn.prepareStatement(query);
-            ps.setInt(1, accountID);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                totalQuantity = rs.getInt(1); // Lấy tổng số lượng
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return totalQuantity;
-    }
-
+//    public int getCartQuantityByAccountID(int accountID) {
+//        int totalQuantity = 0;
+//        try {
+//            String query = "SELECT SUM(amount) FROM Cart WHERE accountID = ?";
+//            conn = new DBContext().getConnection();//mo ket noi voi sql
+//            ps = conn.prepareStatement(query);
+//            ps.setInt(1, accountID);
+//            ResultSet rs = ps.executeQuery();
+//            if (rs.next()) {
+//                totalQuantity = rs.getInt(1); // Lấy tổng số lượng
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return totalQuantity;
+//    }
     public static void main(String[] args) {
         DAO dao = new DAO();
-//        List<Review> list = 
-//        	dao.insertProduct("Giày Bóng Đá Nam Bitis Hunter Football","https://product.hstatic.net/1000230642/product/02400vag__1__5d559f914caf4864ad99a37c18cc1a1b_1024x1024.jpg",
-//        					"535","Giày Bóng Đá Nam Biti Hunter Football","Với thiết kế năng động, Giày bóng đá Biti’s Hunter được tung ra với 5 màu sắc nổi bật tạo điểm nhấn trên sân đấu.",
-//        					"3",1,"G39","Yellow","Ho Chi Minh","https://product.hstatic.net/1000230642/product/02400vag__3__3a83e45335054285a27fba37cafb23c1_1024x1024.jpg",
-//        					"https://product.hstatic.net/1000230642/product/02400vag__4__d3693ef3babe4fc3a2908d8eb2df6e3b_1024x1024.jpg","https://product.hstatic.net/1000230642/product/02400vag__4__d3693ef3babe4fc3a2908d8eb2df6e3b_1024x1024.jpg");
-//        dao.editProduct("Giay chay du lich 2","https://giaygiare.vn/upload/sanpham/nike-sb-dunk-low-eire-net-deep-orange.jpg","301","title 3",
-//       		"desciption desciption 3", "1", "G66", "Blue", "Ho Chi Minh", "https://giaygiare.vn/upload/sanpham/nike-sb-dunk-low-eire-net-deep-orange.jpg",
-//       		"https://giaygiare.vn/upload/sanpham/nike-sb-dunk-low-eire-net-deep-orange.jpg",
-//        		"https://giaygiare.vn/upload/sanpham/nike-sb-dunk-low-eire-net-deep-orange.jpg", "3");
 
-//        List<Invoice> list = dao.searchByNgayXuat("2021-11-20");
-//        for (Invoice o : list) 
-//        { 
-//        	System.out.println(o); 
-//        }
-//      int s = dao.checkAccountAdmin(1);
-//      System.out.println(s);
-//      System.out.println("da chay xong");
-
-        /*
-		 * for (Review o : list) { System.out.println(o); }
-         */
     }
 
 }
