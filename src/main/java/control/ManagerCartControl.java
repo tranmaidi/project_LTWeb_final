@@ -37,49 +37,93 @@ public class ManagerCartControl extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
+        // Lấy thông tin tài khoản từ session
         HttpSession session = request.getSession();
+
+        // Kiểm tra người dùng đã đăng nhập
         Account a = (Account) session.getAttribute("acc");
-        if(a == null) {
-        	response.sendRedirect("login");
-        	return;
+        if (a == null) {
+            response.sendRedirect("login");
+            return;
         }
+
         int accountID = a.getId();
         DAO dao = new DAO();
-        List<Cart> list = dao.getCartByAccountID(accountID);
-        List<Product> list2 = dao.getAllProduct();
-      
-        request.setAttribute("listCart", list);
-        request.setAttribute("listProduct", list2);
-        request.getRequestDispatcher("Cart.jsp").forward(request, response);
-        double totalMoney=0;
-        for(Cart o : list) {
-        	for(Product p : list2) {
-        		if(o.getProductID()==p.getId()) {
-        			totalMoney=totalMoney+(p.getPrice()*o.getAmount());
-        		}
-        	}
+
+        // Lấy danh sách giỏ hàng và sản phẩm
+        List<Cart> listCart = dao.getCartByAccountID(accountID);
+        List<Product> listProduct = dao.getAllProduct();
+
+        // Tính tổng số lượng sản phẩm trong giỏ
+        int totalAmount = 0;
+        for (Cart cart : listCart) {
+            totalAmount += cart.getAmount();
         }
-        
-        double totalMoneyVAT=totalMoney+totalMoney*0.1;
-       
-        
-       
-        
-       
-        PrintWriter out = response.getWriter();
-        		out.println(" <li class=\"d-flex justify-content-between py-3 border-bottom\"><strong class=\"text-muted\">Tổng tiền hàng</strong><strong>"+totalMoney+"</strong></li>\r\n"
-        				+ "                                        <li class=\"d-flex justify-content-between py-3 border-bottom\"><strong class=\"text-muted\">Phí vận chuyển</strong><strong>Free ship</strong></li>\r\n"
-        				+ "                                        <li class=\"d-flex justify-content-between py-3 border-bottom\"><strong class=\"text-muted\">VAT</strong><strong>10 %</strong></li>\r\n"
-        				+ "                                        <li class=\"d-flex justify-content-between py-3 border-bottom\"><strong class=\"text-muted\">Tổng thanh toán</strong>\r\n"
-        				+ "                                            <h5 class=\"font-weight-bold\">"+totalMoneyVAT+"</h5>\r\n"
-        				+ "                                        </li>");
-        	
-       
-       
-        		
-        	
-         
+
+        // Tính tổng tiền hàng và VAT
+        double totalMoney = 0;
+        for (Cart cart : listCart) {
+            for (Product product : listProduct) {
+                if (cart.getProductID() == product.getId()) {
+                    totalMoney += product.getPrice() * cart.getAmount();
+                }
+            }
+        }
+        double totalMoneyVAT = totalMoney + totalMoney * 0.1;
+
+        // Đặt dữ liệu vào request để chuyển tiếp đến JSP
+        request.setAttribute("listCart", listCart);
+        request.setAttribute("listProduct", listProduct);
+        request.setAttribute("totalAmount", totalAmount);
+        request.setAttribute("totalMoney", totalMoney);
+        request.setAttribute("totalMoneyVAT", totalMoneyVAT);
+
+        // Chuyển tiếp đến JSP
+        request.getRequestDispatcher("Cart.jsp").forward(request, response);
     }
+//        HttpSession session = request.getSession();
+//        Account a = (Account) session.getAttribute("acc");
+//        if(a == null) {
+//        	response.sendRedirect("login");
+//        	return;
+//        }
+//        int accountID = a.getId();
+//        DAO dao = new DAO();
+//        List<Cart> list = dao.getCartByAccountID(accountID);
+//        List<Product> list2 = dao.getAllProduct();
+//      
+//        request.setAttribute("listCart", list);
+//        request.setAttribute("listProduct", list2);
+//        request.getRequestDispatcher("Cart.jsp").forward(request, response);
+//        double totalMoney=0;
+//        for(Cart o : list) {
+//        	for(Product p : list2) {
+//        		if(o.getProductID()==p.getId()) {
+//        			totalMoney=totalMoney+(p.getPrice()*o.getAmount());
+//        		}
+//        	}
+//        }
+//        
+//        double totalMoneyVAT=totalMoney+totalMoney*0.1;
+//       
+//        
+//       
+//        
+//       
+//        PrintWriter out = response.getWriter();
+//        		out.println(" <li class=\"d-flex justify-content-between py-3 border-bottom\"><strong class=\"text-muted\">Tổng tiền hàng</strong><strong>"+totalMoney+"</strong></li>\r\n"
+//        				+ "                                        <li class=\"d-flex justify-content-between py-3 border-bottom\"><strong class=\"text-muted\">Phí vận chuyển</strong><strong>Free ship</strong></li>\r\n"
+//        				+ "                                        <li class=\"d-flex justify-content-between py-3 border-bottom\"><strong class=\"text-muted\">VAT</strong><strong>10 %</strong></li>\r\n"
+//        				+ "                                        <li class=\"d-flex justify-content-between py-3 border-bottom\"><strong class=\"text-muted\">Tổng thanh toán</strong>\r\n"
+//        				+ "                                            <h5 class=\"font-weight-bold\">"+totalMoneyVAT+"</h5>\r\n"
+//        				+ "                                        </li>");
+//        	
+//       
+//       
+//        		
+//        	
+//         
+//    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

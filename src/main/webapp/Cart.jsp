@@ -8,12 +8,9 @@
         <title>Cart</title>
         <link rel="icon" href="images/logo2.png" type="image/x-icon">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
     </head>
-
-    <body onload="loadTotalMoney()">
+    <body >
         <jsp:include page="Menu.jsp"></jsp:include>
-
             <div class="shopping-cart">
                 <div class="px-4 px-lg-0">
 
@@ -25,7 +22,7 @@
 
                                     <!-- Shopping cart table -->
                                     <div class="table-responsive">
-                                        <table class="table">
+                                        <table class="table table-hover table-striped text-center">
                                             <thead>
                                             <c:if test="${error!=null }">
                                             <div class="alert alert-danger" role="alert">
@@ -76,7 +73,7 @@
                                                                     </div>
                                                                 </div>
                                                             </th>
-                                                            <td class="align-middle"><strong>${p.price}$</strong></td>
+                                                            <td class="align-middle"><strong>${p.price} VND</strong></td>
                                                             <td class="align-middle"><strong>${p.color}</strong></td>
                                                             
                                                             <td class="align-middle">
@@ -89,7 +86,7 @@
                                                                 <a href="addAmountCart?productID=${o.productID}&amount=${o.amount}"><button class="btnAdd">+</button></a>
                                                             </td>
                                                             <td class="align-middle"><a href="deleteCart?productID=${o.productID }" class="text-dark">
-                                                                    <button type="button" class="btn btn-danger">Delete</button>
+                                                                    <button type="button" class="btn btn-danger btn-sm">Xóa</button>
                                                                 </a>
                                                             </td>
                                                         </tr>
@@ -105,22 +102,34 @@
                                 <!-- End -->
                             </div>
                         </div>
-
+                        
                         <div class="row py-5 p-4 bg-white rounded shadow-sm">
-
                             <div class="col-lg-6">
+                                <a href="shop" class="btn btn-outline-primary rounded-pill py-2 btn-block">Tiếp Tục Mua Hàng</a><br>
                                 <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Thành tiền</div>
 
                                 <div class="p-4">
                                     <ul class="list-unstyled mb-4" id="contentTotalMoney">
-                                        <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Tổng tiền hàng</strong><strong>100 $</strong></li>
-                                        <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Phí vận chuyển</strong><strong>Free ship</strong></li>
-                                        <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">VAT</strong><strong>10 $</strong></li>
-                                        <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Tổng thanh toán</strong>
-                                            <h5 class="font-weight-bold">110 $</h5>
-                                        </li> 
+                                        <li class="d-flex justify-content-between py-3 border-bottom">
+                                            <strong class="text-muted">Tổng tiền hàng</strong>
+                                            <strong>${totalMoney} VND</strong>
+                                        </li>
+                                        <li class="d-flex justify-content-between py-3 border-bottom">
+                                            <strong class="text-muted">Phí vận chuyển</strong>
+                                            <strong>Free ship</strong>
+                                        </li>
+                                        <li class="d-flex justify-content-between py-3 border-bottom">
+                                            <strong class="text-muted">VAT</strong>
+                                            <strong>10%</strong>
+                                        </li>
+                                        <li class="d-flex justify-content-between py-3 border-bottom">
+                                            <strong class="text-muted">Tổng thanh toán</strong>
+                                            <h5 class="font-weight-bold">${totalMoneyVAT} VND</h5>
+                                        </li>
+                                    </ul>
                                     </ul>
                                     <a href="order" class="btn btn-dark rounded-pill py-2 btn-block text-white">Thanh Toán</a>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -129,38 +138,6 @@
                 </div>
             </div>
         </div>
-
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script>
-        function loadTotalMoney() {
-            $.ajax({
-                url: "/WebsiteBanGiay/totalMoneyCart",
-                type: "get", //send it through get method
-                data: {
-
-                },
-                success: function (responseData) {
-                    document.getElementById("contentTotalMoney").innerHTML = responseData;
-                }
-            });
-        }
-
-        window.addEventListener("load", function loadAmountCart() {
-            $.ajax({
-                url: "/WebsiteBanGiay/loadAllAmountCart",
-                type: "get", //send it through get method
-                data: {
-
-                },
-                success: function (responseData) {
-                    document.getElementById("amountCart").innerHTML = responseData;
-                }
-            });
-        }, false);
-        </script>
     </body>
 
 </html>

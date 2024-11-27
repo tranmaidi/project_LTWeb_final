@@ -5,7 +5,6 @@ control\EditControl.class
 entity\Account.class
 control\LoadMoreNikeControl.class
 control\AddReviewControl.class
-control\LoadAmountCartControl.class
 control\LoadControl.class
 control\LoginControl.class
 control\ManagerAccountControl.class

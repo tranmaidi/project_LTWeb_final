@@ -21,55 +21,93 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
-@WebServlet(name = "TotalMoneyCartControl", urlPatterns = {"/totalMoneyCart"})
-public class TotalMoneyCartControl extends HttpServlet {
+//@WebServlet(name = "TotalMoneyCartControl", urlPatterns = {"/totalMoneyCart"})
+//public class TotalMoneyCartControl extends HttpServlet {
+//
+//    /**
+//     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+//     * methods.
+//     *
+//     * @param request servlet request
+//     * @param response servlet response
+//     * @throws ServletException if a servlet-specific error occurs
+//     * @throws IOException if an I/O error occurs
+//     */
+//    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+//            throws ServletException, IOException {
+//        response.setContentType("text/html;charset=UTF-8");
+//        request.setCharacterEncoding("UTF-8");
+//        HttpSession session = request.getSession();
+//        Account a = (Account) session.getAttribute("acc");
+//        int accountID = a.getId();
+//        DAO dao = new DAO();
+//        List<Cart> list = dao.getCartByAccountID(accountID);
+//        List<Product> list2 = dao.getAllProduct();
+//        
+//        double totalMoney=0;
+//        for(Cart o : list) {
+//        	for(Product p : list2) {
+//        		if(o.getProductID()==p.getId()) {
+//        			totalMoney=totalMoney+p.getPrice()*o.getAmount();
+//        		}
+//        	}
+//        }
+//        
+//        double totalMoneyVAT=totalMoney*0.9;
+//        totalMoneyVAT = Math.round(totalMoneyVAT);
+//        
+//        	
+//        PrintWriter out = response.getWriter();
+//        		out.println(" <li class=\"d-flex justify-content-between py-3 border-bottom\"><strong class=\"text-muted\">Tổng tiền hàng</strong><strong>"+totalMoney+"</strong></li>\r\n"
+//        				+ "                                        <li class=\"d-flex justify-content-between py-3 border-bottom\"><strong class=\"text-muted\">Phí vận chuyển</strong><strong>Free ship</strong></li>\r\n"
+//        				+ "                                        <li class=\"d-flex justify-content-between py-3 border-bottom\"><strong class=\"text-muted\">VAT</strong><strong>10 %</strong></li>\r\n"
+//        				+ "                                        <li class=\"d-flex justify-content-between py-3 border-bottom\"><strong class=\"text-muted\">Tổng thanh toán</strong>\r\n"
+//        				+ "                                            <h5 class=\"font-weight-bold\">"+totalMoneyVAT+"</h5>\r\n"
+//        				+ "                                        </li>");
+//        	
+//        
+//        		
+//        	
+//         
+//    }
+    @WebServlet(name = "TotalMoneyCartControl", urlPatterns = {"/totalMoneyCart"})  
+    public class TotalMoneyCartControl extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");
-        HttpSession session = request.getSession();
-        Account a = (Account) session.getAttribute("acc");
-        int accountID = a.getId();
-        DAO dao = new DAO();
-        List<Cart> list = dao.getCartByAccountID(accountID);
-        List<Product> list2 = dao.getAllProduct();
-        
-        double totalMoney=0;
-        for(Cart o : list) {
-        	for(Product p : list2) {
-        		if(o.getProductID()==p.getId()) {
-        			totalMoney=totalMoney+p.getPrice()*o.getAmount();
-        		}
-        	}
+        protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+                throws ServletException, IOException {
+            response.setContentType("text/html;charset=UTF-8");
+            request.setCharacterEncoding("UTF-8");
+            HttpSession session = request.getSession();
+            Account a = (Account) session.getAttribute("acc");
+            if (a == null) {
+                response.sendRedirect("login.jsp");
+                return;
+            }
+
+            int accountID = a.getId();
+            DAO dao = new DAO();
+            List<Cart> listCart = dao.getCartByAccountID(accountID);
+            List<Product> listProduct = dao.getAllProduct();
+
+            double totalMoney = 0;
+            for (Cart o : listCart) {
+                for (Product p : listProduct) {
+                    if (o.getProductID() == p.getId()) {
+                        totalMoney += p.getPrice() * o.getAmount();
+                    }
+                }
+            }
+
+            double totalMoneyVAT = Math.round(totalMoney * 1.1); // VAT 10%
+
+            // Đưa dữ liệu vào request để chuyển qua JSP
+            request.setAttribute("listCart", listCart);
+            request.setAttribute("listProduct", listProduct);
+            request.setAttribute("totalMoney", totalMoney);
+            request.setAttribute("totalMoneyVAT", totalMoneyVAT);
+
+            request.getRequestDispatcher("Cart.jsp").forward(request, response);
         }
-        
-        double totalMoneyVAT=totalMoney*0.9;
-        totalMoneyVAT = Math.round(totalMoneyVAT);
-        
-        	
-        PrintWriter out = response.getWriter();
-        		out.println(" <li class=\"d-flex justify-content-between py-3 border-bottom\"><strong class=\"text-muted\">Tổng tiền hàng</strong><strong>"+totalMoney+"</strong></li>\r\n"
-        				+ "                                        <li class=\"d-flex justify-content-between py-3 border-bottom\"><strong class=\"text-muted\">Phí vận chuyển</strong><strong>Free ship</strong></li>\r\n"
-        				+ "                                        <li class=\"d-flex justify-content-between py-3 border-bottom\"><strong class=\"text-muted\">VAT</strong><strong>10 %</strong></li>\r\n"
-        				+ "                                        <li class=\"d-flex justify-content-between py-3 border-bottom\"><strong class=\"text-muted\">Tổng thanh toán</strong>\r\n"
-        				+ "                                            <h5 class=\"font-weight-bold\">"+totalMoneyVAT+"</h5>\r\n"
-        				+ "                                        </li>");
-        	
-        
-        		
-        	
-         
-    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
