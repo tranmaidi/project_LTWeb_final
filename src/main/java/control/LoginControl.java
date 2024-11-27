@@ -79,9 +79,12 @@ public class LoginControl extends HttpServlet {
              
              u.setMaxAge(60*60*24*365);//1 nam
 
-             response.addCookie(u);//luu u va p len Chrome
-             response.addCookie(p);
-             
+            response.addCookie(u);//luu u va p len Chrome
+            response.addCookie(p);
+            
+            int cartQuantity = dao.getCartQuantityByAccountID(a.getId());
+            session.setAttribute("cartQuantity", cartQuantity);
+
              response.sendRedirect("home");
          }
     }

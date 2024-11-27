@@ -20,12 +20,22 @@
                 </li>
             </ul>
             <form action="search" method="post" class="form-inline my-2 my-lg-0">
-                <a class="btn-success btn-sm ml-3 m-auto" href="managerCart" style="transform: scale(1); transition: transform 0.2s ease; text-decoration: none;">
+<!--                <a class="btn-success btn-sm ml-3 m-auto" href="managerCart" style="transform: scale(1); transition: transform 0.2s ease; text-decoration: none;">
                     <i class="fa fa-shopping-cart"></i> 
                     <span style="font-size: 14px;">Cart</span>
                     <b><span id="amountCart" class="badge badge-light" style="color:black; font-size: 12px;"></span></b>
+                    <b><span class="badge badge-light">
+                        <c:out value="${sessionScope.cartQuantity != null ? sessionScope.cartQuantity : 0}" />
+                    </span></b>
+                </a>-->
+                <a class="btn-success btn-sm ml-3 m-auto" href="managerCart" style="transform: scale(1); transition: transform 0.2s ease; text-decoration: none;">
+                    <i class="fa fa-shopping-cart"></i> 
+                    <span style="font-size: 14px;">Cart</span>
+                    <b><span class="badge badge-light">${sessionScope.cartQuantity != null ? sessionScope.cartQuantity : 0}</span></b>
                 </a>
             </form>
+            
+
             <ul class="navbar-nav">
                 <!-- Dropdown menu for logged-in user -->
                 <c:if test="${sessionScope.acc != null}">

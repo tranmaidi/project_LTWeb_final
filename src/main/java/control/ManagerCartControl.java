@@ -70,6 +70,11 @@ public class ManagerCartControl extends HttpServlet {
             }
         }
         double totalMoneyVAT = totalMoney + totalMoney * 0.1;
+        
+        int cartQuantity = dao.getCartQuantityByAccountID(accountID);
+        
+        // Lưu vào session
+        session.setAttribute("cartQuantity", cartQuantity);
 
         // Đặt dữ liệu vào request để chuyển tiếp đến JSP
         request.setAttribute("listCart", listCart);

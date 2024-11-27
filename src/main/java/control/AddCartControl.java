@@ -36,6 +36,7 @@ public class AddCartControl extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8"); 
+        
         int productID = Integer.parseInt(request.getParameter("pid"));
         HttpSession session = request.getSession();
         Account a = (Account) session.getAttribute("acc");
@@ -62,7 +63,13 @@ public class AddCartControl extends HttpServlet {
         	  request.setAttribute("mess", "Da them san pham vao gio hang!");
         	  request.getRequestDispatcher("managerCart").forward(request, response);
         }
-      request.getRequestDispatcher("managerCart").forward(request, response);
+          // Tính lại tổng số lượng sản phẩm trong giỏ hàng
+    int cartQuantity = dao.getCartQuantityByAccountID(accountID);
+
+    // Lưu vào session
+    session.setAttribute("cartQuantity", cartQuantity);
+
+    request.getRequestDispatcher("managerCart").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

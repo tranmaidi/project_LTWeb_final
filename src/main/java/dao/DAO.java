@@ -1640,6 +1640,23 @@ public class DAO {
         } catch (Exception e) {
         }
     }
+    
+    public int getCartQuantityByAccountID(int accountID) {
+        int totalQuantity = 0;
+        try {
+            String query = "SELECT SUM(amount) FROM Cart WHERE accountID = ?";
+            conn = new DBContext().getConnection();//mo ket noi voi sql
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, accountID);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                totalQuantity = rs.getInt(1); // Lấy tổng số lượng
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return totalQuantity;
+    }
 
     public static void main(String[] args) {
         DAO dao = new DAO();

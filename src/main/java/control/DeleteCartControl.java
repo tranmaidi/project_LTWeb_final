@@ -6,6 +6,7 @@
 package control;
 
 import dao.DAO;
+import entity.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -13,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 
 @WebServlet(name = "DeleteCartControl", urlPatterns = {"/deleteCart"})
@@ -30,10 +32,22 @@ public class DeleteCartControl extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        HttpSession session = request.getSession();
         int productID = Integer.parseInt(request.getParameter("productID"));
         DAO dao = new DAO();
         dao.deleteCart(productID);
         request.setAttribute("mess", "Da xoa san pham khoi gio hang!");
+        Account a = (Account) session.getAttribute("acc");
+        if(a == null) {
+        	response.sendRedirect("login");
+        	return;
+        }
+        int accountID = a.getId();
+        int cartQuantity = dao.getCartQuantityByAccountID(accountID);
+        
+        // Lưu vào session
+        session.setAttribute("cartQuantity", cartQuantity);
+
         request.getRequestDispatcher("managerCart").forward(request, response);
     }
 
