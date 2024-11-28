@@ -1,40 +1,34 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-         pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<link
-    href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-    rel="stylesheet" id="bootstrap-css">
-<script
-src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script
-src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
 
 <!DOCTYPE html>
 <html lang="en">
-
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <link rel="stylesheet"
-              href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-              integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-              crossorigin="anonymous">
-        <link rel="stylesheet"
-              href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
-              integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
-              crossorigin="anonymous">
-        <link href="css/login.css" rel="stylesheet" type="text/css" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
         <title>Edit Profile</title>
         <link rel="icon" href="images/logo2.png" type="image/x-icon">
+        
+        <link rel="stylesheet" href="css/mdb.min.css" />
+        <!--Roboto Font--> 
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700&display=swap"> 
+        <!--Font Awesome-->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+        <!--Bootstrap core CSS-->
+        <link rel="stylesheet" href="https://mdbootstrap.com/previews/ecommerce-demo/css/bootstrap.min.css">
+        <!--Material Design Bootstrap-->
+        <link rel="stylesheet" href="https://mdbootstrap.com/previews/ecommerce-demo/css/mdb-pro.min.css">
+        <!--Material Design Bootstrap Ecommerce-->
+        <link rel="stylesheet" href="https://mdbootstrap.com/previews/ecommerce-demo/css/mdb.ecommerce.min.css">        
+      
+        <!--Custom styles--> 
+        <link rel="stylesheet" href="styles/style.css" />
+        <link href="styles/login.css" rel="stylesheet" type="text/css">
     </head>
-    <body>
+    <body class="skin-light">
         <jsp:include page="Menu.jsp"></jsp:include>
-            <div id="logreg-forms" style="margin-top:100px">
+            <div id="logreg-forms" style="margin-top:150px">
                 <form class="form-signin" action="editProfile" method="post">
                     <h1 class="h3 mb-3 font-weight-normal" style="text-align: center"> Edit Profile</h1>
                     <p class="text-success">${mess}</p>

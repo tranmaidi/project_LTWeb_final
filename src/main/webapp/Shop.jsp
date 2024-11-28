@@ -9,6 +9,7 @@
         <title>Shop</title>
         <link rel="icon" href="images/logo2.png" type="image/x-icon">
         <link rel="stylesheet" href="css/mdb.min.css" />
+
         <!-- Roboto Font -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700&display=swap"> 
         <!--Font Awesome-->
@@ -18,15 +19,16 @@
         <!--Material Design Bootstrap-->
         <link rel="stylesheet" href="https://mdbootstrap.com/previews/ecommerce-demo/css/mdb-pro.min.css">
         <!--Material Design Bootstrap Ecommerce-->
-        <link rel="stylesheet" href="https://mdbootstrap.com/previews/ecommerce-demo/css/mdb.ecommerce.min.css"> 
-       
-        <link href="styles/style.css" rel="stylesheet" type="text/css"/> 
+        <link rel="stylesheet" href="https://mdbootstrap.com/previews/ecommerce-demo/css/mdb.ecommerce.min.css">        
+        <!-- Custom styles -->
+        <link rel="stylesheet" href="styles/style.css" />
         <link href="styles/shop.css" rel="stylesheet" type="text/css"> 
     </head>
+   
     <body class="skin-light" onload="loadAmountCart()">
         <!--Main Navigation-->
-
         <jsp:include page="Menu.jsp"></jsp:include>
+        
         <!--Main layout-->
         <main>
             <div class="container" style="margin-top:100px">

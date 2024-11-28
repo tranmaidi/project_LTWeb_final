@@ -24,6 +24,7 @@
         <link rel="stylesheet" href="styles/style.css" />
         <link href="styles/home.css" rel="stylesheet"> 
     </head>
+    
     <body class="skin-light" onload="loadAmountCart()">
         <jsp:include page="Menu.jsp"></jsp:include>
             <!-- Carousel wrapper -->

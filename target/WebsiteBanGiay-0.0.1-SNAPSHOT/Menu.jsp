@@ -29,7 +29,7 @@
             <!-- Cart Button -->
             <a class="btn cart-btn btn-sm d-flex align-items-center" href="managerCart" style="position: relative;">
                 <i class="fa fa-shopping-cart  cart-icon"></i>
-                <span class="ml-2" style="font-size: 14px;">Cart</span>
+                <span class="ml-2" style="font-size: 14px;">CART</span>
                 <span class="badge badge-light badge-pill" style="position: absolute; top: 0; right: 0;">
                     ${sessionScope.cartQuantity != null ? sessionScope.cartQuantity : 0}
                 </span>

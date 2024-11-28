@@ -8,19 +8,40 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8">
+<!--        <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
         <link href="css/login.css" rel="stylesheet" type="text/css"/>
         <title>Order</title>
+        <link rel="icon" href="images/logo2.png" type="image/x-icon">-->
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Order</title>
         <link rel="icon" href="images/logo2.png" type="image/x-icon">
+        
+        <link rel="stylesheet" href="css/mdb.min.css" />
+        <!--Roboto Font--> 
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700&display=swap"> 
+        <!--Font Awesome-->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+        <!--Bootstrap core CSS-->
+        <link rel="stylesheet" href="https://mdbootstrap.com/previews/ecommerce-demo/css/bootstrap.min.css">
+        <!--Material Design Bootstrap-->
+        <link rel="stylesheet" href="https://mdbootstrap.com/previews/ecommerce-demo/css/mdb-pro.min.css">
+        <!--Material Design Bootstrap Ecommerce-->
+        <link rel="stylesheet" href="https://mdbootstrap.com/previews/ecommerce-demo/css/mdb.ecommerce.min.css">        
+      
+        <!--Custom styles--> 
+        <link rel="stylesheet" href="styles/style.css" />
+        <link href="styles/login.css" rel="stylesheet" type="text/css"> 
         
     </head>
     <body onload="loadTotalQr()">
         <jsp:include page="Menu.jsp"></jsp:include>
-            <div id="logreg-forms">
+            <div id="logreg-forms" style="margin-top:100px">
                 <form class="form-signin" action="order" method="post">
                     <h1 class="h3 mb-3 font-weight-normal" style="text-align: center">Order</h1>
                 <c:if test="${error!=null }">
@@ -54,7 +75,8 @@
                     <ul class="list-unstyled mb-4" id="contentTotalQr"></ul>
 
                 </div>
-                <button class="btn btn-success btn-block" type="submit"><i class="fas fa-american-sign-language-interpreting"></i>Dat Hang</button>
+                <button class="btn btn-success btn-block" type="submit">
+                <i class="fas fa-american-sign-language-interpreting"></i>Dat Hang</button>
 
             </form>
 

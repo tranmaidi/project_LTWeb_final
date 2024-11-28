@@ -3,10 +3,31 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Cart</title>
         <link rel="icon" href="images/logo2.png" type="image/x-icon">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Cart</title>
+        <link rel="icon" href="images/logo2.png" type="image/x-icon">
+        
+        <link rel="stylesheet" href="css/mdb.min.css" />
+        <!--Roboto Font--> 
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700&display=swap"> 
+        <!--Font Awesome-->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+        <!--Bootstrap core CSS-->
+        <link rel="stylesheet" href="https://mdbootstrap.com/previews/ecommerce-demo/css/bootstrap.min.css">
+        <!--Material Design Bootstrap-->
+        <link rel="stylesheet" href="https://mdbootstrap.com/previews/ecommerce-demo/css/mdb-pro.min.css">
+        <!--Material Design Bootstrap Ecommerce-->
+        <link rel="stylesheet" href="https://mdbootstrap.com/previews/ecommerce-demo/css/mdb.ecommerce.min.css">        
+      
+        <!--Custom styles--> 
+        <link rel="stylesheet" href="styles/style.css" />
+        <link href="styles/cart.css" rel="stylesheet" type="text/css"> 
     </head>
     <body >
         <jsp:include page="Menu.jsp"></jsp:include>
@@ -15,7 +36,7 @@
                     <div class="pb-5">
                         <div class="container">
                             <div class="row" style="margin-top:35px">
-                                <div class="col-lg-12 p-5 bg-white rounded shadow-sm mb-5">
+                                <div class="col-lg-12 p-5 bg-white rounded mb-5">
 
                                     <!-- Shopping cart table -->
                                     <div class="table-responsive">
@@ -100,7 +121,7 @@
                             </div>
                         </div>
                         
-                        <div class="row py-5 p-4 bg-white rounded shadow-sm">
+                        <div class="row py-5 p-4 bg-white rounded">
                             <div class="col-lg-6">
                                 <a href="shop" class="btn btn-outline-primary rounded-pill py-2 btn-block">Tiếp Tục Mua Hàng</a><br>
                                 <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Thành tiền</div>
