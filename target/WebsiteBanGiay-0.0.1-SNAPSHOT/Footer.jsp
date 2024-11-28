@@ -1,10 +1,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<!-- Footer -->
 <footer class="text-light bg-dark pt-5">
     <div class="container">
         <div class="row text-center text-md-left">       
-            <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mb-4">
+            <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
                 <h5 class="text-uppercase font-weight-bold">Giày</h5>
                 <hr class="bg-warning mb-4 mt-0 d-inline-block mx-auto w-50">
                 <ul class="list-unstyled">
@@ -56,7 +55,7 @@
                 <iframe src="" width="100%" height="90" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
             </div>
 
-            <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+            <div class="col-md-2 col-lg-3 col-xl-3 mx-auto mb-4">
                 <h5 class="text-uppercase font-weight-bold">Thông tin Shop</h5>
                 <hr class="bg-warning mb-4 mt-0 d-inline-block mx-auto w-50">
                 <ul class="list-unstyled">

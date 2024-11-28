@@ -5,18 +5,23 @@
     <head> 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
+        <link rel="icon" href="images/logo2.png" type="image/x-icon">
         <title>Home Page</title>
         
-         <!-- Font Awesome -->
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
-        <!-- Google Fonts Roboto -->
+        <link rel="stylesheet" href="css/mdb.min.css" />
+
+        <!-- Roboto Font -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700&display=swap"> 
-        <!-- MDB -->
-        <link rel="stylesheet" href="css/mdb.min.css">
+        <!--Font Awesome-->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+        <!--Bootstrap core CSS-->
+        <link rel="stylesheet" href="https://mdbootstrap.com/previews/ecommerce-demo/css/bootstrap.min.css">
+        <!--Material Design Bootstrap-->
         <link rel="stylesheet" href="https://mdbootstrap.com/previews/ecommerce-demo/css/mdb-pro.min.css">
-        <link rel="stylesheet" href="https://mdbootstrap.com/previews/ecommerce-demo/css/mdb.ecommerce.min.css"> 
-        <!--Custom styles--> 
-        <link href="css/style.css" rel="stylesheet" type="text/css"> 
+        <!--Material Design Bootstrap Ecommerce-->
+        <link rel="stylesheet" href="https://mdbootstrap.com/previews/ecommerce-demo/css/mdb.ecommerce.min.css">        
+        <!-- Custom styles -->
+        <link rel="stylesheet" href="styles/style.css" />
         <link href="styles/home.css" rel="stylesheet"> 
     </head>
     <body class="skin-light" onload="loadAmountCart()">
@@ -91,7 +96,7 @@
             </div>
             <div class="row">
                 <div class="display-header d-flex align-items-center justify-content-between" >
-                    <h2 id="gotvuong" class="section-title text-uppercase mb-0>CAO GÓT GÓT VUÔNG</h2>
+                    <h2 id="gotvuong" class="section-title text-uppercase mb-0">CAO GÓT GÓT VUÔNG</h2>
                     <a href="shop" class="btn-right text-uppercase text-hover fw-bold">View all</a>
                 </div>
                 <div class="col-sm-12" >
@@ -106,7 +111,7 @@
                                     </div>
                                     <div class="card-body">
                                         <h4 class="card-title show_txt"><a href="detail?pid=${o.id}" title="View Product">${o.name}</a></h4>
-                                        <p class="card-text show_txt">${o.title}</p>
+<!--                                        <p class="card-text show_txt">${o.title}</p>-->
                                         <div class="row">
                                             <div class="col">
                                                 <p class="btn btn-info btn-block">${o.price}VND</p>
@@ -118,7 +123,7 @@
                             </div>
                         </c:forEach>
                     </div>
-                    <button onclick="loadMoreGV()" class="btn btn-outline-danger mx-auto d-block">Xem thêm</button>
+                    <button onclick="loadMoreGV()" class="btn btn-xemthem btn-outline-danger mx-auto d-block">Xem thêm</button>
                 </div>
             </div>
 
@@ -136,11 +141,11 @@
                                     <div class="view zoom z-depth-2 rounded">
                                         <a href="detail?pid=${o.id}" title="View Product">
                                             <img class="img-fluid w-100" src="${o.image}" alt="Card image cap">
-                                        </a>
+                                        </a>                                      
                                     </div>
                                     <div class="card-body">
                                         <h4 class="card-title show_txt"><a href="detail?pid=${o.id}" title="View Product">${o.name}</a></h4>
-                                        <p class="card-text show_txt">${o.title}</p>
+<!--                                        <p class="card-text show_txt">${o.title}</p>-->
                                         <div class="row">
                                             <div class="col">
                                                 <p class="btn btn-info btn-block">${o.price}VND</p>
@@ -152,7 +157,7 @@
                             </div>
                         </c:forEach>
                     </div>
-                    <button onclick="loadMoreGN()" class="btn btn-outline-danger mx-auto d-block">Xem thêm</button>
+                    <button onclick="loadMoreGN()" class="btn btn-xemthem btn-outline-danger mx-auto d-block">Xem thêm</button>
                 </div>
             </div>
 
@@ -173,7 +178,7 @@
                                     </div>
                                     <div class="card-body">
                                         <h4 class="card-title show_txt"><a href="detail?pid=${o.id}" title="View Product">${o.name}</a></h4>
-                                        <p class="card-text show_txt">${o.title}</p>
+                                        <!--<p class="card-text show_txt">${o.title}</p>-->
                                         <div class="row">
                                             <div class="col">
                                                 <p class="btn btn-info btn-block">${o.price}VND</p>
@@ -185,7 +190,7 @@
                             </div>
                         </c:forEach>
                     </div>
-                    <button onclick="loadMoreHogot()" class="btn btn-outline-danger mx-auto d-block">Xem thêm</button>
+                    <button onclick="loadMoreHogot()" class="btn btn-xemthem btn-outline-danger mx-auto d-block">Xem thêm</button>
                 </div>
             </div>
 
@@ -197,7 +202,7 @@
                         </div>
                         <div class=" col-12 col-md-12 col-lg-6">
                             <div class="card-body">
-                                <h4 class="card-title show_txt" style="text-align:center; font-size:18pt; color:#b57b00;">Hãy trải nghiệm</h4>
+                                <h4 class="card-title show_txt" style="text-align:center; font-size:18pt; color:#c56370;">Hãy trải nghiệm</h4>
                                 <h2 class="card-title show_txt" style="text-align:center; font-size:24pt;">DINNO shop</h2>
                                 <p style="text-align:center;">Chào các chị em phụ nữ xinh đẹp!</p>
                                 <p>DINNO Shop tự hào mang đến cho bạn bộ sưu tập giày cao gót chính hãng, được thiết kế đặc biệt dành cho những người phụ nữ hiện đại, tự tin và luôn muốn tỏa sáng. Tại DINNO, chúng tôi hiểu rằng mỗi đôi giày không chỉ là một món phụ kiện, mà còn là biểu tượng của phong cách và cá tính riêng.</p>       

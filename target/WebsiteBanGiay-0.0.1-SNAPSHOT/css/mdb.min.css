@@ -161,7 +161,7 @@ ol,ul {
 
 dl,ol,ul {
     margin-top: 0;
-    margin-bottom: 1rem
+    margin-bottom: 1rem;
 }
 
 ol ol,ol ul,ul ol,ul ul {
@@ -514,8 +514,8 @@ progress {
 }
 
 .list-inline,.list-unstyled {
-    /* padding-left:0; */
-    list-style: none
+    padding-left: 0;
+    list-style: none;
 }
 
 .list-inline-item {
@@ -7135,7 +7135,7 @@ textarea.form-control-lg {
 .d-flex {
     display: -webkit-box!important;
     display: -ms-flexbox!important;
-    display: flex!important
+    display: flex!important;
 }
 
 .d-inline-flex {
@@ -8304,7 +8304,7 @@ textarea.form-control-lg {
 }
 
 .text-center {
-    text-align: center!important
+    /* text-align:center!important; */
 }
 
 .text-primary {

@@ -2,175 +2,136 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
-
     <head>
-
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <title>Shop</title>
         <link rel="icon" href="images/logo2.png" type="image/x-icon">
+        <link rel="stylesheet" href="css/mdb.min.css" />
         <!-- Roboto Font -->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700&display=swap">
-        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700&display=swap"> 
+        <!--Font Awesome-->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
-        <!-- Bootstrap core CSS -->
+        <!--Bootstrap core CSS-->
         <link rel="stylesheet" href="https://mdbootstrap.com/previews/ecommerce-demo/css/bootstrap.min.css">
-        <!-- Material Design Bootstrap -->
+        <!--Material Design Bootstrap-->
         <link rel="stylesheet" href="https://mdbootstrap.com/previews/ecommerce-demo/css/mdb-pro.min.css">
-        <!-- Material Design Bootstrap Ecommerce -->
-        <link rel="stylesheet" href="https://mdbootstrap.com/previews/ecommerce-demo/css/mdb.ecommerce.min.css">
-        <!-- Your custom styles (optional) -->
-        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <!------ Include the above in your HEAD tag ------>
-        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-        <link href="css/style.css" rel="stylesheet" type="text/css"/> 
-        <style>
-            .navbar .nav-link {
-                color: #000 !important;
-            }
-        </style>
+        <!--Material Design Bootstrap Ecommerce-->
+        <link rel="stylesheet" href="https://mdbootstrap.com/previews/ecommerce-demo/css/mdb.ecommerce.min.css"> 
+       
+        <link href="styles/style.css" rel="stylesheet" type="text/css"/> 
+        <link href="styles/shop.css" rel="stylesheet" type="text/css"> 
     </head>
-
     <body class="skin-light" onload="loadAmountCart()">
-
         <!--Main Navigation-->
-        <header>
 
-            <jsp:include page="Menu.jsp"></jsp:include>
-
-            </header>
-            <!--Main Navigation-->
-
-            <!--Main layout-->
-            <main>
-                <div class="container" style="margin-top:100px">
-
-                    <!--Grid row-->
-                    <div class="row mt-5">
-
-                        <!--Grid column-->
-                        <div class="col-md-4 mb-4">
-
-                            <!-- Section: Sidebar -->
-                            <section>
-
-                                <!-- Section: Categories -->
-                                <section>
-
-                                    <h5>Categories</h5>
-
-                                    <div class="text-muted small text-uppercase mb-5">
+        <jsp:include page="Menu.jsp"></jsp:include>
+        <!--Main layout-->
+        <main>
+            <div class="container" style="margin-top:100px">
+                <div class="row mt-5">
+                    <div class="col-md-4 mb-4">
+                    <!-- Section: Sidebar -->
+                        <section style="margin-top: 30px;">
+                            <!-- Section: Categories -->
+                            <section class="categories">
+                                <h5>Categories</h5>
+                                <div class="text-muted small text-uppercase mb-5">
                                     <c:forEach items="${listCC}" var="o">
                                         <p class="mb-3"><a onclick="load(${o.cid})" class="card-link-secondary">${o.cname}</a></p>
-                                        </c:forEach>
+                                    </c:forEach>
                                 </div>
-
                             </section>
                             <!-- Section: Categories -->
 
                             <!-- Section: Filters -->
                             <section>
-
                                 <h5 class="pt-2 mb-4">Filters</h5>
-
                                 <section class="mb-4">
-
                                     <div class="md-form md-outline mt-0 d-flex justify-content-between align-items-center">
                                         <input oninput="searchByName(this)" value="${txtS}" name="txt" type="text" class="form-control mb-0" placeholder="Search...">
                                         <a href="#!" class="btn btn-flat btn-md px-4 waves-effect"><i class="fas fa-search fa-lg"></i></a>
                                     </div>
-
                                 </section>
-
-
-                                <!-- Section: Price -->
-                                <section class="mb-4">
-
-                                    <h6 class="font-weight-bold mb-3">Price</h6>
-
-                                    <div class="form-check pl-0 mb-3">
-                                        <input onchange="searchByPriceUnder100()" type="radio" class="form-check-input" id="under100" name="materialExampleRadios">
-                                        <label class="form-check-label small text-uppercase card-link-secondary" for="under100">Under
-                                            $100</label>
-                                    </div>
-                                    <div class="form-check pl-0 mb-3">
-                                        <input onchange="searchByPrice100To200()" type="radio" class="form-check-input" id="100200" name="materialExampleRadios">
-                                        <label class="form-check-label small text-uppercase card-link-secondary" for="100200">$100 to
-                                            $200</label>
-                                    </div>
-                                    <div class="form-check pl-0 mb-3">
-                                        <input onchange="searchByPriceAbove200()" type="radio" class="form-check-input" id="200above" name="materialExampleRadios">
-                                        <label class="form-check-label small text-uppercase card-link-secondary" for="200above">$200 &
-                                            Above</label>
-                                    </div>
-                                    <form>
-                                        <div class="d-flex align-items-center mt-4 pb-1">
-                                            <div class="md-form md-outline my-0">
-                                                <input oninput="searchByPriceMinToMax()" id="priceMin" type="text" class="form-control mb-0">
-                                                <label for="priceMin">$ Min</label>
-                                            </div>
-                                            <p class="px-2 mb-0 text-muted"> - </p>
-                                            <div class="md-form md-outline my-0">
-                                                <input oninput="searchByPriceMinToMax()" id="priceMax" type="text" class="form-control mb-0">
-                                                <label for="priceMax">$ Max</label>
-                                            </div>
-                                        </div>
-                                    </form>
-
-                                </section>
-                                <!-- Section: Price -->
-
-
-
-
-                                <!-- Section: Color -->
-                                <section class="mb-4">
-
-                                    <h6 class="font-weight-bold mb-3">Color</h6>
-
-                                    <div class="btn-group btn-group-toggle btn-color-group d-block mt-n2 ml-n2" data-toggle="buttons">
-                                        <label class="btn rounded-circle white border-inset-grey p-3 m-2" style="width: 50px; height: 50px; display: flex; justify-content: center; align-items: center;">
-                                            <input onchange="searchByColorWhite()" type="checkbox" autocomplete="off">
-                                        </label>
-                                        <label class="btn rounded-circle grey p-3 m-2"style="width: 50px; height: 50px; display: flex; justify-content: center; align-items: center;">
-                                            <input onchange="searchByColorGray()" type="checkbox" autocomplete="off">
-                                        </label>
-                                        <label class="btn rounded-circle black p-3 m-2"style="width: 50px; height: 50px; display: flex; justify-content: center; align-items: center;">
-                                            <input onchange="searchByColorBlack()" type="checkbox" autocomplete="off">
-                                        </label>
-                                        <label class="btn rounded-circle green p-3 m-2"style="width: 50px; height: 50px; display: flex; justify-content: center; align-items: center;">
-                                            <input type="checkbox" autocomplete="off">
-                                        </label>
-                                        <label class="btn rounded-circle blue p-3 m-2"style="width: 50px; height: 50px; display: flex; justify-content: center; align-items: center;">
-                                            <input type="checkbox" autocomplete="off">
-                                        </label>
-                                        <label class="btn rounded-circle purple p-3 m-2"style="width: 50px; height: 50px; display: flex; justify-content: center; align-items: center;">
-                                            <input type="checkbox" autocomplete="off">
-                                        </label>
-                                        <label class="btn rounded-circle yellow p-3 m-2"style="width: 50px; height: 50px; display: flex; justify-content: center; align-items: center;">
-                                            <input onchange="searchByColorYellow()" type="checkbox" autocomplete="off">
-                                        </label>
-                                        <label class="btn rounded-circle indigo p-3 m-2"style="width: 50px; height: 50px; display: flex; justify-content: center; align-items: center;">
-                                            <input type="checkbox" checked autocomplete="off">
-                                        </label>
-                                        <label class="btn rounded-circle red p-3 m-2"style="width: 50px; height: 50px; display: flex; justify-content: center; align-items: center;">
-                                            <input type="checkbox" autocomplete="off">
-                                        </label>
-                                        <label class="btn rounded-circle orange p-3 m-2"style="width: 50px; height: 50px; display: flex; justify-content: center; align-items: center;">
-                                            <input type="checkbox" autocomplete="off">
-                                        </label>
-                                    </div>
-
-                                </section>
-                                <!-- Section: Color -->
-
                             </section>
                             <!-- Section: Filters -->
 
-                        </section>
+                            <!-- Section: Price -->
+                            <section>
+                                <h5>Price</h5>
+                                <section class="mb-4">
+                                    <div class="text-muted small text-uppercase mb-5">
+                                        <div class="form-check pl-0 mb-3">
+                                            <input onchange="searchByPriceUnder100()" type="radio" class="form-check-input" id="under100" name="materialExampleRadios">
+                                            <label class="form-check-label small text-uppercase card-link-secondary" for="under100">Under 400.000VND</label>
+                                        </div>
+                                        <div class="form-check pl-0 mb-3">
+                                            <input onchange="searchByPrice100To200()" type="radio" class="form-check-input" id="100200" name="materialExampleRadios">
+                                            <label class="form-check-label small text-uppercase card-link-secondary" for="100200">400.000VND to 500.000VND</label>
+                                        </div>
+                                        <div class="form-check pl-0 mb-3">
+                                            <input onchange="searchByPriceAbove200()" type="radio" class="form-check-input" id="200above" name="materialExampleRadios">
+                                            <label class="form-check-label small text-uppercase card-link-secondary" for="200above">500.000VND & Above</label>
+                                        </div>
+                                        <form style="margin-top: 15px;">
+                                            <div class="d-flex align-items-center mb-3 pb-1">
+                                                <div class="md-form md-outline my-0">
+                                                    <input oninput="searchByPriceMinToMax()" id="priceMin" type="text" class="form-control mb-0">
+                                                    <label for="priceMin">Min</label>
+                                                </div>
+                                                <p class="px-2 mb-0 text-muted"> - </p>
+                                                <div class="md-form md-outline my-0">
+                                                    <input oninput="searchByPriceMinToMax()" id="priceMax" type="text" class="form-control mb-0">
+                                                    <label for="priceMax">Max</label>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </section>
+                            </section>
+                            <!-- Section: Price -->
+
+                            <!-- Section: Color -->
+                            <section>
+                                <h5>Color</h5>
+                                <section class="mb-4">
+                                    <div  data-toggle="buttons">
+                                        <label class="btn rounded-circle white border-inset-grey p-3 m-2">
+                                          <input onchange="searchByColorWhite()" type="checkbox" autocomplete="off">
+                                        </label>
+                                        <label class="btn rounded-circle grey p-3 m-2">
+                                          <input onchange="searchByColorGray()" type="checkbox" autocomplete="off">
+                                        </label>
+                                        <label class="btn rounded-circle black p-3 m-2">
+                                          <input onchange="searchByColorBlack()" type="checkbox" autocomplete="off">
+                                        </label>
+                                        <label class="btn rounded-circle green p-3 m-2">
+                                          <input type="checkbox" autocomplete="off">
+                                        </label>
+                                        <label class="btn rounded-circle blue p-3 m-2">
+                                          <input type="checkbox" autocomplete="off">
+                                        </label>
+                                        <label class="btn rounded-circle purple p-3 m-2">
+                                          <input type="checkbox" autocomplete="off">
+                                        </label>
+                                        <label class="btn rounded-circle yellow p-3 m-2">
+                                          <input onchange="searchByColorYellow()" type="checkbox" autocomplete="off">
+                                        </label>
+                                        <label class="btn rounded-circle indigo p-3 m-2">
+                                          <input type="checkbox" checked autocomplete="off">
+                                        </label>
+                                        <label class="btn rounded-circle red p-3 m-2">
+                                          <input type="checkbox" autocomplete="off">
+                                        </label>
+                                        <label class="btn rounded-circle orange p-3 m-2">
+                                          <input type="checkbox" autocomplete="off">
+                                        </label>
+                                    </div>
+                                </section>
+                            </section>
+
+
                         <!-- Section: Sidebar -->
 
                     </div>
@@ -194,7 +155,7 @@
                                                 <option value="4">Category 4</option>
                                                 <option value="5">Category 5</option>
                                             </select>
-                                            <label>Tất cả sản phẩm</label>
+<!--                                            <label>Tất cả sản phẩm</label>-->
                                             <button class="btn-save btn btn-primary btn-sm mt-2">Save</button>
                                         </div>
                                     </div>
@@ -221,7 +182,6 @@
 
                         <!--Section: Block Content-->
                         <section>
-
                             <!-- Grid row -->
                             <div class="row" id="content">
 
@@ -248,7 +208,7 @@
                                             <div class="text-center pt-4">
 
                                                 <h5>${o.name }</h5>
-                                                <p><span class="mr-1"><strong>${o.price }VND</strong></span></p>
+                                                <p><span class="mr-1"><strong>${o.price } VND</strong></span></p>
 
                                             </div>
 
@@ -274,9 +234,6 @@
                     <jsp:include page="Footer.jsp"></jsp:include>
                     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
                     <!-- Footer -->
-
-
-
                     <!-- SCRIPTS -->
                     <!-- JQuery -->
                     <script src="https://mdbootstrap.com/previews/ecommerce-demo/js/jquery-3.4.1.min.js"></script>
