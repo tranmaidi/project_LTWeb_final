@@ -55,3 +55,11 @@ section h5 {
 .pagination .page-item.disabled .page-link {
     color: #faf8f3
 }
+.md-form.md-outline input[type=text]:focus:not([readonly]) {
+    border-color: #ee8080 !important;
+    -webkit-box-shadow: inset 0 0 0 1px #ee8080 !important;
+    box-shadow: inset 0 0 0 1px #ee8080 !important;
+}
+.md-form .prefix.active,.md-form.md-outline input[type=text]:focus:not([readonly])+label{
+    color: #ee8080
+}
