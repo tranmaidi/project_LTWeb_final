@@ -50,11 +50,10 @@ public class AddControl extends HttpServlet {
         HttpSession session = request.getSession();
         Account a = (Account) session.getAttribute("acc");
         int sid = a.getId();
-        
-        
+              
         DAO dao = new DAO();
         dao.insertProduct(pname, pimage, pprice, ptitle, pdescription, pcategory, sid, pcolor, pimage2, pimage3, pimage4);
-        request.setAttribute("mess", "Product Added!");
+        request.setAttribute("mess", "Sản phẩm đã được thêm!");
         request.getRequestDispatcher("manager").forward(request, response);
     }
 

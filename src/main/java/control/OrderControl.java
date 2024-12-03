@@ -17,6 +17,7 @@ import entity.Email;
 import entity.EmailUtils;
 import entity.Cart;
 import entity.Product;
+
 /**
  * Servlet implementation class ForgotPasswordControl
  */
@@ -54,53 +55,19 @@ public class OrderControl extends HttpServlet {
 
         double totalMoneyVAT = totalMoney + totalMoney * 0.1;
 
-        // Cập nhật thông tin doanh số bán hàng và lượng bán
-//        for (Cart c : list) {
-//            for (Product p : list2) {
-//                if (c.getProductID() == p.getId()) {
-//                    int sell_ID = dao.getSellIDByProductID(p.getId());
-//                    double tongTienBanHangThem = p.getPrice() * c.getAmount();
-//
-//                    TongChiTieuBanHang t2 = dao.checkTongChiTieuBanHangExist(sell_ID);
-//                    if (t2 == null) {
-//                        dao.insertTongChiTieuBanHang(sell_ID, 0, tongTienBanHangThem);
-//                    } else {
-//                        dao.editTongBanHang(sell_ID, tongTienBanHangThem);
-//                    }
-//
-//                    // Cập nhật số lượng đã bán
-//                    SoLuongDaBan s = dao.checkSoLuongDaBanExist(p.getId());
-//                    if (s == null) {
-//                        dao.insertSoLuongDaBan(p.getId(), c.getAmount());
-//                    } else {
-//                        dao.editSoLuongDaBan(p.getId(), c.getAmount());
-//                    }
-//                }
-//            }
-//        }
-        
-        // Thêm hóa đơn mới
-        
-// Cập nhật tổng chi tiêu cho tài khoản hiện tại
-//        TongChiTieuBanHang t = dao.checkTongChiTieuBanHangExist(accountID);
-//        if (t == null) {
-//            dao.insertTongChiTieuBanHang(accountID, totalMoneyVAT, 0);
-//        } else {
-//            dao.editTongChiTieu(accountID, totalMoneyVAT);
-//        }
-
-        // Chuyển tiếp đến trang xác nhận đặt hàng
         request.getRequestDispatcher("DatHang.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Phương thức xử lý POST như cũ
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
         try {
             String emailAddress = request.getParameter("email");
             String name = request.getParameter("name");
             String phoneNumber = request.getParameter("phoneNumber");
             String deliveryAddress = request.getParameter("deliveryAddress");
-
+            
             HttpSession session = request.getSession();
             Account a = (Account) session.getAttribute("acc");
             if (a == null) {
@@ -120,49 +87,61 @@ public class OrderControl extends HttpServlet {
                     }
                 }
             }
-            double totalMoneyVAT = totalMoney + totalMoney * 0.1;
-
+            double totalPayment = totalMoney + 25000;
             // Gửi email xác nhận đơn hàng
             Email email = new Email();
             email.setFrom("ditran.120804@gmail.com");
             email.setFromPassword("pguk ltzo biuh swqk");
             email.setTo(emailAddress);
-            email.setSubject("Dat hang thanh cong tu Fashion Family");
+            email.setSubject("Đặt hàng thành công từ DINNO SHOP");
 
             StringBuilder sb = new StringBuilder();
-            sb.append("Dear ").append(name).append("<br>");
-            sb.append("Ban vua dat hang tu Fashion Family.<br>");
-            sb.append("Dia chi nhan hang: <b>").append(deliveryAddress).append("</b><br>");
-            sb.append("So dien thoai: <b>").append(phoneNumber).append("</b><br>");
-            sb.append("Cac san pham ban dat la:<br>");
+            sb.append("Xin chào ").append(name).append("<br>");
+            sb.append("Bạn vừa đặt hàng từ DINNO SHOP.<br>");
+            sb.append("Địa chỉ nhận hàng: <b>").append(deliveryAddress).append("</b><br>");
+            sb.append("Số điện thoại: <b>").append(phoneNumber).append("</b><br>");
+            sb.append("Các sản phẩm đã đặt:<br>");
             for (Cart c : list) {
                 for (Product p : list2) {
                     if (c.getProductID() == p.getId()) {
-                        sb.append(p.getName()).append(" | Price: ").append(p.getPrice()).append("$ | Amount: ").append(c.getAmount()).append(" | Size: ").append(c.getSize()).append("<br>");
+                        sb.append(" <img src='").append(p.getImage()).append("' alt='").append("<br>")                                
+                                .append("' style='width:70px; height:70px;'><br>")
+                                .append(p.getName())
+                                .append(" | Price: ").append(String.format("%.00f", p.getPrice())).append(" VND")
+                                .append(" | Amount: ").append(c.getAmount())
+                                .append(" | Size: ").append(c.getSize())
+                                .append("<br>");
                     }
                 }
             }
-            sb.append("Tong Tien: ").append(String.format("%.02f", totalMoneyVAT)).append("$<br>");
-            sb.append("Cam on ban da dat hang tai DINNO SHOP<br>");
-sb.append("Chu cua hang");
+            sb.append("Phí vận chuyển: 250000 VND.<br>");
+            sb.append("Tổng tiền: ").append(String.format("%.00f", totalPayment)).append(" VND<br>");
+            sb.append("Cảm ơn bạn đã đặt hàng tại DINNO SHOP.<br>");
+            sb.append("<br><img src='https://img.meta.com.vn/data/image/2022/09/14/stt-cam-on-khach-hang-1.jpg' alt='Thank You' style='width:500px; height:auto;'/><br>");
+            sb.append("Chủ cửa hàng<3");
 
             email.setContent(sb.toString());
             EmailUtils.send(email);
-            request.setAttribute("mess", "Dat hang thanh cong!");
+            request.setAttribute("mess", "Đặt hàng thành công!");
 
             // Xóa giỏ hàng
             dao.deleteCartByAccountID(accountID);
-            
+
             String phuongThuc = request.getParameter("phuongThuc");
             if ("chuyenKhoan".equals(phuongThuc)) {
                 phuongThuc = "Chuyển khoản qua ngân hàng";
             } else {
                 phuongThuc = "Thanh toán khi nhận hàng";
             }
-
-            dao.insertInvoice(accountID, totalMoneyVAT, phuongThuc);
+            String voucherCode = request.getParameter("voucherCode");
+            if(voucherCode != "" ||voucherCode != null && !voucherCode.isEmpty()){
+                Double discountAmount = dao.getDiscountAmount(voucherCode);
+                totalPayment -= discountAmount;
+                dao.insertVoucherAcc(accountID, voucherCode);
+            }
+            dao.insertInvoice(accountID, totalPayment, phuongThuc);
         } catch (Exception e) {
-            request.setAttribute("error", "Dat hang that bai!");
+            request.setAttribute("error", "Đặt hàng thất bại!");
             e.printStackTrace();
         }
         request.getRequestDispatcher("DatHang.jsp").forward(request, response);

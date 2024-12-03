@@ -8,6 +8,7 @@ package control;
 import dao.DAO;
 import entity.Account;
 import entity.Cart;
+import entity.Product;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -23,16 +24,6 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "AddCartControl", urlPatterns = {"/addCart"})
 public class AddCartControl extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-	
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -40,42 +31,44 @@ public class AddCartControl extends HttpServlet {
         int productID = Integer.parseInt(request.getParameter("pid"));
         HttpSession session = request.getSession();
         Account a = (Account) session.getAttribute("acc");
+        
         if(a == null) {
-        	response.sendRedirect("login");
-        	return;
+            response.sendRedirect("login");
+            return;
         }
+
         int accountID = a.getId();
         int amount = Integer.parseInt(request.getParameter("quantity"));
         String size = request.getParameter("size");
-        
         DAO dao = new DAO();
-        Cart cartExisted = dao.checkCartExist(accountID,productID);
-        int amountExisted;
-        String sizeExisted;
-        if(cartExisted != null) {
-        	 amountExisted = cartExisted.getAmount();
-        	 dao.editAmountAndSizeCart(accountID,productID, (amountExisted+amount), size);
-        	 request.setAttribute("mess", "Da tang so luong san pham!");
-        	 request.getRequestDispatcher("managerCart").forward(request, response);
+        String productName = dao.getProductNameByID(productID);
+        // Kiểm tra nếu sản phẩm có size tương ứng đã có trong giỏ hàng
+        Cart cartExisted = dao.checkCartExist(accountID, productID, size);
+        if (cartExisted != null) {
+            // Nếu sản phẩm có size tương ứng đã có trong giỏ, tăng số lượng
+            int amountExisted = cartExisted.getAmount();
+            dao.editAmountAndSizeCart(accountID, productID, (amountExisted + amount), size);
+            request.setAttribute("mess", "Sản phẩm " + productName + " size " + size + " đã có trong giỏ hàng, đã tăng số lượng!");
+        } else {
+            // Nếu sản phẩm chưa có trong giỏ với size này, thêm mới vào giỏ
+            dao.insertCart(accountID, productID, amount, size);
+            request.setAttribute("mess", "Sản phẩm " + productName + " size " + size + " đã được thêm vào giỏ hàng!");
         }
-        else {
-        	  dao.insertCart(accountID, productID, amount, size);
-        	  request.setAttribute("mess", "Da them san pham vao gio hang!");
-        	  request.getRequestDispatcher("managerCart").forward(request, response);
-        }
-        // Tính lại tổng số lượng sản phẩm trong giỏ hàng
-//        int cartQuantity = dao.getCartQuantityByAccountID(accountID);
-//        // Lưu vào session
-//        session.setAttribute("cartQuantity", cartQuantity);
+        if (dao.isProductOnPromotion(productID)) {
+            List<Product> promotionProducts = dao.getPromotionProducts();
+            request.setAttribute("promotionProducts", promotionProducts);
+         }
         
+        // Cập nhật tổng số lượng giỏ hàng
         int totalAmountCart = 0;
-        if (a != null) {
-            List<Cart> list = dao.getCartByAccountID(accountID);
-            totalAmountCart = list.size();
-        }
-        // Lưu tổng số lượng sản phẩm vào attribute
+        List<Cart> list = dao.getCartByAccountID(accountID);
+        totalAmountCart = list.size();
+        
+        // Lưu tổng số lượng sản phẩm vào session
         session.setAttribute("cartQuantity", totalAmountCart);
-      request.getRequestDispatcher("managerCart").forward(request, response);
+        
+        // Chuyển hướng về trang giỏ hàng
+        request.getRequestDispatcher("managerCart").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -116,5 +109,4 @@ public class AddCartControl extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }

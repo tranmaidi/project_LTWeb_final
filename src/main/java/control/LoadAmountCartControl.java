@@ -52,17 +52,8 @@ public class LoadAmountCartControl extends HttpServlet {
 //        //in list p day
 //        PrintWriter out = response.getWriter();
 //        out.println(totalAmountCart);
-
-//        List<Category> listC = dao.getAllCategory();
-//        Product last = dao.getLast();
+//
 //        
-//        
-//        
-//        request.setAttribute("listP", list);
-//        request.setAttribute("listCC", listC);
-//        request.setAttribute("p", last);
-//        request.setAttribute("tag", cateID);
-//        request.getRequestDispatcher("Home.jsp").forward(request, response);
          int totalAmountCart = 0;
 
         HttpSession session = request.getSession();

@@ -5,7 +5,7 @@
     <head> 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
-        <link rel="icon" href="images/logo2.png" type="image/x-icon">
+        <link rel="icon" href="images/logo3.png" type="image/x-icon">
         <title>Home Page</title>
         
         <link rel="stylesheet" href="css/mdb.min.css" />
@@ -97,7 +97,7 @@
             </div>
             <div class="row">
                 <div class="display-header d-flex align-items-center justify-content-between" >
-                    <h2 id="gotvuong" class="section-title text-uppercase mb-0">CAO GÓT GÓT VUÔNG</h2>
+                    <h2 id="caogot" class="section-title text-uppercase mb-0">CAO GÓT GÓT</h2>
                     <a href="shop" class="btn-right text-uppercase text-hover fw-bold">View all</a>
                 </div>
                 <div class="col-sm-12" >
@@ -131,7 +131,7 @@
 
             <div class="row">
                 <div class="display-header d-flex align-items-center justify-content-between" >
-                    <h2 id="gotnhon" class="section-title text-uppercase mb-0" >CAO GÓT GÓT NHỌN</h2>
+                    <h2 id="sandal" class="section-title text-uppercase mb-0" >GIÀY XĂNG ĐAN</h2>
                     <a href="shop" class="btn-right text-uppercase text-hover fw-bold">View all</a>
                 </div>
                 <div class="col-sm-12">
@@ -164,7 +164,7 @@
 
             <div class="row">
                 <div class="display-header d-flex align-items-center justify-content-between" >
-                    <h2 id="hogot" class="section-title text-uppercase mb-0">CAO GÓT HỞ GÓT</h2>
+                    <h2 id="bupbe" class="section-title text-uppercase mb-0">GIÀY BÚP BÊ</h2>
                     <a href="shop" class="btn-right text-uppercase text-hover fw-bold">View all</a>
                 </div>
                 <div class="col-sm-12">

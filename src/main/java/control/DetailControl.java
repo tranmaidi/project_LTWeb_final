@@ -10,7 +10,7 @@ import entity.Account;
 import entity.Category;
 import entity.Product;
 import entity.Review;
-
+import entity.Reply;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -19,7 +19,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 
 @WebServlet(name = "DetailControl", urlPatterns = {"/detail"})
 public class DetailControl extends HttpServlet {
@@ -39,22 +38,31 @@ public class DetailControl extends HttpServlet {
         String id = request.getParameter("pid");
         DAO dao = new DAO();
         Product p = dao.getProductByID(id);
-        System.out.println(p); // In ra giá trị của detail
-
+        
+        // Kiểm tra xem sản phẩm có trong chương trình khuyến mãi không
+        double discountRate = dao.getDiscountRate(p.getId()); // Phương thức kiểm tra giảm giá
+        double discountedPrice = p.getPrice();
+        if (discountRate > 0) {
+            // Nếu có giảm giá, tính lại giá sản phẩm
+            discountedPrice = p.getPrice() * (1 - discountRate);
+        }
+        
         int cateIDProductDetail = dao.getCateIDByProductID(id);
         List<Product> listRelatedProduct = dao.getRelatedProduct(cateIDProductDetail);
-        
+
         List<Review> listAllReview = dao.getAllReviewByProductID(id);
         int countAllReview = listAllReview.size();
-        
+        List<Reply> listAllReply = dao.getReplyAll();
         List<Account> listAllAcount = dao.getAllAccount();
-        
-        Product last = dao.getLast();
 
+        Product last = dao.getLast();
+        
+        request.setAttribute("discountedPrice", discountedPrice);
         request.setAttribute("detail", p);
         request.setAttribute("listRelatedProduct", listRelatedProduct);
         request.setAttribute("listAllReview", listAllReview);
         request.setAttribute("listAllAcount", listAllAcount);
+        request.setAttribute("listAllReply", listAllReply); 
         request.setAttribute("countAllReview", countAllReview);
         request.setAttribute("p", last);
         request.getRequestDispatcher("DetailProduct.jsp").forward(request, response);
@@ -98,5 +106,4 @@ public class DetailControl extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }

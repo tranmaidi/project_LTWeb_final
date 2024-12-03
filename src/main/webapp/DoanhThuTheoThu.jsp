@@ -5,7 +5,7 @@
 <head>
         <meta charset="ISO-8859-1">
         <title>Statistic</title>
-        <link rel="icon" href="images/logo2.png" type="image/x-icon">
+        <link rel="icon" href="images/logo3.png" type="image/x-icon">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -31,7 +31,7 @@
         <!-- MDB -->
         <link rel="stylesheet" href="css/mdb.min.css"/>
         <!-- Custom styles -->
-        <link rel="stylesheet" href="css/style.css"/>
+        <link rel="stylesheet" href="s/style.css"/>
         <style>
         body {
             margin: 0;

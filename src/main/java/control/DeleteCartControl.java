@@ -34,30 +34,41 @@ public class DeleteCartControl extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-//        int productID = Integer.parseInt(request.getParameter("productID"));
-//        DAO dao = new DAO();
-//        dao.deleteCart(productID);
-//        request.setAttribute("mess", "Da xoa san pham khoi gio hang!");
-        HttpSession session = request.getSession();
+        request.setCharacterEncoding("UTF-8");
+
+        // Lấy tham số từ request
         int productID = Integer.parseInt(request.getParameter("productID"));
+        String size = request.getParameter("size");
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("acc");
+
+        if (account == null) {
+            response.sendRedirect("login");
+            return;
+        }
+
+        int accountID = account.getId();
         DAO dao = new DAO();
-        dao.deleteCart(productID);
-        request.setAttribute("mess", "Da xoa san pham khoi gio hang!");
-        Account a = (Account) session.getAttribute("acc");
-        if(a == null) {
-        	response.sendRedirect("login");
-        	return;
+
+        // Kiểm tra sản phẩm trong giỏ
+        Cart cartExisted = dao.checkCartExist(accountID, productID, size);
+        if (cartExisted != null) {
+            dao.deleteCart(accountID, productID, size);  // Xóa sản phẩm theo productID và size
+            request.setAttribute("mess", "Đã xóa sản phẩm khỏi giỏ hàng!");
+        } else {
+            request.setAttribute("error", "Sản phẩm không tồn tại trong giỏ hàng!");
         }
-        int accountID = a.getId();
+
+        // Cập nhật số lượng sản phẩm trong giỏ hàng
         int totalAmountCart = 0;
-        if (a != null) {
-            List<Cart> list = dao.getCartByAccountID(accountID);
-            totalAmountCart = list.size();
-        }
-        // Lưu tổng số lượng sản phẩm vào attribute
+        List<Cart> list = dao.getCartByAccountID(accountID);
+        totalAmountCart = list.size();
         session.setAttribute("cartQuantity", totalAmountCart);
+
+        // Quay lại trang giỏ hàng
         request.getRequestDispatcher("managerCart").forward(request, response);
     }
+
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

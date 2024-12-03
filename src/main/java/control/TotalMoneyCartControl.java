@@ -12,7 +12,10 @@ import entity.Category;
 import entity.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
+import static java.lang.System.out;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -33,44 +36,6 @@ public class TotalMoneyCartControl extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-//    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-//            throws ServletException, IOException {
-//        response.setContentType("text/html;charset=UTF-8");
-//        request.setCharacterEncoding("UTF-8");
-//        HttpSession session = request.getSession();
-//        Account a = (Account) session.getAttribute("acc");
-//        int accountID = a.getId();
-//        DAO dao = new DAO();
-//        List<Cart> list = dao.getCartByAccountID(accountID);
-//        List<Product> list2 = dao.getAllProduct();
-//        
-//        double totalMoney=0;
-//        for(Cart o : list) {
-//        	for(Product p : list2) {
-//        		if(o.getProductID()==p.getId()) {
-//        			totalMoney=totalMoney+p.getPrice()*o.getAmount();
-//        		}
-//        	}
-//        }
-//        
-//        double totalMoneyVAT=totalMoney*0.9;
-//        totalMoneyVAT = Math.round(totalMoneyVAT);
-//        
-//        	
-//        PrintWriter out = response.getWriter();
-//        		out.println(" <li class=\"d-flex justify-content-between py-3 border-bottom\"><strong class=\"text-muted\">Tổng tiền hàng</strong><strong>"+totalMoney+"</strong></li>\r\n"
-//        				+ "                                        <li class=\"d-flex justify-content-between py-3 border-bottom\"><strong class=\"text-muted\">Phí vận chuyển</strong><strong>Free ship</strong></li>\r\n"
-//        				+ "                                        <li class=\"d-flex justify-content-between py-3 border-bottom\"><strong class=\"text-muted\">VAT</strong><strong>10 %</strong></li>\r\n"
-//        				+ "                                        <li class=\"d-flex justify-content-between py-3 border-bottom\"><strong class=\"text-muted\">Tổng thanh toán</strong>\r\n"
-//        				+ "                                            <h5 class=\"font-weight-bold\">"+totalMoneyVAT+"</h5>\r\n"
-//        				+ "                                        </li>");
-//        	
-//        
-//        		
-//        	
-//         
-//    }
-        
         protected void processRequest(HttpServletRequest request, HttpServletResponse response)
                 throws ServletException, IOException {
             response.setContentType("text/html;charset=UTF-8");
@@ -86,24 +51,52 @@ public class TotalMoneyCartControl extends HttpServlet {
             DAO dao = new DAO();
             List<Cart> listCart = dao.getCartByAccountID(accountID);
             List<Product> listProduct = dao.getAllProduct();
-
+            
+            Map<Integer, Double> discountedPrices = new HashMap<>();
+            double discountedPrice=0;
             double totalMoney = 0;
             for (Cart o : listCart) {
                 for (Product p : listProduct) {
                     if (o.getProductID() == p.getId()) {
-                        totalMoney += p.getPrice() * o.getAmount();
+                        
+                        double productPrice = p.getPrice();
+                        double discountRate = dao.getDiscountRate(o.getProductID());
+                        // Tính giá đã giảm
+                        discountedPrice = p.getPrice();
+                        if (discountRate > 0) {
+                            discountedPrice = productPrice * (1 - discountRate );  // Giảm giá theo tỷ lệ
+                        }
+                           // Lưu giá đã giảm vào Map
+                        discountedPrices.put(o.getProductID(), discountedPrice);                   
+                        totalMoney += discountedPrice * o.getAmount();
+                        request.setAttribute("discountRate", discountRate);
+                        request.setAttribute("discountedPrices", discountedPrices);                    
                     }
                 }
             }
+            
+            String voucherCode = request.getParameter("voucherCode");
+            double discountAmount = 0;
 
-            double totalMoneyVAT = Math.round(totalMoney * 1.1); // VAT 10%
-
+            if (voucherCode != null && !voucherCode.isEmpty()) {
+                if (dao.isVoucherUsable(voucherCode, accountID, totalMoney)) {
+                    discountAmount = dao.getDiscountAmount(voucherCode);
+                } 
+            }
+            
+            double totalPayment = totalMoney - discountAmount;
+            if (totalPayment > 0) {
+                totalPayment += 25000; // Phí vận chuyển
+            } else {
+                totalPayment = 0; 
+            }
+            
             // Đưa dữ liệu vào request để chuyển qua JSP
             request.setAttribute("listCart", listCart);
             request.setAttribute("listProduct", listProduct);
             request.setAttribute("totalMoney", totalMoney);
-            request.setAttribute("totalMoneyVAT", totalMoneyVAT);
-
+            request.setAttribute("totalPayment", totalPayment);
+            request.setAttribute("discountPrice", discountAmount);
             request.getRequestDispatcher("Cart.jsp").forward(request, response);
         }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

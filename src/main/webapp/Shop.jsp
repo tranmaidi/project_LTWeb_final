@@ -7,7 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <title>Shop</title>
-        <link rel="icon" href="images/logo2.png" type="image/x-icon">
+        <link rel="icon" href="images/logo3.png" type="image/x-icon">
         <link rel="stylesheet" href="css/mdb.min.css" />
 
         <!-- Roboto Font -->
@@ -66,15 +66,15 @@
                                     <div class="text-muted small text-uppercase mb-5">
                                         <div class="form-check pl-0 mb-3">
                                             <input onchange="searchByPriceUnder100()" type="radio" class="form-check-input" id="under100" name="materialExampleRadios">
-                                            <label class="form-check-label small text-uppercase card-link-secondary" for="under100">Under 400.000VND</label>
+                                            <label class="form-check-label small text-uppercase card-link-secondary" for="under100">Dưới 400.000VND</label>
                                         </div>
                                         <div class="form-check pl-0 mb-3">
                                             <input onchange="searchByPrice100To200()" type="radio" class="form-check-input" id="100200" name="materialExampleRadios">
-                                            <label class="form-check-label small text-uppercase card-link-secondary" for="100200">400.000VND to 500.000VND</label>
+                                            <label class="form-check-label small text-uppercase card-link-secondary" for="100200">400.000VND đến 500.000VND</label>
                                         </div>
                                         <div class="form-check pl-0 mb-3">
                                             <input onchange="searchByPriceAbove200()" type="radio" class="form-check-input" id="200above" name="materialExampleRadios">
-                                            <label class="form-check-label small text-uppercase card-link-secondary" for="200above">500.000VND & Above</label>
+                                            <label class="form-check-label small text-uppercase card-link-secondary" for="200above">Trên 500.000VND</label>
                                         </div>
                                         <form style="margin-top: 15px;">
                                             <div class="d-flex align-items-center mb-3 pb-1">
@@ -186,8 +186,6 @@
                         <section>
                             <!-- Grid row -->
                             <div class="row" id="content">
-
-
                                 <c:forEach items="${listP}" var="o">
                                     <!-- Grid column -->
                                     <div class="col-md-4 mb-5">
@@ -208,10 +206,8 @@
                                             </div>
 
                                             <div class="text-center pt-4">
-
                                                 <h5>${o.name }</h5>
-                                                <p><span class="mr-1"><strong>${o.price } VND</strong></span></p>
-
+                                                <p><span class="mr-1"><strong>${o.price}VND</strong></span></p>
                                             </div>
 
                                         </div>

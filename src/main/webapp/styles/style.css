@@ -146,4 +146,13 @@ label.btn {
     text-align: center;
     z-index: 2; /* Đảm bảo chữ nằm trên ảnh */
 }
+#starRating i {
+    font-size: 24px;
+    color: #ccc;
+    cursor: pointer;
+}
+#starRating i.selected {
+    color: #ffcc00;
+}
+
 

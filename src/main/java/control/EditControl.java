@@ -50,7 +50,7 @@ public class EditControl extends HttpServlet {
         String pcategory = request.getParameter("category");
         DAO dao = new DAO();
         dao.editProduct(pname, pimage, pprice, ptitle, pdescription, pcategory, pcolor, pimage2, pimage3, pimage4, pid);
-       request.setAttribute("mess", "Edited!");
+       request.setAttribute("mess", "Sản phẩm đã được chỉnh sửa!");
        request.getRequestDispatcher("manager").forward(request, response);
 //        response.sendRedirect("manager");
     }

@@ -40,7 +40,7 @@
                 <c:if test="${sessionScope.acc != null}">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle font-weight-bold" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Hello ${sessionScope.acc.user}
+                            <img src="${sessionScope.acc.avatar}" alt="Avatar" class="rounded-circle img-fluid" style="height: 40px; width: 40px; object-fit: cover; border: 2px solid #ddd;">
                         </a>
                         <div class="dropdown-menu" aria-labelledby="userDropdown">
                             <a class="dropdown-item" href="editProfile">Edit Profile</a>
@@ -48,7 +48,9 @@
                                 <a class="dropdown-item" href="manager" target="_blank">Manage Products</a>
                                 <a class="dropdown-item" href="admin" target="_blank">Statistics</a>
                             </c:if>
-                            <a class="dropdown-item" href="managerHistory">History</a>
+                            <c:if test="${sessionScope.acc.isAdmin != 1}">
+                                <a class="dropdown-item" href="managerHistory">History</a>
+                            </c:if>
                             <a class="dropdown-item" href="logout">Logout</a>
                         </div>
                     </li>

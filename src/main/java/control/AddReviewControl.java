@@ -51,7 +51,7 @@ public class AddReviewControl extends HttpServlet {
         int productID = Integer.parseInt(request.getParameter("productID"));
         
         DAO dao = new DAO();
-        dao.insertReview(accountID, productID, contentReview);
+        //dao.insertReview(accountID, productID, contentReview);
       
         Review newReview = new Review();
         newReview = dao.getNewReview(accountID, productID);
@@ -65,7 +65,7 @@ public class AddReviewControl extends HttpServlet {
             		+ "                <div class=\"d-flex justify-content-between\">\r\n"
             		+ "                  <p class=\"mt-1 mb-2\">\r\n"
             		+ "                    <strong>"+a.getUser()+"</strong>\r\n"
-            		+ "                    <span>– </span><span>"+newReview.getDateReview()+"</span>\r\n"
+            		+ "                    <span>ï¿½ </span><span>"+newReview.getDateReview()+"</span>\r\n"
             		+ "                  </p>\r\n"
             		+ "                </div>\r\n"
             		+ "                <p class=\"mb-0\">"+newReview.getContentReview()+"</p>\r\n"
@@ -73,9 +73,7 @@ public class AddReviewControl extends HttpServlet {
             		+ "            </div>\r\n"
             		+ "            <hr>    ");
        
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    }  // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -113,5 +111,4 @@ public class AddReviewControl extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }

@@ -12,7 +12,10 @@ import entity.Category;
 import entity.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -53,37 +56,66 @@ public class ManagerCartControl extends HttpServlet {
         // Lấy danh sách giỏ hàng và sản phẩm
         List<Cart> listCart = dao.getCartByAccountID(accountID);
         List<Product> listProduct = dao.getAllProduct();
-
+        List<Product> promotionalProducts = dao.getPromotionProducts();
+        if (promotionalProducts == null) {
+            promotionalProducts = new ArrayList<>();
+        }
         // Tính tổng số lượng sản phẩm trong giỏ
         int totalAmount = 0;
         for (Cart cart : listCart) {
             totalAmount += cart.getAmount();
         }
-
-        // Tính tổng tiền hàng và VAT
-        double totalMoney = 0;
+        // Kiểm tra sản phẩm khuyến mãi
+        boolean hasPromoProduct = false;
         for (Cart cart : listCart) {
-            for (Product product : listProduct) {
-                if (cart.getProductID() == product.getId()) {
-                    totalMoney += product.getPrice() * cart.getAmount();
-                }
+            if (dao.isProductOnPromotion(cart.getProductID())) {
+                hasPromoProduct = true;
+                break;
             }
         }
-        double totalMoneyVAT = totalMoney + totalMoney * 0.1;
+        double discountedPrice=0;
+        // Tính tổng tiền hàng 
+        double totalMoney = 0;
+        Map<Integer, Double> discountedPrices = new HashMap<>();
+            for (Cart o : listCart) {
+                for (Product p : listProduct) {
+                    if (o.getProductID() == p.getId()) {
+                        
+                        double productPrice = p.getPrice();
+                        double discountRate = dao.getDiscountRate(o.getProductID());
+                        // Tính giá đã giảm
+                        discountedPrice = p.getPrice();
+                        if (discountRate > 0) {
+                            discountedPrice = productPrice * (1 - discountRate );  // Giảm giá theo tỷ lệ
+                        }
+                           // Lưu giá đã giảm vào Map
+                        discountedPrices.put(o.getProductID(), discountedPrice);                   
+                        totalMoney += discountedPrice * o.getAmount();
+                        request.setAttribute("discountRate", discountRate);
+                        request.setAttribute("discountedPrices", discountedPrices);   
+                  
+                    }
+                }
+            }        
+        
+        double totalPayment = totalMoney > 0 ? totalMoney + 25000 : 0;
 
         int totalAmountCart = 0;
         if (a != null) {
             List<Cart> list = dao.getCartByAccountID(accountID);
             totalAmountCart = list.size();
         }
-        // Lưu tổng số lượng sản phẩm vào attribute
-        session.setAttribute("cartQuantity", totalAmountCart);
+       
         // Đặt dữ liệu vào request để chuyển tiếp đến JSP
+        request.setAttribute("promotionalProducts", promotionalProducts);
+        request.setAttribute("hasPromotionalProduct", hasPromoProduct);
+        session.setAttribute("cartQuantity", totalAmountCart);
+        session.setAttribute("voucherCode", "");
         request.setAttribute("listCart", listCart);
         request.setAttribute("listProduct", listProduct);
         request.setAttribute("totalAmount", totalAmount);
         request.setAttribute("totalMoney", totalMoney);
-        request.setAttribute("totalMoneyVAT", totalMoneyVAT);
+        request.setAttribute("totalPayment", totalPayment);
 
         // Chuyển tiếp đến JSP
         request.getRequestDispatcher("Cart.jsp").forward(request, response);
@@ -110,28 +142,22 @@ public class ManagerCartControl extends HttpServlet {
 //        		}
 //        	}
 //        }
-//        
-//        double totalMoneyVAT=totalMoney+totalMoney*0.1;
+//        double totalPayment=0;
+//        if (totalMoney==0)
+//               totalPayment=0;
+//        else totalPayment = totalMoney + 25000;
 //       
 //        
 //       
 //        
 //       
 //        PrintWriter out = response.getWriter();
-//        		out.println(" <li class=\"d-flex justify-content-between py-3 border-bottom\"><strong class=\"text-muted\">Tổng tiền hàng</strong><strong>"+totalMoney+"</strong></li>\r\n"
-//        				+ "                                        <li class=\"d-flex justify-content-between py-3 border-bottom\"><strong class=\"text-muted\">Phí vận chuyển</strong><strong>Free ship</strong></li>\r\n"
-//        				+ "                                        <li class=\"d-flex justify-content-between py-3 border-bottom\"><strong class=\"text-muted\">VAT</strong><strong>10 %</strong></li>\r\n"
-//        				+ "                                        <li class=\"d-flex justify-content-between py-3 border-bottom\"><strong class=\"text-muted\">Tổng thanh toán</strong>\r\n"
-//        				+ "                                            <h5 class=\"font-weight-bold\">"+totalMoneyVAT+"</h5>\r\n"
-//        				+ "                                        </li>");
-//        	
-//       
-//       
-//        		
-//        	
-//         
-//    }
-
+//        		        out.println(" <li class=\"d-flex justify-content-between py-3 border-bottom\"><strong class=\"text-muted\">Tổng tiền hàng</strong><strong>" + totalMoney + " VND</strong></li>\r\n"
+//            + "                                        <li class=\"d-flex justify-content-between py-3 border-bottom\"><strong class=\"text-muted\">Phí vận chuyển</strong><strong>" + 25000 + " VND</strong></li>\r\n"
+//            + "                                        <li class=\"d-flex justify-content-between py-3 border-bottom\"><strong class=\"text-muted\">Tổng thanh toán</strong>\r\n"
+//            + "                                            <h5 class=\"font-weight-bold\">" + totalPayment + " VND</h5>\r\n"
+//            + "                                        </li>");
+//}
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

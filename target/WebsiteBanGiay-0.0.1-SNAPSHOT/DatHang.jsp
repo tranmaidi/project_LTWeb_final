@@ -8,19 +8,11 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-<!--        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-        <link href="css/login.css" rel="stylesheet" type="text/css"/>
-        <title>Order</title>
-        <link rel="icon" href="images/logo2.png" type="image/x-icon">-->
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <title>Order</title>
-        <link rel="icon" href="images/logo2.png" type="image/x-icon">
+        <link rel="icon" href="images/logo3.png" type="image/x-icon">
         
         <link rel="stylesheet" href="css/mdb.min.css" />
         <!--Roboto Font--> 
@@ -55,21 +47,23 @@
                     </div>
                 </c:if>
                 <label for="name">Name</label>
-                <input name="name" type="text" id="name" class="form-control" placeholder="Name" required="" autofocus="">
+                <input name="name" type="text" id="name" class="form-control" placeholder="Name" required="" autofocus="" value="${sessionScope.acc.fullName}">
                 <label for="phoneNumber">Phone number</label>
-                <input name="phoneNumber" type="text" id="phoneNumber" class="form-control" placeholder="Phone number" required="" autofocus="">
+                <input name="phoneNumber" type="text" id="phoneNumber" class="form-control" placeholder="Phone number" required="" autofocus="" value="${sessionScope.acc.phoneNumber}">
                 <label for="email">Email</label>
-                <input name="email" type="text" id="email" class="form-control" placeholder="email" required="" autofocus="">
+                <input name="email" type="text" id="email" class="form-control" placeholder="email" required="" autofocus="" value="${sessionScope.acc.email}">
                 <label for="deliveryAddress">Delivery Address</label>
-                <input name="deliveryAddress" type="text" id="deliveryAddress" class="form-control" placeholder="Delivery Address" required="" autofocus="">
+                <input name="deliveryAddress" type="text" id="deliveryAddress" class="form-control" placeholder="Delivery Address" required="" autofocus="" value="${sessionScope.acc.address}">
                 <div class="form-group mb-4">
                     <label class="block mb-2" for="paymentMethod">Payment Method</label>
                     <select class="form-control w-full p-2 border border-gray-300 rounded" id="phuongThuc" name="phuongThuc" onchange="showQRCode(this.value)" required="">
+                        <option value="">Chọn phương thức thanh toán...</option>
                         <option value="thanhToanKhiNhanHang">Thanh toán khi nhận hàng</option>
                         <option value="chuyenKhoan">Chuyển khoản qua ngân hàng</option>
                     </select>
                 </div>
-
+                
+                <input type="hidden" name="voucherCode" value="${sessionScope.voucherCode}" />
                 <div class="form-group mb-4" id="qrCodeContainer" style="display: none;">
                     
                     <ul class="list-unstyled mb-4" id="contentTotalQr"></ul>

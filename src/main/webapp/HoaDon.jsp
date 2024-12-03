@@ -5,7 +5,7 @@
     <head>
         <meta charset="ISO-8859-1">
         <title>Statistic</title>
-        <link rel="icon" href="images/logo2.png" type="image/x-icon">
+        <link rel="icon" href="images/logo3.png" type="image/x-icon">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -23,7 +23,7 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
               integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-        <link href="css/style.css" rel="stylesheet" type="text/css"/>
+        <!--<link href="css/style.css" rel="stylesheet" type="text/css"/>-->
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css"/>
         <!-- Google Fonts Roboto -->
@@ -31,7 +31,7 @@
         <!-- MDB -->
         <link rel="stylesheet" href="css/mdb.min.css"/>
         <!-- Custom styles -->
-        <link rel="stylesheet" href="css/style.css"/>
+        <link rel="stylesheet" href="styles/style.css"/>
         <style>
             body {
                 margin: 0;
@@ -89,20 +89,18 @@
 
             <!--Main layout-->
             <main>
+                <c:if test="${mess!=null }">
+                    <div class="mb-0 alert alert-success" role="alert">
+                        ${mess}
+                    </div>
+                </c:if>
+                
                 <div class="container pt-4">
 
                     <!--Section: Sales Performance KPIs-->
                     <section class="mb-4">
-                    <c:if test="${error!=null }">
-                        <div class="alert alert-danger" role="alert">
-                            ${error}
-                        </div>
-                    </c:if>
-                    <c:if test="${mess!=null }">
-                        <div class="alert alert-success" role="alert">
-                            ${mess}
-                        </div>
-                    </c:if>
+                    
+                  
 
                     <div class="card">
                         <div class="card-header py-3 row">
@@ -121,7 +119,7 @@
                                 </h5>
                             </div>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body">                            
                             <div class="table-responsive">
                                 <table class="table table-hover text-nowrap">
                                     <thead>
@@ -137,21 +135,37 @@
                                     </thead>
 
                                     <tbody id="content">
+                                        
+                                        
+                                        
                                         <c:forEach items="${listAllInvoice}" var="i">
                                             <tr>
                                                 <th scope="row"></th>
                                                 <td>${i.maHD }</td>
                                                 <c:forEach items="${listAllAccount}" var="a">
-                                                    <c:if test="${i.accountID==a.id }">
+                                                    <c:if test="${i.accountID==a.id }">    
+                                                        <c:set var="userName" value="${a.user}"/>
+                                                        <c:set var="userEmail" value="${a.email}"/>                                                      
                                                         <td>${a.user }</td>
                                                     </c:if>
                                                 </c:forEach>
                                                 <td>${String.format("%.02f",i.tongGia) }</td>
                                                 <td>${i.ngayXuat }</td> 
                                                 <td>${i.phuongThuc}</td>
-                                                <form action="XacNhanHoaDon" method="get">
+                                                <form action="confirm" method="get">
                                                     <input type="hidden" name="invoice" value="${i}">
-                                                    <td><button type="submit" class="mb-0 text-center btn btn-primary waves-effect waves-light">Xác nhận</button> </td>
+                                                    <input type="hidden" name="userName" value="${userName}">
+                                                    <input type="hidden" name="userEmail" value="${userEmail}">
+                                                    
+                                                    <c:choose>
+                                                        <c:when test="${i.phuongThuc == 'Chuyển khoản qua ngân hàng'}">
+                                                            <td><button type="submit" class="mb-0 text-center btn btn-primary waves-effect waves-light">Xác nhận</button> </td>
+                                                        </c:when>
+                                                       
+                                                        <c:otherwise><td></td></c:otherwise>
+                                                        
+                                                    </c:choose>
+                                                    
                                                 </form>
                                             </tr>
                                         </c:forEach>
@@ -194,7 +208,7 @@
             function searchByDate(param) {
                 var txtSearchDate = param.value;
                 $.ajax({
-                    url: "/WebsiteBanGiay1/searchAjaxHoaDon",
+                    url: "/WebsiteBanGiay/searchAjaxHoaDon",
                     type: "get", //send it through get method
                     data: {
                         ngayXuat: txtSearchDate

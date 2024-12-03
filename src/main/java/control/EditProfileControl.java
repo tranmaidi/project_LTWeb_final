@@ -13,50 +13,57 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "EditProfileControl", urlPatterns = {"/editProfile"})
 public class EditProfileControl extends HttpServlet {
 
-    /**
-     * Hiển thị form chỉnh sửa thông tin
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Chuyển hướng đến trang editProfile.jsp để hiển thị form
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
         request.getRequestDispatcher("EditProfile.jsp").forward(request, response);
     }
 
-    /**
-     * Xử lý cập nhật thông tin người dùng
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
+
         HttpSession session = request.getSession();
         Account a = (Account) session.getAttribute("acc");
 
-        // Kiểm tra nếu tài khoản không tồn tại trong session
         if (a == null) {
             response.sendRedirect("login.jsp");
             return;
         }
 
         int id = a.getId();
-
-        // Lấy các giá trị nhập vào từ người dùng
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String email = request.getParameter("email");
-
         DAO dao = new DAO();
-        dao.editProfile(username, password, email, id);
 
-        // Cập nhật lại thông tin trong session
+        // Lấy dữ liệu từ form
+        String username = request.getParameter("username");
+        String email = request.getParameter("email");
+        String avatarUrl = request.getParameter("avatarUrl");
+        String fullName = request.getParameter("fullName");
+        String dob = request.getParameter("dob");
+        String address = request.getParameter("address");
+        String phoneNumber = request.getParameter("phoneNumber");
+
+        // Cập nhật thông tin
+        dao.editProfile(username, a.getPass(), email, avatarUrl, fullName, dob, address, phoneNumber, id);
+
+        // Cập nhật session
         a.setUser(username);
-        a.setPass(password);
         a.setEmail(email);
+        a.setAvatar(avatarUrl);
+        a.setFullName(fullName);
+        a.setDob(dob);
+        a.setAddress(address);
+        a.setPhoneNumber(phoneNumber);
+
         session.setAttribute("acc", a);
 
-        // Gửi thông báo thành công và chuyển hướng lại trang editProfile.jsp
-        request.setAttribute("mess", "Cập nhật tài khoản thành công!");
+        // Thông báo thành công
+        request.setAttribute("mess", "Cập nhật thông tin thành công!");
         request.getRequestDispatcher("EditProfile.jsp").forward(request, response);
     }
 

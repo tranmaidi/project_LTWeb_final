@@ -9,7 +9,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <title>Detail Product</title>
-        <link rel="icon" href="images/logo2.png" type="image/x-icon">
+        <link rel="icon" href="images/logo3.png" type="image/x-icon">
         <!-- Roboto Font -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700&display=swap">
         <!-- Font Awesome -->
@@ -21,11 +21,14 @@
         <!-- Material Design Bootstrap Ecommerce -->
         <link rel="stylesheet" href="https://mdbootstrap.com/previews/ecommerce-demo/css/mdb.ecommerce.min.css">
         <!-- Your custom styles (optional) -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <link href="css/style.css" rel="stylesheet" type="text/css"/>
+        <link href="styles/style.css" rel="stylesheet" type="text/css"/>
 
         <style>
             .navbar .nav-link {
@@ -64,6 +67,14 @@
                 .navbar .nav-link {
                     color: #000 !important;
                 }
+
+                .fa-star {
+                    font-size: 20px; /* Đảm bảo kích thước sao hợp lý */
+                }
+                .star-rating {
+                    margin-top: 10px;
+                }
+
             </style>
         </head>
         <body class="skin-light">
@@ -166,20 +177,28 @@
 
                                 <h5>${detail.name}</h5>
 
-                                <p><span class="mr-1"><strong>${String.format("%.02f",detail.price*0.9)}VND</strong></span><span
-                                        class="text-grey"><strong><s>${detail.price }VND</s></strong></span></p>
+                                <p><span class="mr-1">
+                                        <strong>
+                                            <!-- Hiển thị giá đã giảm nếu có, nếu không hiển thị giá gốc -->
+                                            ${discountedPrice != null && discountedPrice < detail.price ? String.format("%.02f", discountedPrice) : String.format("%.02f", detail.price)} VND
+                                        </strong>
+                                    </span>
 
-
-                                <p class="pt-1">${detail.description}</p>
+                                    <span class="text-grey">
+                                        <strong>
+                                            <!-- Nếu có giá giảm, hiển thị giá gốc -->
+                                            <s>${discountedPrice != null && discountedPrice < detail.price ? String.format("%.02f", detail.price) : ""}</s>
+                                        </strong>
+                                    </span></p>
                                 <div class="table-responsive">
                                     <table class="table table-sm table-borderless mb-0">
                                         <tbody>
-                                           
+
                                             <tr>
                                                 <th class="pl-0 w-25" scope="row"><strong>Color</strong></th>
                                                 <td>${detail.color }</td>
                                             </tr>
-                                         
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -197,7 +216,7 @@
                                                     <td class="pl-0">
                                                         <div class="mt-1">
                                                             <div class="def-number-input number-input safari_only mb-0" style="display: flex;
-                                                                align-items: center;">
+                                                                 align-items: center;">
                                                                 <button type="button" onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
                                                                         class="minus"></button>
                                                                 <input class="quantity" min="0" name="quantity" value="1" type="number">
@@ -208,20 +227,22 @@
                                                     </td>
                                                     <td>
                                                         <div class="mt-1">
+                                                            <!-- Ensure all radio buttons have the same name and are correctly grouped -->
                                                             <div class="form-check form-check-inline pl-0">
-                                                                <input type="radio" class="form-check-input" id="small" value="small" name="size" checked>
-                                                                <label class="form-check-label small text-uppercase card-link-secondary"
-                                                                       for="small">Small</label>
+                                                                <input type="radio" class="form-check-input" id="size-36" value="36" name="size" checked>
+                                                                <label class="form-check-label small text-uppercase card-link-secondary" for="size-36">36</label>
                                                             </div>
                                                             <div class="form-check form-check-inline pl-0">
-                                                                <input type="radio" class="form-check-input" id="medium" value="medium" name="size">
-                                                                <label class="form-check-label small text-uppercase card-link-secondary"
-                                                                       for="medium">Medium</label>
+                                                                <input type="radio" class="form-check-input" id="size-37" value="37" name="size">
+                                                                <label class="form-check-label small text-uppercase card-link-secondary" for="size-37">37</label>
                                                             </div>
                                                             <div class="form-check form-check-inline pl-0">
-                                                                <input type="radio" class="form-check-input" id="large" value="large" name="size">
-                                                                <label class="form-check-label small text-uppercase card-link-secondary"
-                                                                       for="large">Large</label>
+                                                                <input type="radio" class="form-check-input" id="size-38" value="38" name="size">
+                                                                <label class="form-check-label small text-uppercase card-link-secondary" for="size-38">38</label>
+                                                            </div>
+                                                            <div class="form-check form-check-inline pl-0">
+                                                                <input type="radio" class="form-check-input" id="size-39" value="39" name="size">
+                                                                <label class="form-check-label small text-uppercase card-link-secondary" for="size-39">39</label>
                                                             </div>
                                                         </div>
                                                     </td>
@@ -242,7 +263,6 @@
                     </section>
                     <!--Section: Block Content-->
 
-                    <!-- Classic tabs -->
                     <div class="classic-tabs">
 
                         <ul class="nav tabs-primary nav-justified" id="advancedTab" role="tablist">
@@ -262,8 +282,9 @@
                         <div class="tab-content" id="advancedTabContent">
                             <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
                                 <h5>Product Description</h5>
-
-                                <h6>${String.format("%.02f",detail.price*0.9) }VND</h6>
+                                
+                                <h6>  ${discountedPrice != null && discountedPrice < detail.price ? String.format("%.02f", discountedPrice) : String.format("%.02f", detail.price)} VND
+                                        </h6>
                                 <p class="pt-1">${detail.description}</p>
                             </div>
                             <div class="tab-pane fade" id="info" role="tabpanel" aria-labelledby="info-tab">
@@ -284,163 +305,232 @@
                                 </table>
                             </div>
                             <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
-                                <h5><span>${countAllReview }</span> review for <span>${detail.name }</span></h5>
+                                <h5><span>${countAllReview}</span> review(s) for <span>${detail.name}</span></h5>
 
-                                <h5 class="mt-4">Add a review</h5>
-                                <p></p>
-
+                                <h5 class="mt-4">Add a Review</h5>
                                 <div>
-                                    <!-- Your review -->
+                                    <!-- Add a Review -->
                                     <div class="md-form md-outline">
                                         <textarea id="form76" class="md-textarea form-control pr-6" rows="4"></textarea>
                                         <label for="form76">Your review</label>
                                     </div>
                                     <div class="text-right pb-2">
-                                        <button type="button" class="btn btn-primary" onclick="addReview(${detail.id})">Add a review</button>
+                                        <button type="button" class="btn btn-primary" onclick="addReview(${detail.id})">Add a Review</button>
                                     </div>
                                 </div>
-
-
-
-                                <c:forEach items="${listAllReview}" var="r">
-
+                                <c:forEach items="${listAllReview}" var="review">
+                                    <hr>
                                     <div class="media mt-3 mb-4">
-                                        <img class="d-flex mr-3 z-depth-1" src="https://mdbootstrap.com/img/Photos/Others/placeholder1.jpg"
-                                             width="62" alt="Generic placeholder image">
+                                        <img 
+                                            class="d-flex mr-3 z-depth-1" 
+                                            <c:forEach items="${listAllAcount}" var="account">
+                                            src="${account.avatar}" 
+                                            </c:forEach>
+                                            width="62"
+                                            height="62"
+                                            alt="User Avatar" 
+                                            style="border-radius: 50%;">
                                         <div class="media-body">
                                             <div class="d-flex justify-content-between">
                                                 <p class="mt-1 mb-2">
-                                                    <c:forEach items="${listAllAcount}" var="a">
-                                                        <c:if test="${r.accountID == a.id }">
-                                                            <strong>${a.user } </strong>
+                                                    <c:forEach items="${listAllAcount}" var="account">
+                                                        <c:if test="${review.accountID == account.id}">
+                                                            <strong>${account.user}</strong>
                                                         </c:if>
                                                     </c:forEach>
-                                                    <span>– </span><span>${r.dateReview }</span>
+                                                    <span>– </span><span>${review.dateReview}</span>
                                                 </p>
                                             </div>
-                                            <p class="mb-0">${r.contentReview }</p>
+                                            <div class="star-rating mb-2">
+                                                <c:forEach var="starIndex" begin="1" end="5">
+                                                    <i 
+                                                        class="fa ${starIndex <= review.rating ? 'fa-star' : 'fa-star-o'}" 
+                                                        style="color: ${starIndex <= review.rating ? '#ffcc00' : '#ccc'};
+                                                        font-size: 20px;">
+                                                    </i>
+                                                </c:forEach>
+                                            </div>
+                                            <!-- Display review content -->
+                                            <p class="mb-0">${review.contentReview}</p>
+                                            <div id="reply-${review.maReview}" class="reply-section">
+                                                <!-- Replies Section -->
+                                                <c:forEach items="${listAllReply}" var="reply">
+                                                    <c:if test="${reply.reviewID == review.maReview}">
+                                                        <hr>
+                                                        <div class="media mt-2">
+                                                            <img class="d-flex mr-3 z-depth-1" src="images/logo3.png" width="55" alt="Reply placeholder" style="border-radius: 100%;">
+                                                            <div class="media-body">
+                                                                <p class="mt-0 mb-1">
+                                                                    <c:forEach items="${listAllAcount}" var="a">
+                                                                        <c:if test="${reply.accountID == a.id}">
+                                                                            <strong>${a.user}</strong>
+                                                                        </c:if>
+                                                                    </c:forEach>
+                                                                    <span>– </span><span>${reply.dateReply}</span>
+                                                                </p>
+                                                                <p>${reply.contentReply}</p>
+                                                            </div>
+                                                        </div>
+                                                    </c:if>
+                                                </c:forEach>
+                                            </div>
+                                            <!-- Form to add reply -->
+                                            <div class="text-right">
+                                                <button type="button" class="btn btn-outline-primary btn-sm" onclick="toggleReplyForm(${review.maReview})">Reply</button>
+                                            </div>
+                                            <!-- Reply Form (Initially hidden) -->
+                                            <div id="reply-form-${review.maReview}" class="reply-form mt-3" style="display: none;">
+                                                <div class="md-form md-outline">
+                                                    <textarea id="contexreply-${review.maReview}" class="md-textarea form-control pr-6" rows="2" placeholder="Write a reply"></textarea>
+                                                </div>
+                                                <div class="text-right">
+                                                    <button type="button" class="btn btn-secondary btn-sm" onclick="addReply(${review.maReview})">Submit Reply</button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <hr>    
                                 </c:forEach>
                             </div>
-                        </div>
 
-                    </div>
-                    <!-- Classic tabs -->
+                            <!-- Classic tabs -->
+                            <hr>
+                            <!--Section: Block Content-->
+                            <section class="text-center">
+                                <h4 class="text-center my-5"><strong>Related products</strong></h4>
+                                <!-- Grid row -->
+                                <div class="row">
 
-                    <hr>
+                                    <c:forEach items="${listRelatedProduct}" var="o">
+                                        <!-- Grid column -->
+                                        <div class="col-md-6 col-lg-3 mb-5">
 
-                    <!--Section: Block Content-->
-                    <section class="text-center">
+                                            <!-- Card -->
+                                            <div class="">
 
-                        <h4 class="text-center my-5"><strong>Related products</strong></h4>
-
-                        <!-- Grid row -->
-                        <div class="row">
-
-                            <c:forEach items="${listRelatedProduct}" var="o">
-                                <!-- Grid column -->
-                                <div class="col-md-6 col-lg-3 mb-5">
-
-                                    <!-- Card -->
-                                    <div class="">
-
-                                        <div class="view zoom overlay z-depth-2 rounded">
-                                            <img class="img-fluid w-100"
-                                                 src="${o.image }" alt="Sample">
-                                            <h4 class="mb-0"><span class="badge badge-primary badge-pill badge-news">Sale 10%</span></h4>
-                                            <a href="detail?pid=${o.id}">
-                                                <div class="mask">
+                                                <div class="view zoom overlay z-depth-2 rounded">
                                                     <img class="img-fluid w-100"
-                                                         src="${o.image }">
-                                                    <div class="mask rgba-black-slight"></div>
+                                                         src="${o.image }" alt="Sample">
+                                                    
+                                                    <a href="detail?pid=${o.id}">
+                                                        <div class="mask">
+                                                            <img class="img-fluid w-100"
+                                                                 src="${o.image }">
+                                                            <div class="mask rgba-black-slight"></div>
+                                                        </div>
+                                                    </a>
                                                 </div>
-                                            </a>
+
+                                                <div class="pt-4">
+
+                                                    <h5>${o.title }</h5>
+                                                    <p><span class="text-danger mr-1"><strong>${o.price }VND</strong></span></p>
+                                       
+
+                                                </div>
+                                            </div>
+                                            <!-- Card -->
                                         </div>
-
-                                        <div class="pt-4">
-
-                                            <h5>${o.title }</h5>
-                                            <p><span class="text-danger mr-1"><strong>${String.format("%.02f",o.price*0.9) }VND</strong></span><span
-                                                    class="text-grey"><strong><s>${o.price }VND</s></strong></span></p>
-
-
-
-                                        </div>
-
-                                    </div>
-                                    <!-- Card -->
-
+                                        <!-- Grid column -->
+                                    </c:forEach>
                                 </div>
-                                <!-- Grid column -->
-                            </c:forEach>
-
+                                <!-- Grid row -->
+                            </section>
+                            <!--Section: Block Content-->
                         </div>
-                        <!-- Grid row -->
+                        </main>
+                        <!--Main layout-->
+                        <jsp:include page="Footer.jsp"></jsp:include>
+                        <script>
+                            window.addEventListener("load", function loadAmountCart() {
+                                $.ajax({
+                                    url: "/WebsiteBanGiay/loadAllAmountCart",
+                                    type: "get", //send it through get method
+                                    data: {
 
-                    </section>
-                    <!--Section: Block Content-->
+                                    },
+                                    success: function (responseData) {
+                                        document.getElementById("amountCart").innerHTML = responseData;
+                                    }
+                                });
+                            }, false);
 
-                </div>
-            </main>
-            <!--Main layout-->
+                            function addReview(pID) {
+                                var cntReview = document.getElementById("form76").value;
+                                $.ajax({
+                                    url: "/WebsiteBanGiay/addReview",
+                                    type: "get", //send it through get method
+                                    data: {
+                                        productID: pID,
+                                        contentReview: cntReview
+                                    },
+                                    success: function (data) {
+                                        var row = document.getElementById("reviews");
+                                        row.innerHTML += data;
+                                    },
+                                    error: function (xhr) {
+                                        //Do Something to handle error
+                                    }
+                                });
+                            }
+                            // Hàm toggle để ẩn/hiện form trả lời
+                            function toggleReplyForm(reviewId) {
+                                var replyForm = document.getElementById("reply-form-" + reviewId);
+                                // Kiểm tra trạng thái hiển thị của form, nếu đang ẩn thì sẽ hiển thị, nếu đang hiển thị sẽ ẩn đi
+                                if (replyForm.style.display === "none" || replyForm.style.display === "") {
+                                    replyForm.style.display = "block"; // Hiển thị form
+                                } else {
+                                    replyForm.style.display = "none"; // Ẩn form
+                                }
+                            }
+                            // Hàm để gửi phản hồi
+                            function addReply(reviewId) {
+                                var content = document.getElementById("contexreply-" + reviewId).value;
+
+                                // Gửi yêu cầu AJAX để lưu dữ liệu phản hồi
+                                $.ajax({
+                                    url: "/WebsiteBanGiay/reply",
+                                    type: "POST",
+                                    data: {
+                                        reviewID: reviewId,
+                                        replyContent: content
+                                    },
+                                    success: function (response) {
+                                        // Tìm phần tử chứa danh sách các phản hồi của review
+                                        var replyContainer = document.getElementById("reply-" + reviewId);
+
+                                        // Chèn phản hồi vào cuối danh sách
+                                        replyContainer.innerHTML += response;
+
+                                        // Xóa nội dung trong textarea và ẩn form sau khi gửi phản hồi
+                                        document.getElementById("contexreply-" + reviewId).value = "";
+                                        document.getElementById("reply-form-" + reviewId).style.display = "none";
+                                    },
+                                    error: function (xhr, status, error) {
+                                        console.error("Có lỗi trong quá trình gửi phản hồi:", error);
+                                    }
+                                });
+                            }
 
 
-
-
-            <jsp:include page="Footer.jsp"></jsp:include>
-            <script>
-                window.addEventListener("load", function loadAmountCart() {
-                    $.ajax({
-                        url: "/WebsiteBanGiay/loadAllAmountCart",
-                        type: "get", //send it through get method
-                        data: {
-
-                        },
-                        success: function (responseData) {
-                            document.getElementById("amountCart").innerHTML = responseData;
-                        }
-                    });
-                }, false);
-
-                function addReview(pID) {
-                    var cntReview = document.getElementById("form76").value;
-                    $.ajax({
-                        url: "/WebsiteBanGiay/addReview",
-                        type: "get", //send it through get method
-                        data: {
-                            productID: pID,
-                            contentReview: cntReview
-                        },
-                        success: function (data) {
-                            var row = document.getElementById("reviews");
-                            row.innerHTML += data;
-                        },
-                        error: function (xhr) {
-                            //Do Something to handle error
-                        }
-                    });
-                }
-            </script>
-            <!-- SCRIPTS -->
-            <!-- JQuery -->
-            <script src="../../../js/jquery-3.4.1.min.js"></script>
-            <!-- Bootstrap tooltips -->
-            <script type="text/javascript" src="https://mdbootstrap.com/previews/ecommerce-demo/js/popper.min.js"></script>
-            <!-- Bootstrap core JavaScript -->
-            <script type="text/javascript" src="https://mdbootstrap.com/previews/ecommerce-demo/js/bootstrap.js"></script>
-            <!-- MDB core JavaScript -->
-            <script type="text/javascript" src="https://mdbootstrap.com/previews/ecommerce-demo/js/mdb.min.js"></script>
-            <!-- MDB Ecommerce JavaScript -->
-            <script type="text/javascript" src="https://mdbootstrap.com/previews/ecommerce-demo/js/mdb.ecommerce.min.js"></script>
-            <script>
-                $(document).ready(function () {
-                    // MDB Lightbox Init
-                    $(function () {
-                        $("#mdb-lightbox-ui").load("../../../mdb-addons/mdb-lightbox-ui.html");
-                    });
-                });
-            </script>
-        </body>
-    </html>
+                        </script>
+                        <!-- SCRIPTS -->
+                        <!-- JQuery -->
+                        <script src="../../../js/jquery-3.4.1.min.js"></script>
+                        <!-- Bootstrap tooltips -->
+                        <script type="text/javascript" src="https://mdbootstrap.com/previews/ecommerce-demo/js/popper.min.js"></script>
+                        <!-- Bootstrap core JavaScript -->
+                        <script type="text/javascript" src="https://mdbootstrap.com/previews/ecommerce-demo/js/bootstrap.js"></script>
+                        <!-- MDB core JavaScript -->
+                        <script type="text/javascript" src="https://mdbootstrap.com/previews/ecommerce-demo/js/mdb.min.js"></script>
+                        <!-- MDB Ecommerce JavaScript -->
+                        <script type="text/javascript" src="https://mdbootstrap.com/previews/ecommerce-demo/js/mdb.ecommerce.min.js"></script>
+                        <script>
+                            $(document).ready(function () {
+                                // MDB Lightbox Init
+                                $(function () {
+                                    $("#mdb-lightbox-ui").load("../../../mdb-addons/mdb-lightbox-ui.html");
+                                });
+                            });
+                        </script>
+                        </body>
+                        </html>
