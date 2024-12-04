@@ -69,7 +69,6 @@ public class TotalMoneyCartControl extends HttpServlet {
                            // Lưu giá đã giảm vào Map
                         discountedPrices.put(o.getProductID(), discountedPrice);                   
                         totalMoney += discountedPrice * o.getAmount();
-                        request.setAttribute("discountRate", discountRate);
                         request.setAttribute("discountedPrices", discountedPrices);                    
                     }
                 }

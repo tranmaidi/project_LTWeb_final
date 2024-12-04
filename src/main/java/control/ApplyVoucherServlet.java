@@ -10,7 +10,9 @@ import entity.Cart;
 import entity.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -42,18 +44,34 @@ public class ApplyVoucherServlet extends HttpServlet {
             totalAmount += cart.getAmount();
         }
 
-        double totalMoney = 0;
-        for (Cart cart : listCart) {
-            for (Product product : listProduct) {
-                if (cart.getProductID() == product.getId()) {
-                    totalMoney += product.getPrice() * cart.getAmount();
+        Map<Integer, Double> discountedPrices = new HashMap<>();
+            double discountedPrice=0;
+            double totalMoney = 0;
+            for (Cart o : listCart) {
+                for (Product p : listProduct) {
+                    if (o.getProductID() == p.getId()) {
+                        
+                        double productPrice = p.getPrice();
+                        double discountRate = dao.getDiscountRate(o.getProductID());
+                        // Tính giá đã giảm
+                        discountedPrice = p.getPrice();
+                        if (discountRate > 0) {
+                            discountedPrice = productPrice * (1 - discountRate );  // Giảm giá theo tỷ lệ
+                        }
+                           // Lưu giá đã giảm vào Map
+                        discountedPrices.put(o.getProductID(), discountedPrice);                   
+                        totalMoney += discountedPrice * o.getAmount();
+                        request.setAttribute("discountedPrices", discountedPrices);                    
+                    }
                 }
             }
-        }
-        double totalPayment;
-        if (totalMoney==0)
-               totalPayment=0;
-        else totalPayment = totalMoney + 25000;
+        double totalPayment = totalMoney ;
+            if (totalPayment > 0) {
+                totalPayment += 25000; // Phí vận chuyển
+            } else {
+                totalPayment = 0; 
+            }
+            
 
         int totalAmountCart = 0;
         if (a != null) {
@@ -63,7 +81,7 @@ public class ApplyVoucherServlet extends HttpServlet {
         String voucherMessage = "";
         double discountAmount = 0;
         if (voucherCode != null && !voucherCode.isEmpty()) {
-            if (dao.isVoucherUsable(voucherCode, accountID, totalMoney)) {
+            if (dao.isVoucherValid(voucherCode,  totalMoney)&&!dao.isVoucherLinkedToAccount(voucherCode, accountID)) {
                 discountAmount = dao.getDiscountAmount(voucherCode);
                 voucherMessage = "Áp mã thành công";
             } 

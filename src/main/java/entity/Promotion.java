@@ -14,13 +14,13 @@ public class Promotion {
     private int id;
     private int productID;
     private double discountRate;
-    private String startDate;
-    private String endDate;
+    private Date startDate;
+    private Date endDate;
 
     // Constructors
     public Promotion() {}
 
-    public Promotion(int id, int productID, double discountRate, String startDate, String endDate) {
+    public Promotion(int id, int productID, double discountRate, Date startDate, Date endDate) {
         this.id = id;
         this.productID = productID;
         this.discountRate = discountRate;
@@ -53,19 +53,19 @@ public class Promotion {
         this.discountRate = discountRate;
     }
 
-    public String getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public String getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(String endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 
@@ -80,4 +80,6 @@ public class Promotion {
                 ", endDate=" + endDate +
                 '}';
     }
+
+   
 }

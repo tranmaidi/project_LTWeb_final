@@ -34,8 +34,9 @@ public class DeleteControl extends HttpServlet {
         DAO dao = new DAO();
         dao.deleteCartByProductID(pid);
         dao.deleteReviewByProductID(pid);
+//        dao.deleteSoLuongDaBanByProductID(pid);
         dao.deleteProduct(pid);
-        request.setAttribute("mess", "Đã xóa sản phẩm!");
+        request.setAttribute("mess", "Deleted!");
         request.getRequestDispatcher("manager").forward(request, response);
     }
 

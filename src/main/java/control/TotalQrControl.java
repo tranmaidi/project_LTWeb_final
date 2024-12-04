@@ -8,6 +8,7 @@ import dao.DAO;
 import entity.Account;
 import entity.Cart;
 import entity.Category;
+import entity.Invoice;
 import entity.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -32,60 +33,89 @@ public class TotalQrControl extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         HttpSession session = request.getSession();
         Account a = (Account) session.getAttribute("acc");
+        if (a == null) {
+            response.sendRedirect("login.jsp");
+            return;
+        }
+
         int accountID = a.getId();
         DAO dao = new DAO();
-        List<Cart> list = dao.getCartByAccountID(accountID);
-        List<Product> list2 = dao.getAllProduct();
-        
-        double totalMoney=0;
-        for(Cart o : list) {
-        	for(Product p : list2) {
-        		if(o.getProductID()==p.getId()) {
-        			totalMoney=totalMoney+p.getPrice()*o.getAmount();
-        		}
-        	}
+        List<Cart> listCart = dao.getCartByAccountID(accountID);
+        List<Product> listProduct = dao.getAllProduct();
+        List<Invoice> listInvoice = dao.getAllInvoice();
+
+        double discountedPrice=0;
+            double totalMoney = 0;
+            for (Cart o : listCart) {
+                for (Product p : listProduct) {
+                    if (o.getProductID() == p.getId()) {
+                        
+                        double productPrice = p.getPrice();
+                        double discountRate = dao.getDiscountRate(o.getProductID());
+                        // Tính giá đã giảm
+                        discountedPrice = p.getPrice();
+                        if (discountRate > 0) {
+                            discountedPrice = productPrice * (1 - discountRate ); 
+                        }
+                        totalMoney += discountedPrice * o.getAmount();
+                    }
+                }
+            }
+          
+            double totalPayment = totalMoney ;
+            if (totalPayment > 0) {
+                totalPayment += 25000; // Phí vận chuyển
+            } else {
+                totalPayment = 0; 
+            }
+            
+        String voucherCode = (String) session.getAttribute("voucherCode");
+        Double discountAmount = 0.0;
+            if (voucherCode != "" || voucherCode != null && !voucherCode.isEmpty()) {
+                if (dao.isVoucherValid(voucherCode,  totalMoney)&&!dao.isVoucherLinkedToAccount(voucherCode, accountID)){
+                discountAmount = dao.getDiscountAmount(voucherCode);
+                totalPayment -= discountAmount;
+                }
+            }
+        int hd = 0;
+        for (Invoice i : listInvoice) {
+            if (hd < i.getMaHD()) {
+                hd = i.getMaHD();
+            }
         }
-        
-        double totalMoneyVAT=totalMoney*0.9;
-        totalMoneyVAT = Math.round(totalMoneyVAT);
-        
-        String qrCodeUrl = "https://qr.sepay.vn/img?acc=1023751080&bank=VCB&amount=" + totalMoneyVAT;
-        	
+        hd += 1;
+        String qrCodeUrl = "https://qr.sepay.vn/img?acc=1023751080&bank=VCB&amount=" + totalPayment + "&des=" + hd;
+
         PrintWriter out = response.getWriter();
-                        out.println("<div class=\"flex justify-center mb-6\">\n"
-                                + "    <img alt=\"Centered Image\"  src=\""+ qrCodeUrl + "\"  align=\"middle\"/>\n"
-                                        + "<hr>"
-                                + "   </div>\n"
-                                + "    <div class=\"mb-4\">\n"
-                                + "     <label class=\"block text-gray-700 font-medium mb-2\" for=\"cardHolder\">\n"
-                                + "      Card Holder\n"
-                                + "     </label>\n"
-                                + "     <input class=\"w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500\" id=\"cardHolder\" type=\"text\" value=\"Trịnh Ngọc Hiếu\" readonly/>\n"
-                                + "    </div>\n"
-                                + "    <div class=\"mb-4\">\n"
-                                + "     <label class=\"block text-gray-700 font-medium mb-2\" for=\"accountNumber\">\n"
-                                + "      STK\n"
-                                + "     </label>\n"
-                                + "     <input class=\"w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500\" id=\"accountNumber\" type=\"text\" value=\"1023751080\" readonly/>\n"
-                                + "    </div>\n"
-                                + "    <div class=\"mb-4\">\n"
-                                + "     <label class=\"block text-gray-700 font-medium mb-2\" for=\"bankName\">\n"
-                                + "      Ngân Hàng\n"
-                                + "     </label>\n"
-                                + "     <input class=\"w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500\" id=\"bankName\" type=\"text\" value=\"Vietcombank\" readonly/>\n"
-                                + "    </div>\n"
-                                + "    <div class=\"mb-6\">\n"
-                                + "     <label class=\"block text-gray-700 font-medium mb-2\" for=\"amount\">\n"
-                                + "      Số tiền\n"
-                                + "     </label>\n"
-                                + "     <input class=\"w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500\" id=\"amount\" type=\"text\" value=\""+ totalMoneyVAT +"\" readonly/>\n"
-                                + "    </div>\n"
-                                + "  </div>");
-        	
-        
-        		
-        	
-         
+        out.println("<div class=\"flex justify-center mb-6\">\n"
+                + "    <img alt=\"Centered Image\"  src=\"" + qrCodeUrl + "\"  align=\"middle\"/>\n"
+                + "<hr>"
+                + "   </div>\n"
+                + "<table class=\"table\">\n"
+                + "            <tbody>\n"
+                + "                <tr>\n"
+                + "                    <td>Chủ tài khoản: </td>\n"
+                + "                    <td><b>Trịnh Ngọc Hiếu</b></td>\n"
+                + "                </tr>\n"
+                +"                    <tr>\n"
+                + "                    <td>Ngân hàng: </td>\n"
+                + "                    <td><b>Vietcombank</b></td>\n"
+                + "                </tr>\n"
+                + "                 <tr>\n"
+                + "                    <td>Số TK: </td>\n"
+                + "                    <td><b>1023751080</b></td>\n"
+                + "                </tr>\n"
+                + "                 <tr>\n"
+                + "                    <td>Số tiền: </td>\n"
+                + "                    <td><b> " + totalPayment + "</b></td>\n"
+                + "                </tr>\n"
+                + "                 <tr>\n"
+                + "                    <td>Nội dung CK: </td>\n"
+                + "                    <td><b>" + hd + "</b></td>\n"
+                + "                </tr>\n"
+                + "            </tbody>\n"
+                + "        </table>");
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

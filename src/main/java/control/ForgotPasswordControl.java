@@ -42,15 +42,16 @@ public class ForgotPasswordControl extends HttpServlet {
             }
             if (account != null) {
                 Email email = new Email();
-                email.setFrom("ditran.120804@gmail.com");
-                email.setFromPassword("pguk ltzo biuh swqk");
+                email.setFrom("dinnoshopweb@gmail.com");
+                email.setFromPassword("xpez ruov apxa voje");
                 email.setTo(emailAddress);
                 email.setSubject("Forgot Password Function");
                 StringBuilder sb = new StringBuilder();
-                sb.append("Chào ").append(username).append("<br>");
+                sb.append("DINNO shop xin chào: ").append(username).append("<br>");
+                sb.append("Bạn đã sử dụng tính năng quên mật khẩu.<br>");
                 sb.append("Mật khẩu của bạn là: <b>").append(account.getPass()).append(" </b> <br>");
                 sb.append("Đừng chia sẻ với anh nhé!<br>");
-                sb.append("Quản lý");
+                sb.append("Trân trọng!");
 
                 email.setContent(sb.toString());
                 EmailUtils.send(email);

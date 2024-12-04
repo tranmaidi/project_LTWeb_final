@@ -7,6 +7,8 @@ package control;
 
 import dao.DAO;
 import entity.Account;
+import entity.Email;
+import entity.EmailUtils;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -42,16 +44,46 @@ public class SignUpControl extends HttpServlet {
             DAO dao = new DAO();
             Account a = dao.checkAccountExist(user);
             if (a == null) {
-                dao.singup(user, pass, email);
-                request.setAttribute("mess", "Đăng ký thành công!");
+                dao.singup(user, pass, email); 
+
+                String voucherCode = "FREESHIP"; 
+
+                // Gửi email mã voucher
+                try {
+                    Email emailObj = new Email();
+                    emailObj.setFrom("dinnoShopWeb@gmail.com");
+                    emailObj.setFromPassword("xpez ruov apxa voje");
+                    emailObj.setTo(email);
+                    emailObj.setSubject("Chào mừng bạn đến với Dinno Shop!");
+
+                    // Nội dung email
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("Chào ").append(user).append(",<br>");
+                    sb.append("Cảm ơn bạn đã đăng ký tài khoản tại Dinno Shop!<br>");
+                    sb.append("Để tri ân, chúng tôi gửi tặng bạn một mã voucher miễn phí ship: <b>").append(voucherCode).append("</b><br>");
+                    sb.append("Hãy sử dụng mã này trong lần mua hàng tiếp theo của bạn!<br>");
+                    sb.append("Chúc bạn có trải nghiệm mua sắm tuyệt vời!<br>");
+                    sb.append("<br><img src='https://res.cloudinary.com/ds1rgnuvr/image/upload/v1733243576/t%E1%BA%A3i_xu%E1%BB%91ng_xopa1j.jpg' alt='Thank You' style='width:500px; height:auto;'/><br>");
+
+                    sb.append("Trân trọng,<br>Dinno Shop");
+
+                    emailObj.setContent(sb.toString());
+                    EmailUtils.send(emailObj);
+
+                    request.setAttribute("mess", "Đăng ký thành công! Mã voucher đã được gửi qua email của bạn.");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    request.setAttribute("error", "Đăng ký thành công nhưng không gửi được email. Vui lòng kiểm tra lại.");
+                }
+
+                // Chuyển hướng về trang Login.jsp
                 request.getRequestDispatcher("Login.jsp").forward(request, response);
             } else {
-                request.setAttribute("error", "Tên tài khoản đã tồn tại. Vui lòng thử lại.");
+                request.setAttribute("error", "Tài khoản đã tồn tại. Vui lòng thử tên khác.");
                 request.getRequestDispatcher("Login.jsp").forward(request, response);
             }
 
         }
-        //sign up
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -251,9 +251,11 @@
                                         </table>
                                     </div>
                                     <div class="mt-1">
-                                        <button type="submit" class="btn btn-primary btn-md mr-1 mb-2">Buy now</button>
-                                        <button type="submit" class="btn btn-light btn-md mr-1 mb-2"><i class="fas fa-shopping-cart pr-2"></i>Add to
-                                            cart</button>
+                                        <button type="submit" class="btn btn-primary btn-md mr-1 mb-2" name="BuyNow" value="true">Buy now</button>
+                                        <button type="submit" class="btn btn-light btn-md mr-1 mb-2">
+                                            <i class="fas fa-shopping-cart pr-2"></i>
+                                            Add to cart
+                                        </button>
                                     </div>
                                 </form>
 
@@ -307,24 +309,15 @@
                             <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
                                 <h5><span>${countAllReview}</span> review(s) for <span>${detail.name}</span></h5>
 
-                                <h5 class="mt-4">Add a Review</h5>
-                                <div>
-                                    <!-- Add a Review -->
-                                    <div class="md-form md-outline">
-                                        <textarea id="form76" class="md-textarea form-control pr-6" rows="4"></textarea>
-                                        <label for="form76">Your review</label>
-                                    </div>
-                                    <div class="text-right pb-2">
-                                        <button type="button" class="btn btn-primary" onclick="addReview(${detail.id})">Add a Review</button>
-                                    </div>
-                                </div>
                                 <c:forEach items="${listAllReview}" var="review">
                                     <hr>
                                     <div class="media mt-3 mb-4">
                                         <img 
                                             class="d-flex mr-3 z-depth-1" 
                                             <c:forEach items="${listAllAcount}" var="account">
+                                            <c:if test="${review.accountID == account.id}">
                                             src="${account.avatar}" 
+                                            </c:if>
                                             </c:forEach>
                                             width="62"
                                             height="62"

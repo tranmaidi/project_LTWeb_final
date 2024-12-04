@@ -11,10 +11,10 @@ public class SQLServerConnection {
     // Open the connection
     public static Connection openConnection() throws SQLException, ClassNotFoundException {
         String dbDriver = "com.mysql.cj.jdbc.Driver";
-        String dbURL = "jdbc:mysql://localhost:3306";
-        String dbName = "quanlybangiay";
-        String dbUsername = "root";
-        String dbPassword = "123456";
+        String dbURL = "jdbc:mysql://b95xv6elmras4lfaadtj-mysql.services.clever-cloud.com:3306";
+        String dbName = "b95xv6elmras4lfaadtj";
+        String dbUsername = "uf697ta5dmba707j";
+        String dbPassword = "7823FkdLIO2OMRjYvQWk";
         String connectionURL = dbURL + "/" + dbName + "?useSSL=false&serverTimezone=UTC";
 
         try {

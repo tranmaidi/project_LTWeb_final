@@ -1,18 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package control;
 
 import dao.DAO;
 import entity.Account;
-import entity.Cart;
-import entity.Category;
 import entity.Invoice;
-import entity.Product;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,42 +12,39 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
 @WebServlet(name = "StatisticControl", urlPatterns = {"/admin"})
 public class StatisticControl extends HttpServlet {
 
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * Kiểm tra nếu người dùng là admin
+     */
+    private boolean isAdmin(HttpSession session, DAO dao) {
+        Account a = (Account) session.getAttribute("acc");
+        if (a == null) {
+            return false;
+        }
+        int uID = a.getId();
+        return dao.checkAccountAdmin(uID) == 1;  // Nếu là admin, trả về true
+    }
+
+    /**
+     * Xử lý các yêu cầu GET và POST
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
-        
+
         HttpSession session = request.getSession();
-        Account a = (Account) session.getAttribute("acc");
-        int uID;
         DAO dao = new DAO();
-        if(a == null) {
-        	response.sendRedirect("login");
-        	return;
+
+        // Kiểm tra quyền admin
+        if (!isAdmin(session, dao)) {
+            response.sendRedirect("login"); // Nếu không phải admin, chuyển hướng về login
+            return;
         }
-        uID= a.getId();
- 	   int checkIsAdmin = dao.checkAccountAdmin(uID);
-       if(checkIsAdmin == 0)
-       {
-       		response.sendRedirect("login");
-       		return;
-       }
-        	
-        	
-       
+
+        // Lấy dữ liệu thống kê từ DAO
         double totalMoney1 = dao.totalMoneyDay(1);
         double totalMoney2 = dao.totalMoneyDay(2);
         double totalMoney3 = dao.totalMoneyDay(3);
@@ -64,7 +52,7 @@ public class StatisticControl extends HttpServlet {
         double totalMoney5 = dao.totalMoneyDay(5);
         double totalMoney6 = dao.totalMoneyDay(6);
         double totalMoney7 = dao.totalMoneyDay(7);
-        
+
         double totalMoneyMonth1 = dao.totalMoneyMonth(1);
         double totalMoneyMonth2 = dao.totalMoneyMonth(2);
         double totalMoneyMonth3 = dao.totalMoneyMonth(3);
@@ -77,21 +65,23 @@ public class StatisticControl extends HttpServlet {
         double totalMoneyMonth10 = dao.totalMoneyMonth(10);
         double totalMoneyMonth11 = dao.totalMoneyMonth(11);
         double totalMoneyMonth12 = dao.totalMoneyMonth(12);
-        
+
+        // Thống kê thêm
         int allReview = dao.countAllReview();
         int allProduct = dao.countAllProduct();
         double sumAllInvoice = dao.sumAllInvoice();
-        
+
         List<Invoice> listAllInvoice = dao.getAllInvoice();
         List<Account> listAllAccount = dao.getAllAccount();
-        
+
+        // Đưa dữ liệu vào request để hiển thị trên trang Statistic.jsp
         request.setAttribute("listAllInvoice", listAllInvoice);
         request.setAttribute("listAllAccount", listAllAccount);
         request.setAttribute("sumAllInvoice", sumAllInvoice);
-        
         request.setAttribute("allReview", allReview);
         request.setAttribute("allProduct", allProduct);
-        
+
+        // Tổng tiền theo ngày
         request.setAttribute("totalMoney1", totalMoney1);
         request.setAttribute("totalMoney2", totalMoney2);
         request.setAttribute("totalMoney3", totalMoney3);
@@ -99,7 +89,8 @@ public class StatisticControl extends HttpServlet {
         request.setAttribute("totalMoney5", totalMoney5);
         request.setAttribute("totalMoney6", totalMoney6);
         request.setAttribute("totalMoney7", totalMoney7);
-        
+
+        // Tổng tiền theo tháng
         request.setAttribute("totalMoneyMonth1", totalMoneyMonth1);
         request.setAttribute("totalMoneyMonth2", totalMoneyMonth2);
         request.setAttribute("totalMoneyMonth3", totalMoneyMonth3);
@@ -112,52 +103,27 @@ public class StatisticControl extends HttpServlet {
         request.setAttribute("totalMoneyMonth10", totalMoneyMonth10);
         request.setAttribute("totalMoneyMonth11", totalMoneyMonth11);
         request.setAttribute("totalMoneyMonth12", totalMoneyMonth12);
-        
-       
-    
+
+        // Forward dữ liệu sang trang Statistic.jsp
         request.getRequestDispatcher("Statistic.jsp").forward(request, response);
-      
-       
-       
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    // Phương thức xử lý HTTP GET
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    // Phương thức xử lý HTTP POST
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
-
+    }
 }

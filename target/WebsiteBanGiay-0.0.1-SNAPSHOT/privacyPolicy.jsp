@@ -107,10 +107,10 @@
                 <h2>e. Địa chỉ của đơn vị thu thập và quản lý thông tin cá nhân</h2>
                 <p><strong>CÔNG TY CỔ PHẦN DINNO FASHION GROUP</strong></p>
                 <p>Địa chỉ: Số 1, đường Võ Văn Ngân, phường Linh Chiểu, Thành phố Thủ Đức, Thành phố Hồ Chí Minh, Việt Nam</p>
-                <p>Email: <a href="mailto:ditran.120804@gmail.com">ditran.120804@gmail.com</a> - Hotline: 032 633 1143</p>
+                <p>Email: <a href="mailto:dinnoshopweb@gmail.com">dinnoshopweb@gmail.com</a> - Hotline: 032 633 1143</p>
             </div><div class="section">
                 <h2>f. Phương tiện và công cụ để người dùng tiếp cận và chỉnh sửa dữ liệu cá nhân của mình</h2>
-                <p>Khách hàng có quyền tự kiểm tra, cập nhật, điều chỉnh hoặc hủy bỏ thông tin cá nhân của mình bằng cách gửi thông tin cần chỉnh sửa vào email: <a href="mailto:ditran.120804@gmail.com">ditran.120804@gmail.com</a></p>
+                <p>Khách hàng có quyền tự kiểm tra, cập nhật, điều chỉnh hoặc hủy bỏ thông tin cá nhân của mình bằng cách gửi thông tin cần chỉnh sửa vào email: <a href="mailto:dinnoshopweb@gmail.com">dinnoshopweb@gmail.com</a></p>
             </div>
 
             <div class="section">
@@ -121,7 +121,7 @@
 
             <div class="section">
                 <h2>h. Cơ chế tiếp nhận và giải quyết khiếu nại liên quan đến việc thông tin cá nhân khách hàng</h2>
-                <p>Khách hàng có quyền gửi khiếu nại về việc lộ thông tin cá nhân cho bên thứ ba đến Ban quản trị của Sàn giao dịch thương mại điện tử Dinno qua địa chỉ Công ty hoặc qua Email: <a href="mailto:ditran.120804@gmail.com">ditran.120804@gmail.com</a></p>
+                <p>Khách hàng có quyền gửi khiếu nại về việc lộ thông tin cá nhân cho bên thứ ba đến Ban quản trị của Sàn giao dịch thương mại điện tử Dinno qua địa chỉ Công ty hoặc qua Email: <a href="mailto:dinnoshopweb@gmail.com">dinnoshopweb@gmail.com</a></p>
             </div>
         </main>
         <jsp:include page="Footer.jsp"></jsp:include>

@@ -43,7 +43,7 @@
                             <img src="${sessionScope.acc.avatar}" alt="Avatar" class="rounded-circle img-fluid" style="height: 40px; width: 40px; object-fit: cover; border: 2px solid #ddd;">
                         </a>
                         <div class="dropdown-menu" aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="editProfile">Edit Profile</a>
+                            <a class="dropdown-item" href="editProfile">Infor & password</a>
                             <c:if test="${sessionScope.acc.isAdmin == 1}">
                                 <a class="dropdown-item" href="manager" target="_blank">Manage Products</a>
                                 <a class="dropdown-item" href="admin" target="_blank">Statistics</a>

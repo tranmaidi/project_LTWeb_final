@@ -530,7 +530,7 @@ public class DAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             new DBContext().closeConnection(conn);
         }
         return list;
@@ -1239,8 +1239,8 @@ public class DAO {
     }
 
     public void singup(String user, String pass, String email) {
-        String query = "insert into account(pass, isAdmin, email, user, avatar, fullName, dob, address, phoneNumber)\n"
-                + "values(?,0,?,?,0,0,0,0,0)";
+        String query = "insert into account(pass,isAdmin,email,user,avatar,fullName,dob,address,phoneNumber)\n"
+                + "values(?,0,?,?,'https://res.cloudinary.com/ds1rgnuvr/image/upload/v1733239477/928429_account_customer_profile_user_icon_akxdo2.png','',0,'','')";
         try {
             conn = new DBContext().getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
@@ -1464,7 +1464,6 @@ public class DAO {
         return null;  // Trả về null nếu không tìm thấy phản hồi
     }
 
-    
     private static java.sql.Date getCurrentDate() {
         java.util.Date today = new java.util.Date();
         return new java.sql.Date(today.getTime());
@@ -1552,6 +1551,23 @@ public class DAO {
         } finally {
             new DBContext().closeConnection(conn);
         }
+    }
+
+    public void editPhuongThuc(int maHD) {
+        String query = "UPDATE invoice SET phuongThuc = ? WHERE maHD = ?";
+        String phuongThuc = "Đã xác nhận chuyển khoản";
+        try {
+            conn = new DBContext().getConnection();  // Mở kết nối với DB
+            ps = conn.prepareStatement(query);
+            ps.setString(1, phuongThuc);
+            ps.setInt(2, maHD);
+            ps.executeUpdate();  // Thực thi câu lệnh
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            new DBContext().closeConnection(conn);
+        }
+
     }
 
     public void editProduct(String pname, String pimage, String pprice, String ptitle, String pdescription, String pcategory,
@@ -1669,7 +1685,6 @@ public class DAO {
             }
         }
     }
-
 
     public void editTongBanHang(int sell_ID, double tongTienBanHangThem) {
         String query = "exec dbo.proc_CapNhatTongBanHang ?,?";
@@ -1790,7 +1805,7 @@ public class DAO {
         }
         return 0;
     }
-
+    
     public List<Voucher> getAllVouchers() {
         List<Voucher> vouchers = new ArrayList<>();
         String query = "SELECT * FROM voucher";
@@ -1852,6 +1867,7 @@ public class DAO {
         }
         return vouchers;
     }
+
 
     // Lấy voucher chưa tới hạn sử dụng
     public List<Voucher> getNotStartedVouchers() {
@@ -2003,38 +2019,44 @@ public class DAO {
         return false;
     }
 
-    public List<String> getUsersByVoucher(int voucherId) {
-        String query = "SELECT `user` FROM voucher_acc \n"
-                + "JOIN account ON voucher_acc.account_id = account.uID \n"
+    public List<List<String>> getUsersByVoucher(int voucherId) {
+        String query = "SELECT account.user, voucher_acc.used_at "
+                + "FROM voucher_acc "
+                + "JOIN account ON voucher_acc.account_id = account.uID "
                 + "WHERE voucher_acc.voucher_id = ?";
-        List<String> users = new ArrayList<>();
+        List<List<String>> usages = new ArrayList<>();
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
             ps.setInt(1, voucherId);
             rs = ps.executeQuery();
             while (rs.next()) {
-                users.add(rs.getString("user"));
+                List<String> usage = new ArrayList<>();
+                usage.add(rs.getString("user"));       // Thêm `user` vào danh sách con
+                usage.add(rs.getString("used_at"));   // Thêm `used_at` vào danh sách con
+                usages.add(usage);                    // Thêm danh sách con vào danh sách lớn
             }
         } catch (Exception e) {
+            e.printStackTrace();
         }
-        return users;
+        return usages;
     }
+
     public List<Product> getPromotionProducts() {
         List<Product> promotionProducts = new ArrayList<>();
-        String sql = "SELECT * FROM Promotion p JOIN Product pr ON p.productID = pr.id WHERE CURDATE() BETWEEN p.startDate AND p.endDate;";
-       try {
+        String sql = "SELECT * FROM promotion p JOIN product pr ON p.productID = pr.id WHERE CURDATE() BETWEEN p.startDate AND p.endDate;";
+        try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
-             while (rs.next()) {
-            Product product = new Product();
-            product.setId(rs.getInt("productID"));
-            product.setName(rs.getString("name"));
-            product.setPrice(rs.getDouble("price"));
-            product.setImage(rs.getString("image"));
-            promotionProducts.add(product);
-        }
+            while (rs.next()) {
+                Product product = new Product();
+                product.setId(rs.getInt("productID"));
+                product.setName(rs.getString("name"));
+                product.setPrice(rs.getDouble("price"));
+                product.setImage(rs.getString("image"));
+                promotionProducts.add(product);
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -2042,7 +2064,7 @@ public class DAO {
     }
 
     public boolean isProductOnPromotion(int productId) {
-        String sql = "SELECT * FROM Promotion WHERE productID = ?;";
+        String sql = "SELECT * FROM promotion WHERE productID = ?;";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql);
@@ -2056,10 +2078,10 @@ public class DAO {
     }
 
     public double getDiscountRate(int productID) {
-        String sql = "SELECT discountRate FROM Promotion WHERE productID = ? AND CURDATE() BETWEEN startDate AND endDate;";
+        String sql = "SELECT discountRate FROM promotion WHERE productID = ? AND CURDATE() BETWEEN startDate AND endDate;";
         try {
-                conn = new DBContext().getConnection();
-                ps = conn.prepareStatement(sql);
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
             ps.setInt(1, productID);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -2070,30 +2092,161 @@ public class DAO {
         }
         return 0.0; // Không có khuyến mãi
     }
+
     public List<Promotion> getAllPromotions() {
         List<Promotion> promotions = new ArrayList<>();
-        String sql = "SELECT * FROM Promotion;";
-        
+        String sql = "SELECT * FROM promotion;";
+
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery();
-            
+            ResultSet rs = ps.executeQuery();
+
             while (rs.next()) {
                 Promotion promo = new Promotion();
                 promo.setId(rs.getInt("id"));
                 promo.setProductID(rs.getInt("productID"));
                 promo.setDiscountRate(rs.getDouble("discountRate"));
-                promo.setStartDate(rs.getString("startDate"));
-                promo.setEndDate(rs.getString("endDate"));
+                promo.setStartDate(rs.getDate("startDate"));
+                promo.setEndDate(rs.getDate("endDate"));
                 promotions.add(promo);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
         return promotions;
     }
+
+    public boolean addPromotion(Promotion promotion) {
+        String sql = "INSERT INTO promotion (productID, discountRate, startDate, endDate) VALUES (?, ?, ?, ?)";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, promotion.getProductID());
+            ps.setDouble(2, promotion.getDiscountRate());
+            ps.setDate(3, (java.sql.Date) promotion.getStartDate());
+            ps.setDate(4, (java.sql.Date) promotion.getEndDate());
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public Promotion getPromotionById(int id) {
+        String query = "SELECT * FROM promotion WHERE id = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return new Promotion(rs.getInt("id"), rs.getInt("productID"),
+                        rs.getDouble("discountRate"), rs.getDate("startDate"), rs.getDate("endDate"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public boolean updatePromotion(Promotion promotion) {
+        String sql = "UPDATE promotion SET productID = ?, discountRate = ?, startDate = ?, endDate = ? WHERE id = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, promotion.getProductID());
+            ps.setDouble(2, promotion.getDiscountRate());
+            ps.setDate(3, (java.sql.Date) promotion.getStartDate());
+            ps.setDate(4, (java.sql.Date) promotion.getEndDate());
+            ps.setInt(5, promotion.getId());
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean deletePromotionById(int id) {
+        String query = "DELETE FROM promotion WHERE id = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, id);
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            new DBContext().closeConnection(conn);
+        }
+        return false;
+    }
+    public boolean isVoucherValid(String code, double totalMoney) {
+        String query = "SELECT COUNT(*) "
+                + "FROM voucher "
+                + "WHERE code = ? "
+                + "AND start_date <= NOW() "
+                + "AND end_date >= NOW() "
+                + "AND min_spend <= ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, code); // Mã giảm giá
+            ps.setDouble(2, totalMoney); // Tổng tiền cần thanh toán
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0; // Trả về true nếu có bản ghi phù hợp
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+        return false; // Trả về false nếu có lỗi hoặc không có bản ghi
+    }
+
+    public boolean isVoucherLinkedToAccount(String code, int accountId) {
+        String query = "SELECT COUNT(*) " +
+                       "FROM voucher v " +
+                       "INNER JOIN voucher_acc va ON v.voucher_id = va.voucher_id " +
+                       "WHERE v.code = ? " +
+                       "AND va.account_id = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, code); // Mã giảm giá
+            ps.setInt(2, accountId); // ID tài khoản người dùng
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0; // Trả về true nếu có bản ghi phù hợp
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (conn != null) conn.close();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+        return false; // Trả về false nếu có lỗi hoặc không có bản ghi
+    }
+    
     public static void main(String[] args) {
         DAO dao = new DAO();
 

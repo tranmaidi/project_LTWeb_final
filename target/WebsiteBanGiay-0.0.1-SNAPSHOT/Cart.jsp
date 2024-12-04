@@ -97,7 +97,7 @@
                                                             </td>
                                                             <td style="vertical-align: middle;">
                                                                 <c:choose>
-                                                                    <c:when test="${discountedPrices[o.productID] != null && discountedPrices[o.productID] != p.price}">
+                                                                    <c:when test="${discountedPrices[o.productID] != p.price}">
                                                                     <!-- Hiển thị giá gốc và giá đã giảm -->
                                                                     <span class="original-price" style="text-decoration: line-through; color: gray;">
                                                                         ${p.price} VND
@@ -134,8 +134,7 @@
                                     </table>
                                     <div class="row mt-4">
                                     <!-- Hiển thị sản phẩm khuyến mãi -->
-                                    <c:if test="${hasPromotionalProduct}">
-                                        <div class="col-12 mb-4">
+-                                        <div class="col-12 mb-4">
                                             <h3>Sản Phẩm Khuyến Mãi</h3>
                                         </div>
                                         <c:forEach items="${promotionalProducts}" var="promoProduct">
@@ -149,7 +148,6 @@
                                                 </div>
                                             </div>
                                         </c:forEach>
-                                    </c:if>
                                     <c:if test="${empty promotionalProducts}">
                                         <p>Không có sản phẩm khuyến mãi hiện tại.</p>
                                     </c:if>

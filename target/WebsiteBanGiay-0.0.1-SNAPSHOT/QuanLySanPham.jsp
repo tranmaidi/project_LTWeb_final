@@ -5,7 +5,7 @@
     <head>
         <meta charset="ISO-8859-1">
         <title>Quản lý sản phẩm</title>
-        <link rel="icon" href="images/logo3.png" type="image/x-icon">
+        <link rel="icon" href="images/logo2.png" type="image/x-icon">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -14,15 +14,15 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
               integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-        <!--<link href="css/style.css" rel="stylesheet" type="text/css"/>-->
-        <link href="styles/manager.css" rel="stylesheet" type="text/css"/>
+        <link href="css/style.css" rel="stylesheet" type="text/css"/>
+        <link href="css/manager.css" rel="stylesheet" type="text/css"/>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
               integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-        <!--<link href="css/style.css" rel="stylesheet" type="text/css"/>-->
+        <link href="css/style.css" rel="stylesheet" type="text/css"/>
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css"/>
         <!-- Google Fonts Roboto -->
@@ -30,14 +30,11 @@
         <!-- MDB -->
         <link rel="stylesheet" href="css/mdb.min.css"/>
         <!-- Custom styles -->
-        <link rel="stylesheet" href="styles/style.css"/>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.3/dist/sweetalert2.min.css">
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.3/dist/sweetalert2.min.js"></script>
+        <link rel="stylesheet" href="css/style.css"/>
         <style>
             img{
                 width: 200px;
-                height: auto; /* Giữ tỷ lệ gốc của ảnh */
-                object-fit: contain; /* Đảm bảo ảnh không bị cắt xén và giữ tỷ lệ */
+                height: 120px;
             }
         </style>
         <style>
@@ -115,32 +112,15 @@
                                 </div>
                             </div>
 
-                        <c:if test="${error != null }">
-                            <script>
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'Lỗi',
-                                    text: '${error}',
-                                    showConfirmButton: true,
-                                    confirmButtonText: 'OK',
-                                    background: '#f8d7da',
-                                    color: '#721c24'
-                                });
-                            </script>
+                        <c:if test="${error!=null }">
+                            <div class="alert alert-danger" role="alert">
+                                ${error}
+                            </div>
                         </c:if>
-
-                        <c:if test="${mess != null }">
-                            <script>
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: 'Thành công',
-                                    text: '${mess}',
-                                    showConfirmButton: true,
-                                    confirmButtonText: 'OK',
-                                    background: '#d4edda',
-                                    color: '#155724'
-                                });
-                            </script>
+                        <c:if test="${mess!=null }">
+                            <div class="alert alert-success" role="alert">
+                                ${mess}
+                            </div>
                         </c:if>
 
                         <div class="card-body">
@@ -166,11 +146,7 @@
                                                 <td>${o.price} VND</td>
                                                 <td>
                                                     <a href="loadProduct?pid=${o.id}"><button type="button" class="btn btn-warning"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></button></a>
-                                                    <a href="javascript:void(0);" onclick="confirmDeleteProduct(${o.id})">
-                                                        <button type="button" class="btn btn-danger">
-                                                            <i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i>
-                                                        </button>
-                                                    </a>
+                                                    <a href="delete?pid=${o.id}"><button type="button" class="btn btn-danger"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></button></a>
                                                 </td>
                                             </tr>
                                         </c:forEach>
@@ -275,25 +251,7 @@
         </div>
 
         <script src="js/manager.js" type="text/javascript"></script>
-        <script>
-        function confirmDeleteProduct(productID) {
-            Swal.fire({
-                title: 'Bạn có chắc chắn muốn xóa sản phẩm này?',
-                text: "Hành động này không thể hoàn tác!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Xóa',   
-                cancelButtonText: 'Hủy'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Điều hướng đến Servlet xóa sản phẩm với tham số productID
-                    window.location.href = "delete?pid=" + productID;
-                }
-            });
-        }
-        </script>
+
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <!--Main layout-->
         <!-- SCRIPTS -->

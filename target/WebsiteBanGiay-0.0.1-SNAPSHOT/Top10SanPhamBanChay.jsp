@@ -144,7 +144,7 @@
                                                         <td>
                                                             <img src="${o.image}">
                                                         </td>
-                                                        <td>${o.price} $</td>
+                                                        <td>${o.price} VND</td>
                                                         <td>${t.amount}</td>
                                                     </tr>
                                                 </c:if>

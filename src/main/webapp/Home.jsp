@@ -97,7 +97,7 @@
             </div>
             <div class="row">
                 <div class="display-header d-flex align-items-center justify-content-between" >
-                    <h2 id="caogot" class="section-title text-uppercase mb-0">CAO GÓT GÓT</h2>
+                    <h2 id="caogot" class="section-title text-uppercase mb-0">GIÀY CAO GÓT</h2>
                     <a href="shop" class="btn-right text-uppercase text-hover fw-bold">View all</a>
                 </div>
                 <div class="col-sm-12" >

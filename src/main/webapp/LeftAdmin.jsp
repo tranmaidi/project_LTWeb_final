@@ -36,6 +36,9 @@
         <a href="quanlyvoucher" class="list-group-item list-group-item-action py-2 ripple">
           <i class="fas fa-user-circle fa-fw me-3"></i><span>Quản lý Mã giảm giá</span>
         </a>
+        <a href="promotion" class="list-group-item list-group-item-action py-2 ripple">
+            <i class="fas fa-user-circle fa-fw me-3"></i><span>Quản lý khuyến mãi</span>
+        </a>
       </div>
     </div>
   </nav>

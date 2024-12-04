@@ -33,7 +33,7 @@
         <!-- Custom styles -->
         <link rel="stylesheet" href="styles/style.css"/>
         
-        <style>
+        <style4
             body {
                 margin: 0;
                 padding: 0;
@@ -146,7 +146,7 @@
                                     <div class="d-flex justify-content-between p-md-1">
                                         <div class="d-flex flex-row">
                                             <div class="align-self-center">
-                                                <h2 class="h1 mb-0 me-4">$${sumAllInvoice }</h2>
+                                                <h2 class="h1 mb-0 me-4">${sumAllInvoice }</h2>
                                             </div>
                                             <div>
                                                 <h4>Total Sales</h4>

@@ -50,7 +50,7 @@
 
                 <button class="btn btn-success btn-block" type="submit"><i class="fas fa-sign-in-alt"></i> Sign in</button>
                 <hr>
-                <a href="https://accounts.google.com/o/oauth2/auth?scope=email profile openid&redirect_uri=https://dinno.onrender.com/DINNO/login1&response_type=code&client_id=1010520136732-i7ivlfqiuov69jmrmfd49ubdl577flbc.apps.googleusercontent.com&approval_prompt=force" 
+                <a href="https://accounts.google.com/o/oauth2/auth?scope=email profile openid&redirect_uri=http://localhost:8080/WebsiteBanGiay/login1&response_type=code&client_id=1010520136732-i7ivlfqiuov69jmrmfd49ubdl577flbc.apps.googleusercontent.com&approval_prompt=force" 
                    class="btn btn-danger btn-block" style="color:white">
                     <i class="fab fa-google" ></i>
                     <span>Sign in with Google</span>

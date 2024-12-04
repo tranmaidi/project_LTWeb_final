@@ -24,25 +24,25 @@
         <link rel="stylesheet" href="styles/style.css" />
         <link href="styles/shop.css" rel="stylesheet" type="text/css"> 
     </head>
-   
+
     <body class="skin-light" onload="loadAmountCart()">
         <!--Main Navigation-->
         <jsp:include page="Menu.jsp"></jsp:include>
-        
-        <!--Main layout-->
-        <main>
-            <div class="container" style="margin-top:100px">
-                <div class="row mt-5">
-                    <div class="col-md-4 mb-4">
-                    <!-- Section: Sidebar -->
-                        <section style="margin-top: 30px;">
-                            <!-- Section: Categories -->
-                            <section class="categories">
-                                <h5>Categories</h5>
-                                <div class="text-muted small text-uppercase mb-5">
+
+            <!--Main layout-->
+            <main>
+                <div class="container" style="margin-top:100px">
+                    <div class="row mt-5">
+                        <div class="col-md-4 mb-4">
+                            <!-- Section: Sidebar -->
+                            <section style="margin-top: 30px;">
+                                <!-- Section: Categories -->
+                                <section class="categories">
+                                    <h5>Categories</h5>
+                                    <div class="text-muted small text-uppercase mb-5">
                                     <c:forEach items="${listCC}" var="o">
                                         <p class="mb-3"><a onclick="load(${o.cid})" class="card-link-secondary">${o.cname}</a></p>
-                                    </c:forEach>
+                                        </c:forEach>
                                 </div>
                             </section>
                             <!-- Section: Categories -->
@@ -100,41 +100,41 @@
                                 <section class="mb-4">
                                     <div  data-toggle="buttons">
                                         <label class="btn rounded-circle white border-inset-grey p-3 m-2">
-                                          <input onchange="searchByColorWhite()" type="checkbox" autocomplete="off">
+                                            <input onchange="searchByColorWhite()" type="checkbox" autocomplete="off">
                                         </label>
                                         <label class="btn rounded-circle grey p-3 m-2">
-                                          <input onchange="searchByColorGray()" type="checkbox" autocomplete="off">
+                                            <input onchange="searchByColorGray()" type="checkbox" autocomplete="off">
                                         </label>
                                         <label class="btn rounded-circle black p-3 m-2">
-                                          <input onchange="searchByColorBlack()" type="checkbox" autocomplete="off">
+                                            <input onchange="searchByColorBlack()" type="checkbox" autocomplete="off">
                                         </label>
                                         <label class="btn rounded-circle green p-3 m-2">
-                                          <input type="checkbox" autocomplete="off">
+                                            <input type="checkbox" autocomplete="off">
                                         </label>
                                         <label class="btn rounded-circle blue p-3 m-2">
-                                          <input type="checkbox" autocomplete="off">
+                                            <input type="checkbox" autocomplete="off">
                                         </label>
                                         <label class="btn rounded-circle purple p-3 m-2">
-                                          <input type="checkbox" autocomplete="off">
+                                            <input type="checkbox" autocomplete="off">
                                         </label>
                                         <label class="btn rounded-circle yellow p-3 m-2">
-                                          <input onchange="searchByColorYellow()" type="checkbox" autocomplete="off">
+                                            <input onchange="searchByColorYellow()" type="checkbox" autocomplete="off">
                                         </label>
                                         <label class="btn rounded-circle indigo p-3 m-2">
-                                          <input type="checkbox" checked autocomplete="off">
+                                            <input type="checkbox" checked autocomplete="off">
                                         </label>
                                         <label class="btn rounded-circle red p-3 m-2">
-                                          <input type="checkbox" autocomplete="off">
+                                            <input type="checkbox" autocomplete="off">
                                         </label>
                                         <label class="btn rounded-circle orange p-3 m-2">
-                                          <input type="checkbox" autocomplete="off">
+                                            <input type="checkbox" autocomplete="off">
                                         </label>
                                     </div>
                                 </section>
                             </section>
 
 
-                        <!-- Section: Sidebar -->
+                            <!-- Section: Sidebar -->
 
                     </div>
                     <!--Grid column-->
@@ -157,7 +157,7 @@
                                                 <option value="4">Category 4</option>
                                                 <option value="5">Category 5</option>
                                             </select>
-<!--                                            <label>Tất cả sản phẩm</label>-->
+                                            <!--                                            <label>Tất cả sản phẩm</label>-->
                                             <button class="btn-save btn btn-primary btn-sm mt-2">Save</button>
                                         </div>
                                     </div>
@@ -244,195 +244,195 @@
                     <!-- MDB Ecommerce JavaScript -->
                     <script type="text/javascript" src="https://mdbootstrap.com/previews/ecommerce-demo/js/mdb.ecommerce.min.js"></script>
                     <script>
-                                                $('#multi').mdbRange({
-                                                    single: {
-                                                        active: true,
-                                                        multi: {
-                                                            active: true,
-                                                            rangeLength: 1
-                                                        },
-                                                    }
-                                                });
+                                              $('#multi').mdbRange({
+                                                  single: {
+                                                      active: true,
+                                                      multi: {
+                                                          active: true,
+                                                          rangeLength: 1
+                                                      },
+                                                  }
+                                              });
 
-                                                $(document).ready(function () {
-                                                    $('.mdb-select').materialSelect();
-                                                    $('.select-wrapper.md-form.md-outline input.select-dropdown').bind('focus blur', function () {
-                                                        $(this).closest('.select-outline').find('label').toggleClass('active');
-                                                        $(this).closest('.select-outline').find('.caret').toggleClass('active');
-                                                    });
-                                                });
-                                                function load(cateid) {
-                                                    $.ajax({
-                                                        url: "/WebsiteBanGiay/categoryShop",
-                                                        type: "get", //send it through get method
-                                                        data: {
-                                                            cid: cateid
-                                                        },
-                                                        success: function (responseData) {
-                                                            document.getElementById("content").innerHTML = responseData;
-                                                        }
-                                                    });
-                                                }
-                                                function searchByName(param) {
-                                                    var txtSearch = param.value;
-                                                    $.ajax({
-                                                        url: "/WebsiteBanGiay/searchAjaxShop",
-                                                        type: "get", //send it through get method
-                                                        data: {
-                                                            txt: txtSearch
-                                                        },
-                                                        success: function (data) {
-                                                            var row = document.getElementById("content");
-                                                            row.innerHTML = data;
-                                                        },
-                                                        error: function (xhr) {
-                                                            //Do Something to handle error
-                                                        }
-                                                    });
-                                                }
-                                                function searchByPriceMinToMax() {
-                                                    var numMin = document.getElementById("priceMin").value;
-                                                    var numMax = document.getElementById("priceMax").value;
-                                                    $.ajax({
-                                                        url: "/WebsiteBanGiay/searchAjaxPriceMinToMax",
-                                                        type: "get", //send it through get method
-                                                        data: {
-                                                            priceMin: numMin,
-                                                            priceMax: numMax
-                                                        },
-                                                        success: function (data) {
-                                                            var row = document.getElementById("content");
-                                                            row.innerHTML = data;
-                                                        },
-                                                        error: function (xhr) {
-                                                            //Do Something to handle error
-                                                        }
-                                                    });
-                                                }
-                                                function searchByPriceUnder100() {
-                                                    $.ajax({
-                                                        url: "/WebsiteBanGiay/searchAjaxPriceUnder100Shop",
-                                                        type: "get", //send it through get method
-                                                        data: {
+                                              $(document).ready(function () {
+                                                  $('.mdb-select').materialSelect();
+                                                  $('.select-wrapper.md-form.md-outline input.select-dropdown').bind('focus blur', function () {
+                                                      $(this).closest('.select-outline').find('label').toggleClass('active');
+                                                      $(this).closest('.select-outline').find('.caret').toggleClass('active');
+                                                  });
+                                              });
+                                              function load(cateid) {
+                                                  $.ajax({
+                                                      url: "/WebsiteBanGiay/categoryShop",
+                                                      type: "get", //send it through get method
+                                                      data: {
+                                                          cid: cateid
+                                                      },
+                                                      success: function (responseData) {
+                                                          document.getElementById("content").innerHTML = responseData;
+                                                      }
+                                                  });
+                                              }
+                                              function searchByName(param) {
+                                                  var txtSearch = param.value;
+                                                  $.ajax({
+                                                      url: "/WebsiteBanGiay/searchAjaxShop",
+                                                      type: "get", //send it through get method
+                                                      data: {
+                                                          txt: txtSearch
+                                                      },
+                                                      success: function (data) {
+                                                          var row = document.getElementById("content");
+                                                          row.innerHTML = data;
+                                                      },
+                                                      error: function (xhr) {
+                                                          //Do Something to handle error
+                                                      }
+                                                  });
+                                              }
+                                              function searchByPriceMinToMax() {
+                                                  var numMin = document.getElementById("priceMin").value;
+                                                  var numMax = document.getElementById("priceMax").value;
+                                                  $.ajax({
+                                                      url: "/WebsiteBanGiay/searchAjaxPriceMinToMax",
+                                                      type: "get", //send it through get method
+                                                      data: {
+                                                          priceMin: numMin,
+                                                          priceMax: numMax
+                                                      },
+                                                      success: function (data) {
+                                                          var row = document.getElementById("content");
+                                                          row.innerHTML = data;
+                                                      },
+                                                      error: function (xhr) {
+                                                          //Do Something to handle error
+                                                      }
+                                                  });
+                                              }
+                                              function searchByPriceUnder100() {
+                                                  $.ajax({
+                                                      url: "/WebsiteBanGiay/searchAjaxPriceUnder100Shop",
+                                                      type: "get", //send it through get method
+                                                      data: {
 
-                                                        },
-                                                        success: function (data) {
-                                                            var row = document.getElementById("content");
-                                                            row.innerHTML = data;
-                                                        },
-                                                        error: function (xhr) {
-                                                            //Do Something to handle error
-                                                        }
-                                                    });
-                                                }
-                                                function searchByPrice100To200() {
-                                                    $.ajax({
-                                                        url: "/WebsiteBanGiay/searchAjaxPrice100To200Shop",
-                                                        type: "get", //send it through get method
-                                                        data: {
+                                                      },
+                                                      success: function (data) {
+                                                          var row = document.getElementById("content");
+                                                          row.innerHTML = data;
+                                                      },
+                                                      error: function (xhr) {
+                                                          //Do Something to handle error
+                                                      }
+                                                  });
+                                              }
+                                              function searchByPrice100To200() {
+                                                  $.ajax({
+                                                      url: "/WebsiteBanGiay/searchAjaxPrice100To200Shop",
+                                                      type: "get", //send it through get method
+                                                      data: {
 
-                                                        },
-                                                        success: function (data) {
-                                                            var row = document.getElementById("content");
-                                                            row.innerHTML = data;
-                                                        },
-                                                        error: function (xhr) {
-                                                            //Do Something to handle error
-                                                        }
-                                                    });
-                                                }
-                                                function searchByPriceAbove200() {
-                                                    $.ajax({
-                                                        url: "/WebsiteBanGiay/searchAjaxPriceAbove200Shop",
-                                                        type: "get", //send it through get method
-                                                        data: {
+                                                      },
+                                                      success: function (data) {
+                                                          var row = document.getElementById("content");
+                                                          row.innerHTML = data;
+                                                      },
+                                                      error: function (xhr) {
+                                                          //Do Something to handle error
+                                                      }
+                                                  });
+                                              }
+                                              function searchByPriceAbove200() {
+                                                  $.ajax({
+                                                      url: "/WebsiteBanGiay/searchAjaxPriceAbove200Shop",
+                                                      type: "get", //send it through get method
+                                                      data: {
 
-                                                        },
-                                                        success: function (data) {
-                                                            var row = document.getElementById("content");
-                                                            row.innerHTML = data;
-                                                        },
-                                                        error: function (xhr) {
-                                                            //Do Something to handle error
-                                                        }
-                                                    });
-                                                }
-                                                function searchByColorWhite() {
-                                                    $.ajax({
-                                                        url: "/WebsiteBanGiay/searchAjaxColorWhite",
-                                                        type: "get", //send it through get method
-                                                        data: {
+                                                      },
+                                                      success: function (data) {
+                                                          var row = document.getElementById("content");
+                                                          row.innerHTML = data;
+                                                      },
+                                                      error: function (xhr) {
+                                                          //Do Something to handle error
+                                                      }
+                                                  });
+                                              }
+                                              function searchByColorWhite() {
+                                                  $.ajax({
+                                                      url: "/WebsiteBanGiay/searchAjaxColorWhite",
+                                                      type: "get", //send it through get method
+                                                      data: {
 
-                                                        },
-                                                        success: function (data) {
-                                                            var row = document.getElementById("content");
-                                                            row.innerHTML = data;
-                                                        },
-                                                        error: function (xhr) {
-                                                            //Do Something to handle error
-                                                        }
-                                                    });
-                                                }
-                                                function searchByColorGray() {
-                                                    $.ajax({
-                                                        url: "/WebsiteBanGiay/searchAjaxColorGray",
-                                                        type: "get", //send it through get method
-                                                        data: {
+                                                      },
+                                                      success: function (data) {
+                                                          var row = document.getElementById("content");
+                                                          row.innerHTML = data;
+                                                      },
+                                                      error: function (xhr) {
+                                                          //Do Something to handle error
+                                                      }
+                                                  });
+                                              }
+                                              function searchByColorGray() {
+                                                  $.ajax({
+                                                      url: "/WebsiteBanGiay/searchAjaxColorGray",
+                                                      type: "get", //send it through get method
+                                                      data: {
 
-                                                        },
-                                                        success: function (data) {
-                                                            var row = document.getElementById("content");
-                                                            row.innerHTML = data;
-                                                        },
-                                                        error: function (xhr) {
-                                                            //Do Something to handle error
-                                                        }
-                                                    });
-                                                }
-                                                function searchByColorBlack() {
-                                                    $.ajax({
-                                                        url: "/WebsiteBanGiay/searchAjaxColorBlack",
-                                                        type: "get", //send it through get method
-                                                        data: {
+                                                      },
+                                                      success: function (data) {
+                                                          var row = document.getElementById("content");
+                                                          row.innerHTML = data;
+                                                      },
+                                                      error: function (xhr) {
+                                                          //Do Something to handle error
+                                                      }
+                                                  });
+                                              }
+                                              function searchByColorBlack() {
+                                                  $.ajax({
+                                                      url: "/WebsiteBanGiay/searchAjaxColorBlack",
+                                                      type: "get", //send it through get method
+                                                      data: {
 
-                                                        },
-                                                        success: function (data) {
-                                                            var row = document.getElementById("content");
-                                                            row.innerHTML = data;
-                                                        },
-                                                        error: function (xhr) {
-                                                            //Do Something to handle error
-                                                        }
-                                                    });
-                                                }
-                                                function searchByColorYellow() {
-                                                    $.ajax({
-                                                        url: "/WebsiteBanGiay/searchAjaxColorYellow",
-                                                        type: "get", //send it through get method
-                                                        data: {
+                                                      },
+                                                      success: function (data) {
+                                                          var row = document.getElementById("content");
+                                                          row.innerHTML = data;
+                                                      },
+                                                      error: function (xhr) {
+                                                          //Do Something to handle error
+                                                      }
+                                                  });
+                                              }
+                                              function searchByColorYellow() {
+                                                  $.ajax({
+                                                      url: "/WebsiteBanGiay/searchAjaxColorYellow",
+                                                      type: "get", //send it through get method
+                                                      data: {
 
-                                                        },
-                                                        success: function (data) {
-                                                            var row = document.getElementById("content");
-                                                            row.innerHTML = data;
-                                                        },
-                                                        error: function (xhr) {
-                                                            //Do Something to handle error
-                                                        }
-                                                    });
-                                                }
-                                                function loadAmountCart() {
-                                                    $.ajax({
-                                                        url: "/WebsiteBanGiay/loadAllAmountCart",
-                                                        type: "get", //send it through get method
-                                                        data: {
+                                                      },
+                                                      success: function (data) {
+                                                          var row = document.getElementById("content");
+                                                          row.innerHTML = data;
+                                                      },
+                                                      error: function (xhr) {
+                                                          //Do Something to handle error
+                                                      }
+                                                  });
+                                              }
+                                              function loadAmountCart() {
+                                                  $.ajax({
+                                                      url: "/WebsiteBanGiay/loadAllAmountCart",
+                                                      type: "get", //send it through get method
+                                                      data: {
 
-                                                        },
-                                                        success: function (responseData) {
-                                                            document.getElementById("amountCart").innerHTML = responseData;
-                                                        }
-                                                    });
-                                                }
+                                                      },
+                                                      success: function (responseData) {
+                                                          document.getElementById("amountCart").innerHTML = responseData;
+                                                      }
+                                                  });
+                                              }
                     </script>
                     <!-- MDB -->
                     <script type="text/javascript" src="js/mdb.min.js"></script>

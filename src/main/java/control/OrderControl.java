@@ -25,6 +25,9 @@ import entity.Product;
 public class OrderControl extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
         Account a = (Account) session.getAttribute("acc");
 
@@ -41,19 +44,40 @@ public class OrderControl extends HttpServlet {
         List<Cart> list = dao.getCartByAccountID(accountID);
         List<Product> list2 = dao.getAllProduct();
 
-        double totalMoney = 0;
-        for (Cart c : list) {
-            for (Product p : list2) {
-                if (c.getProductID() == p.getId()) {
-                    totalMoney += p.getPrice() * c.getAmount();
-
-                    // Thêm sản phẩm vào bảng History
-                    dao.insertHistory(accountID, p.getId(), c.getAmount(), c.getSize());
+        double discountedPrice=0;
+            double totalMoney = 0;
+            for (Cart o : list) {
+                for (Product p : list2) {
+                    if (o.getProductID() == p.getId()) {
+                        
+                        double productPrice = p.getPrice();
+                        double discountRate = dao.getDiscountRate(o.getProductID());
+                        // Tính giá đã giảm
+                        discountedPrice = p.getPrice();
+                        if (discountRate > 0) {
+                            discountedPrice = productPrice * (1 - discountRate ); 
+                        }
+                           // Lưu giá đã giảm vào Map
+                        totalMoney += discountedPrice * o.getAmount();
+                        dao.insertHistory(accountID, p.getId(), o.getAmount(), o.getSize());
                 }
             }
         }
-
-        double totalMoneyVAT = totalMoney + totalMoney * 0.1;
+        double totalPayment = totalMoney ;
+            if (totalPayment > 0) {
+                totalPayment += 25000; // Phí vận chuyển
+            } else {
+                totalPayment = 0; 
+            }
+            
+        String voucherCode = request.getParameter("voucherCode");
+        Double discountAmount = 0.0;
+            if (voucherCode != "" || voucherCode != null && !voucherCode.isEmpty()) {
+                if (dao.isVoucherValid(voucherCode,  totalMoney)&&!dao.isVoucherLinkedToAccount(voucherCode, accountID)){
+                discountAmount = dao.getDiscountAmount(voucherCode);
+                totalPayment -= discountAmount;
+                }
+            }
 
         request.getRequestDispatcher("DatHang.jsp").forward(request, response);
     }
@@ -62,6 +86,12 @@ public class OrderControl extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
+        String isBuyNow = request.getParameter("BuyNow");
+        if(isBuyNow != null){
+            doGet(request, response);
+            return;
+        }
+        
         try {
             String emailAddress = request.getParameter("email");
             String name = request.getParameter("name");
@@ -76,22 +106,49 @@ public class OrderControl extends HttpServlet {
             }
             int accountID = a.getId();
             DAO dao = new DAO();
-            List<Cart> list = dao.getCartByAccountID(accountID);
-            List<Product> list2 = dao.getAllProduct();
+            List<Cart> list = dao.getCartByAccountID(accountID);List<Product> list2 = dao.getAllProduct();
 
+             double discountedPrice=0;
+            double totaldiscounted = 0;
             double totalMoney = 0;
-            for (Cart c : list) {
+            for (Cart o : list) {
                 for (Product p : list2) {
-                    if (c.getProductID() == p.getId()) {
-                        totalMoney += p.getPrice() * c.getAmount();
-                    }
+                    if (o.getProductID() == p.getId()) {
+                        
+                        double productPrice = p.getPrice();
+                        double discountRate = dao.getDiscountRate(o.getProductID());
+                        // Tính giá đã giảm
+                        discountedPrice = p.getPrice();
+                        if (discountRate > 0) {
+                            totaldiscounted = productPrice *  discountRate;
+                            discountedPrice = discountedPrice - totaldiscounted ; 
+                        }
+                                                    
+
+                           // Lưu giá đã giảm vào Map
+                        totalMoney += discountedPrice * o.getAmount();
+                        dao.insertHistory(accountID, p.getId(), o.getAmount(), o.getSize());
                 }
             }
-            double totalPayment = totalMoney + 25000;
+        }
+            double totalPayment = totalMoney ;
+            if (totalPayment > 0) {
+                totalPayment += 25000; // Phí vận chuyển
+            } else {
+                totalPayment = 0; 
+            }
+        
+            String voucherCode = request.getParameter("voucherCode");
+            Double discountAmount = 0.0;
+            if(voucherCode != "" ||voucherCode != null && !voucherCode.isEmpty()){
+                discountAmount = dao.getDiscountAmount(voucherCode);
+                totalPayment -= discountAmount;
+                dao.insertVoucherAcc(accountID, voucherCode);
+            }
             // Gửi email xác nhận đơn hàng
             Email email = new Email();
-            email.setFrom("ditran.120804@gmail.com");
-            email.setFromPassword("pguk ltzo biuh swqk");
+            email.setFrom("dinnoshopweb@gmail.com");
+            email.setFromPassword("xpez ruov apxa voje");
             email.setTo(emailAddress);
             email.setSubject("Đặt hàng thành công từ DINNO SHOP");
 
@@ -114,15 +171,16 @@ public class OrderControl extends HttpServlet {
                     }
                 }
             }
-            sb.append("Phí vận chuyển: 250000 VND.<br>");
+            sb.append("Phí vận chuyển: 25000 VND.<br>");
+            sb.append("Số tiền giảm giá: ").append(String.format("%.00f", discountAmount)).append(" VND<br>");
+            sb.append("Số tiền giảm giá khuyến m: ").append(String.format("%.00f", totaldiscounted)).append(" VND<br>");
             sb.append("Tổng tiền: ").append(String.format("%.00f", totalPayment)).append(" VND<br>");
             sb.append("Cảm ơn bạn đã đặt hàng tại DINNO SHOP.<br>");
             sb.append("<br><img src='https://img.meta.com.vn/data/image/2022/09/14/stt-cam-on-khach-hang-1.jpg' alt='Thank You' style='width:500px; height:auto;'/><br>");
             sb.append("Chủ cửa hàng<3");
 
             email.setContent(sb.toString());
-            EmailUtils.send(email);
-            request.setAttribute("mess", "Đặt hàng thành công!");
+            EmailUtils.send(email);request.setAttribute("mess", "Đặt hàng thành công!");
 
             // Xóa giỏ hàng
             dao.deleteCartByAccountID(accountID);
@@ -133,12 +191,7 @@ public class OrderControl extends HttpServlet {
             } else {
                 phuongThuc = "Thanh toán khi nhận hàng";
             }
-            String voucherCode = request.getParameter("voucherCode");
-            if(voucherCode != "" ||voucherCode != null && !voucherCode.isEmpty()){
-                Double discountAmount = dao.getDiscountAmount(voucherCode);
-                totalPayment -= discountAmount;
-                dao.insertVoucherAcc(accountID, voucherCode);
-            }
+            
             dao.insertInvoice(accountID, totalPayment, phuongThuc);
         } catch (Exception e) {
             request.setAttribute("error", "Đặt hàng thất bại!");

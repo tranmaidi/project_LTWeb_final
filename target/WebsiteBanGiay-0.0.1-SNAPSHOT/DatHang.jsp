@@ -57,7 +57,6 @@
                 <div class="form-group mb-4">
                     <label class="block mb-2" for="paymentMethod">Payment Method</label>
                     <select class="form-control w-full p-2 border border-gray-300 rounded" id="phuongThuc" name="phuongThuc" onchange="showQRCode(this.value)" required="">
-                        <option value="">Chọn phương thức thanh toán...</option>
                         <option value="thanhToanKhiNhanHang">Thanh toán khi nhận hàng</option>
                         <option value="chuyenKhoan">Chuyển khoản qua ngân hàng</option>
                     </select>
@@ -100,22 +99,20 @@
                 $('#logreg-forms #btn-signup').click(toggleSignUp);
                 $('#logreg-forms #cancel_signup').click(toggleSignUp);
             })
-            function loadTotalQr(){
+            function loadTotalQr(voucherCode) {
+                    $.ajax({
+                        url: "/WebsiteBanGiay/totalQr",
+                        type: "get",
+                        data: { voucherCode: voucherCode },
+                        success: function (responseData) {
+                            document.getElementById("contentTotalQr").innerHTML = responseData;
+                        },
+                        error: function () {
+                            alert("Không thể tải tổng tiền. Vui lòng kiểm tra lại.");
+                        }
+                    });
+                }
 
-                                    $.ajax({
-                                    url: "/WebsiteBanGiay/totalQr",
-                                    type: "get", //send it through get method
-                                    data: {
-                                        
-                                    },
-                                    success: function (responseData) {
-                                        document.getElementById("contentTotalQr").innerHTML = responseData;
-                                    },
-                                    error: function () {
-                                        alert("Không thể tải tổng tiền. Vui lòng kiểm tra lại.");
-                                    }
-                                });
-                           }
             window.addEventListener("load", function loadAmountCart() {
                 $.ajax({
                     url: "/WebsiteBanGiay/loadAllAmountCart",

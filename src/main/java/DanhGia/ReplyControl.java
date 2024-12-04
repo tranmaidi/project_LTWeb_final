@@ -45,7 +45,7 @@ public class ReplyControl extends HttpServlet {
         out.println("<img class=\"d-flex mr-3 z-depth-1\" src=\"images/logo3.png\" width=\"55\" alt=\"Reply placeholder\" style=\"border-radius: 100%;\">");
         out.println("  <div class=\"media-body\">");
         out.println("    <p class=\"mt-0 mb-1\">");
-        out.println("      <strong>" + account.getPass() + "</strong>");
+        out.println("      <strong>" + account.getUser() + "</strong>");
         out.println("      <span>– </span><span>" + newReply.getDateReply() + "</span>");
         out.println("    </p>");
         out.println("    <p>" + newReply.getContentReply() + "</p>");

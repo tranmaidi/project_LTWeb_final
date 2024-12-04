@@ -55,6 +55,12 @@
     <artifactId>mysql-connector-java</artifactId>
     <version>8.0.29</version>  <!-- Use the latest version -->
 </dependency>
+    <dependency>
+      <groupId>com.liferay</groupId>
+      <artifactId>org.apache.commons.fileupload</artifactId>
+      <version>1.2.2.LIFERAY-PATCHED-1</version>
+      <type>jar</type>
+    </dependency>
   </dependencies>
   <build>
 

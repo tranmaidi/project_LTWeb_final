@@ -27,7 +27,7 @@
                 <h5 class="text-uppercase font-weight-bold">Thông tin Fanpage</h5>
                 <hr class="bg-warning mb-4 mt-0 d-inline-block mx-auto w-50">
                 <div>
-                    <a href="https://www.facebook.com/tmdi1284" class="me-4 text-reset">
+                    <a href="https://www.facebook.com/profile.php?id=61569954601618" target="_blank" class="me-4 text-reset">
                         <i class="fab fa-facebook-f"></i>
                     </a>
                     <a href="" class="me-4 text-reset">

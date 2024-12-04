@@ -65,14 +65,7 @@ public class ManagerCartControl extends HttpServlet {
         for (Cart cart : listCart) {
             totalAmount += cart.getAmount();
         }
-        // Kiểm tra sản phẩm khuyến mãi
-        boolean hasPromoProduct = false;
-        for (Cart cart : listCart) {
-            if (dao.isProductOnPromotion(cart.getProductID())) {
-                hasPromoProduct = true;
-                break;
-            }
-        }
+        
         double discountedPrice=0;
         // Tính tổng tiền hàng 
         double totalMoney = 0;
@@ -91,7 +84,7 @@ public class ManagerCartControl extends HttpServlet {
                            // Lưu giá đã giảm vào Map
                         discountedPrices.put(o.getProductID(), discountedPrice);                   
                         totalMoney += discountedPrice * o.getAmount();
-                        request.setAttribute("discountRate", discountRate);
+//                        request.setAttribute("discountRate", discountRate);
                         request.setAttribute("discountedPrices", discountedPrices);   
                   
                     }
@@ -108,7 +101,6 @@ public class ManagerCartControl extends HttpServlet {
        
         // Đặt dữ liệu vào request để chuyển tiếp đến JSP
         request.setAttribute("promotionalProducts", promotionalProducts);
-        request.setAttribute("hasPromotionalProduct", hasPromoProduct);
         session.setAttribute("cartQuantity", totalAmountCart);
         session.setAttribute("voucherCode", "");
         request.setAttribute("listCart", listCart);

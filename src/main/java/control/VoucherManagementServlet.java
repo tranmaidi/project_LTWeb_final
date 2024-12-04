@@ -59,13 +59,20 @@ public class VoucherManagementServlet extends HttpServlet {
                 break;
             case "view_usage":
                 int voucherId = Integer.parseInt(request.getParameter("id"));
-                List<String> users = dao.getUsersByVoucher(voucherId); // Lấy danh sách người dùng
+                List<List<String>> usages = dao.getUsersByVoucher(voucherId); // Lấy danh sách sử dụng voucher
                 StringBuilder responseHtml = new StringBuilder();
                 responseHtml.append("<ul>");
-                for (String user : users) {
-                    responseHtml.append("<li>").append(user).append("</li>");
+                for (List<String> usage : usages) {
+                    String user = usage.get(0);       // Lấy thông tin `user`
+                    String usedAt = usage.get(1);     // Lấy thông tin `used_at`
+                    responseHtml.append("<li>")
+                                .append("User: ")
+                                .append(user)
+                                .append(" - Used at: ")
+                                .append(usedAt)
+                                .append("</li>");
                 }
-                if (users.isEmpty()) {
+                if (usages.isEmpty()) {
                     responseHtml.append("<p>No usage details available.</p>");
                 }
                 responseHtml.append("</ul>");

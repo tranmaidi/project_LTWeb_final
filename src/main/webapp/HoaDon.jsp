@@ -145,21 +145,25 @@
                                                 <c:forEach items="${listAllAccount}" var="a">
                                                     <c:if test="${i.accountID==a.id }">    
                                                         <c:set var="userName" value="${a.user}"/>
-                                                        <c:set var="userEmail" value="${a.email}"/>                                                      
+                                                        <c:set var="userEmail" value="${a.email}"/>          
+                                                        <c:set var="userFullName" value="${a.fullName}"/>
                                                         <td>${a.user }</td>
                                                     </c:if>
                                                 </c:forEach>
                                                 <td>${String.format("%.02f",i.tongGia) }</td>
                                                 <td>${i.ngayXuat }</td> 
                                                 <td>${i.phuongThuc}</td>
-                                                <form action="confirm" method="get">
-                                                    <input type="hidden" name="invoice" value="${i}">
-                                                    <input type="hidden" name="userName" value="${userName}">
+                                                <form action="confirm" method="get" onsubmit="reloadPage()">
+                                                    <input type="hidden" name="invoiceid" value="${i.maHD}">
+                                                    <input type="hidden" name="userFullName" value="${userFullName}">
                                                     <input type="hidden" name="userEmail" value="${userEmail}">
                                                     
                                                     <c:choose>
                                                         <c:when test="${i.phuongThuc == 'Chuyển khoản qua ngân hàng'}">
-                                                            <td><button type="submit" class="mb-0 text-center btn btn-primary waves-effect waves-light">Xác nhận</button> </td>
+                                                            <td><button id="confirmButton" type="submit" class="mb-0 text-center btn btn-primary waves-effect waves-light">Xác nhận</button> </td>
+                                                        </c:when>
+                                                        <c:when test="${i.phuongThuc == 'Đã xác nhận chuyển khoản'}">
+                                                            <td><button class="mb-0 text-center btn btn-gray waves-effect waves-light" disabled>Đã xác nhận</button> </td>
                                                         </c:when>
                                                        
                                                         <c:otherwise><td></td></c:otherwise>
@@ -206,6 +210,9 @@
         <script type="text/javascript" src="js/script.js"></script>
         <script>
             function searchByDate(param) {
+                var button = document.getElementById("confirmButton");
+                button.disabled = true;  // Vô hiệu hóa nút khi nhấn
+                button.innerText = "Đang xử lý...";  // Thay đổi văn bản nút để cho biết đang xử lý
                 var txtSearchDate = param.value;
                 $.ajax({
                     url: "/WebsiteBanGiay/searchAjaxHoaDon",
@@ -218,6 +225,12 @@
                     }
 
                 });
+            }
+            function reloadPage() {
+                // Reload lại trang sau khi gửi form
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000); // Đặt thời gian trễ (1 giây) để xử lý backend trước khi reload
             }
         </script>
     </body>

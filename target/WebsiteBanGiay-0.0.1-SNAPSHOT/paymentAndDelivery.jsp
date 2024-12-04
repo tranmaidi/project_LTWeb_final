@@ -116,7 +116,7 @@
                 <h2>Liên hệ</h2>
                 <p>Hotline: <strong>032 633 1143</strong></p>
                 <p>Website: <a href="" target="_blank">dinno.vn</a></p>
-                <p>Email: <a href="mailto:ditran.120804@gmail.com">ditran.120804@gmail.com</a></p>
+                <p>Email: <a href="mailto:dinnoshopweb@gmail.com">dinnoshopweb@gmail.com</a></p>
                 <p>Fanpage: <a href="" target="_blank">facebook.com/giaydinno</a></p>
             </div>
         </main>

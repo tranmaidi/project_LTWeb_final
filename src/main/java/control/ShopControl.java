@@ -35,9 +35,7 @@ public class ShopControl extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        //b1: get data from dao
         DAO dao = new DAO();
-//        List<Product> list = dao.getAllProduct();
         List<Category> listC = dao.getAllCategory();
 
        
@@ -50,7 +48,6 @@ public class ShopControl extends HttpServlet {
         
       
         List<Product> list = dao.getProductByIndex(indexPage);
-//        List<Category> listC = dao.getAllCategory();
         int allProduct = dao.countAllProduct();
         int endPage = allProduct/9;
         if(allProduct % 9 != 0) {

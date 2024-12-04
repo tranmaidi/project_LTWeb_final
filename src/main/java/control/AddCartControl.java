@@ -36,7 +36,7 @@ public class AddCartControl extends HttpServlet {
             response.sendRedirect("login");
             return;
         }
-
+        
         int accountID = a.getId();
         int amount = Integer.parseInt(request.getParameter("quantity"));
         String size = request.getParameter("size");
@@ -59,6 +59,8 @@ public class AddCartControl extends HttpServlet {
             request.setAttribute("promotionProducts", promotionProducts);
          }
         
+        
+        
         // Cập nhật tổng số lượng giỏ hàng
         int totalAmountCart = 0;
         List<Cart> list = dao.getCartByAccountID(accountID);
@@ -67,8 +69,14 @@ public class AddCartControl extends HttpServlet {
         // Lưu tổng số lượng sản phẩm vào session
         session.setAttribute("cartQuantity", totalAmountCart);
         
-        // Chuyển hướng về trang giỏ hàng
-        request.getRequestDispatcher("managerCart").forward(request, response);
+        String isBuyNow = request.getParameter("BuyNow");
+        
+        if(isBuyNow != null){
+            request.getRequestDispatcher("order").forward(request, response);
+        }else{
+            request.getRequestDispatcher("managerCart").forward(request, response);
+        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

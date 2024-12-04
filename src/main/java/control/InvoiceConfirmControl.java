@@ -4,6 +4,8 @@
  */
 package control;
 
+import dao.DAO;
+import entity.Invoice;
 import entity.Account;
 import entity.Email;
 import entity.EmailUtils;
@@ -43,30 +45,30 @@ public class InvoiceConfirmControl extends HttpServlet {
             response.sendRedirect("login");
             return;         
         }
-        
+        DAO dao = new DAO();
+        int maHD = (int) Integer.parseInt(request.getParameter("invoiceid"));
         String userEmail = (String) request.getParameter("userEmail");
-        String userName = (String) request.getParameter("userName");
+        String userFullName = (String) request.getParameter("userFullName");
+        dao.editPhuongThuc(maHD);
         
-     
         try{
             Email email = new Email();
-            email.setFrom("thanghuynh0706@gmail.com");
-            email.setFromPassword("gazl nchi rrnx pgox");
-            //email.setTo("thanghuynh0706@gmail.com");
+            email.setFrom("dinnoShopWeb@gmail.com");
+            email.setFromPassword("xpez ruov apxa voje");
             email.setTo(userEmail);
             email.setSubject("Transfer Confirm");
 
             String content = "<div style=\"font-family: sans-serif; max-width: 600px; margin: auto; \n" +
     "             background-color: #F4F4F4; text-align: center;\">\r\n"
                     + "<div style=\"margin: 15px\">\r\n"
-                    + "<br><img src=\"https://websitebangiay-xran.onrender.com/WebsiteBanGiay-0.0.1-SNAPSHOT/images/logo3.png\" alt=\"logo\" width=\"200\" height=\"100\">\r\n"
+                    + "<br><img src=\"https://dinno.onrender.com/DINNO/images/logo3.png\" alt=\"logo\" width=\"200\" height=\"100\">\r\n"
                     + "</div>\r\n"
                     + "<div style=\"margin-top: -10px; padding: 5px\">\r\n"
-                    + "<h1 style=\"color: #F964A6\">Xác nhận chuyển khoản</h1>\r\n"
-                    + "<h3>Xin chào "+ userName +  "</h3>\r\n"
-                    + "<h3>Vui lòng phản hồi email với hình ảnh minh chứng đã chuyển khoản</h3>\r\n"
+                    + "<h1 style=\"color: #F964A6\">Xác nhận chuyển khoản thành công</h1>\r\n"
+                    + "<h3>Xin chào "+ userFullName +  "</h3>\r\n"
+                    + "<h3>Cảm ơn bạn vì đã luôn tin tưởng và mua sản phẩm bên shop.</h3>\r\n"
                     + "<h3>Để tiếp tục mua sắm, vui lòng nhấn vào nút bên dưới</h3><br>\r\n"
-                    + "<a href=\"https://websitebangiay-xran.onrender.com/WebsiteBanGiay-0.0.1-SNAPSHOT/home\" target=\"_blank\" style=\"text-decoration: none; \n" +
+                    + "<a href=\"https://dinno.onrender.com/DINNO/home\" target=\"_blank\" style=\"text-decoration: none; \n" +
     "                 padding: 0.85em; color: #FFFFFF; background-color: #45BB89; border-radius: 5px\">Click here </a><br><br>\r\n"
                     + "</div>\r\n"
                     + "</div>\r\n";
@@ -79,6 +81,8 @@ public class InvoiceConfirmControl extends HttpServlet {
 		}
         
         request.getRequestDispatcher("hoaDon").forward(request, response);
+        
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
